@@ -45,19 +45,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         TokenAuthentication tokenAuthentication = (TokenAuthentication) authentication;
-        String username = (String) tokenAuthentication.getPrincipal();
-        String password = (String) tokenAuthentication.getCredentials();
-
-        StringBuilder sb1 = new StringBuilder();
-        sb1.append(username).append(password);
-
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(sb1.toString().getBytes("UTF-8"));
-        byte byteData[] = md.digest();
-
-        String token = IntStream.range(0, byteData.length)
-                                .mapToObj(i -> Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1))
-                                .collect(Collectors.joining());
+        String token = (String) tokenAuthentication.getCredentials();
 
         Optional<User> existedUser = this.userRepository.findByToken(token);
         if(!existedUser.isPresent()){

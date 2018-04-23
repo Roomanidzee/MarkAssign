@@ -3,7 +3,7 @@ package io.vscale.uniservice.services.implementations.admin;
 import io.vscale.uniservice.domain.Group;
 import io.vscale.uniservice.domain.Profile;
 import io.vscale.uniservice.domain.Student;
-import io.vscale.uniservice.forms.rest.StudentForm;
+import io.vscale.uniservice.forms.rest.StudentRESTForm;
 import io.vscale.uniservice.repositories.data.GroupRepository;
 import io.vscale.uniservice.repositories.data.ProfileRepository;
 import io.vscale.uniservice.repositories.data.StudentRepository;
@@ -31,17 +31,17 @@ public class StudentAdminServiceImpl implements StudentAdminService{
     private GroupRepository groupRepository;
 
     @Override
-    public void makeRESTStudent(StudentForm studentForm) {
+    public void makeRESTStudent(StudentRESTForm studentRESTForm) {
 
-        Profile profile = this.profileRepository.findOne(studentForm.getProfileId());
+        Profile profile = this.profileRepository.findOne(studentRESTForm.getProfileId());
 
-        Group group = this.groupRepository.findByTitle(studentForm.getGroupTitle())
+        Group group = this.groupRepository.findByTitle(studentRESTForm.getGroupTitle())
                                           .orElseThrow(IllegalArgumentException::new);
 
         Student student = Student.builder()
                                  .profile(profile)
-                                 .gender(studentForm.getGender())
-                                 .course(studentForm.getCourse())
+                                 .gender(studentRESTForm.getGender())
+                                 .course(studentRESTForm.getCourse())
                                  .groups(Collections.singleton(group))
                                  .build();
 

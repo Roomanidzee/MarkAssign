@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @EqualsAndHashCode
 @ToString
-public class StudentForm {
+public class CooperatorRESTForm {
 
+    private Long id;
     private Long profileId;
-    private Byte course;
-    private String gender;
-    private String groupTitle;
+    private Byte recordOfService;
+    private String appointment;
 
 }

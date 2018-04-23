@@ -1,15 +1,14 @@
 package io.vscale.uniservice.controllers.rest.student;
 
+import io.vscale.uniservice.domain.Event;
 import io.vscale.uniservice.domain.Group;
 import io.vscale.uniservice.domain.Student;
 import lombok.AllArgsConstructor;
 
 import io.vscale.uniservice.services.interfaces.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,15 +19,34 @@ import java.util.List;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/api_v1/student_role")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequestMapping("/api_v1")
 public class StudentRESTController {
 
-    private StudentService studentService;
+    private final StudentService studentService;
 
-    @GetMapping("/show/group")
+    @Autowired
+    public StudentRESTController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    @GetMapping("/student_role/show/group")
     public List<Student> getStudentByGroup(@RequestBody Group group){
         return this.studentService.getStudentsByGroup(group);
+    }
+
+    @GetMapping({"/student_role/student/{id}", "/admin_role/student/{id}"})
+    public ResponseEntity<Student> getStudentById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(this.studentService.getStudentById(id));
+    }
+
+    @GetMapping("/student/mark")
+    public ResponseEntity<Integer> getStudentMarks(Student student){
+        return ResponseEntity.ok(this.studentService.getMarksSum(student));
+    }
+
+    @GetMapping({"/admin_role/student/events", "/student_role/student/events"})
+    public ResponseEntity<List<Event>> getStudentEvents(Student student){
+        return ResponseEntity.ok(this.studentService.getStudentEvents(student));
     }
 
 }

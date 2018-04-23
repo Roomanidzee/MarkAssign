@@ -90,4 +90,10 @@ public class Event {
                inverseJoinColumns = @JoinColumn(name = "manager_id"))
     private Set<Profile> managers;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "event_to_organization",
+            joinColumns = @JoinColumn(name = "event_agency_id"),
+            inverseJoinColumns = @JoinColumn(name = "agency_id"))
+    private List<Organization> organizations;
+
 }

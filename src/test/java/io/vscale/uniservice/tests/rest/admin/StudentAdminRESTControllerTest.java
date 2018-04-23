@@ -3,7 +3,7 @@ package io.vscale.uniservice.tests.rest.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vscale.uniservice.controllers.rest.admin.StudentAdminRESTController;
 import io.vscale.uniservice.domain.Student;
-import io.vscale.uniservice.forms.rest.StudentForm;
+import io.vscale.uniservice.forms.rest.StudentRESTForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -39,21 +39,21 @@ public class StudentAdminRESTControllerTest {
     @Test
     public void shouldCreateNewStudent() throws Exception{
 
-        StudentForm studentForm = StudentForm.builder()
+        StudentRESTForm studentRESTForm = StudentRESTForm.builder()
                                              .course((byte) 1)
                                              .gender("Мужской")
                                              .build();
 
         Student student = Student.builder()
-                                 .course(studentForm.getCourse())
-                                 .gender(studentForm.getGender())
+                                 .course(studentRESTForm.getCourse())
+                                 .gender(studentRESTForm.getGender())
                                  .build();
 
-        BDDMockito.given(this.studentAdminRESTController.createStudent(studentForm))
+        BDDMockito.given(this.studentAdminRESTController.createStudent(studentRESTForm))
                   .willReturn(Collections.singletonList(student));
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonInString = objectMapper.writeValueAsString(studentForm);
+        String jsonInString = objectMapper.writeValueAsString(studentRESTForm);
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.post("/api_v1/admin_role/create_student")

@@ -1,6 +1,6 @@
 package io.vscale.uniservice.services.interfaces.admin;
 
-import io.vscale.uniservice.forms.rest.CooperatorForm;
+import io.vscale.uniservice.forms.rest.CooperatorRESTForm;
 
 /**
  * 17.03.2018
@@ -9,5 +9,5 @@ import io.vscale.uniservice.forms.rest.CooperatorForm;
  * @version 1.0
  */
 public interface CooperatorAdminService {
-    void makeRESTCooperator(CooperatorForm cooperatorForm);
+    void makeRESTCooperator(CooperatorRESTForm cooperatorRESTForm);
 }

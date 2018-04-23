@@ -78,4 +78,10 @@ public class Organization {
                inverseJoinColumns = @JoinColumn(name = "org_file_id"))
     private Set<FileOfService> organizationFiles;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "event_to_organization",
+               joinColumns = @JoinColumn(name = "agency_id"),
+               inverseJoinColumns = @JoinColumn(name = "event_agency_id"))
+    private Set<Event> events;
+
 }

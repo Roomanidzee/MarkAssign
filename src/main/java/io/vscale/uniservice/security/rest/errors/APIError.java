@@ -33,7 +33,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode
 @ToString
-@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "error", visible = true)
+@JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "errorTime", visible = true)
 @JsonTypeIdResolver(LowerCaseClassNameResolver.class)
 public class APIError {
 

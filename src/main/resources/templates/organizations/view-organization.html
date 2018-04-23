@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     <div class="create-box">
-                        <a href="create-organization.html"><button type="button" class="create-button">Редактировать</button></a>
+                        <a th:href="@{/admin/organizations/edit/id}"><button type="button" class="create-button">Редактировать</button></a>
                     </div>
                     <div class="small-box">
                         <div class="description-box">
@@ -90,9 +90,54 @@
 
                         <div class="title-view">
                             <div class="small-box">
-                                <a href="#"><span>Участники: </span>32</a>
-
+                                <a data-toggle="modal" data-target="#myModal">
+                                    <span>Участники: </span>32
+                                </a>
                             </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h2 class="modal-title" id="myModalLabel">Участники: 32 </h2><a class="edit" href="#"><i class="fas fa-edit"></i> Редактировать</a>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="list-item-users">
+                                                <div class="row">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                                                        <img class="user-picture center-block img-circle" src="img/default-user.png" alt="User">
+                                                    </div>
+                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
+                                                        <div class="user-data">
+                                                            <div class="user-title">
+                                                                <div class="user-name">
+                                                                    <a href="#">
+                                                                        <span class="lastname">Фамилия</span>
+                                                                        <span class="name">Имя</span>
+                                                                        <span class="secondname">Отчество</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="user-info">
+                                                                <p><span>Обучение:</span>Бакалавриат</p>
+                                                                <p><span>Курс:</span>2</p>
+                                                                <p><span>Группа:</span>11-602</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="close-button create-button" data-dismiss="modal">Закрыть</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="search-title">
                                 <div class="search-box">
                                     <input type="search" id="search" placeholder="Поиск..." />
@@ -104,7 +149,7 @@
                         <!-- item 1 -->
                         <div class="list-item">
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12" th:if = "${events ne null}" th:each="event : ${events}">
                                     <div class="user-data">
                                         <div class="user-title">
                                             <div class="user-name">
@@ -112,12 +157,12 @@
                                                     <span>Название</span>
                                                 </a>
                                             </div>
-                                            <a class="edit" href="#"><i class="fas fa-edit"></i> Редактировать</a>
+                                            <a class="edit" href = "#"><i class="fas fa-edit"></i> Редактировать</a>
                                         </div>
                                         <div class="user-info">
-                                            <p><span>Тип мероприятия:</span>Тип</p>
-                                            <p><span>Дата:</span>13.04.2018</p>
-                                            <p><span>Описание:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis dolore magni mollitia praesentium quae vel? Facilis hic, illum inventore nemo nobis perspiciatis qui suscipit voluptatem! Eius impedit neque tenetur.</p>
+                                            <p th:text="${event.eventTypeName}"><span>Тип мероприятия:</span>Тип</p>
+                                            <p th:text="${event.eventDate}"><span>Дата:</span>13.04.2018</p>
+                                            <p th:text="${event.description}"><span>Описание:</span></p>
                                         </div>
                                     </div>
                                 </div>

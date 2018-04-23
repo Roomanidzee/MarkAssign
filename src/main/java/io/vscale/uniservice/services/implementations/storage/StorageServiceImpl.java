@@ -82,6 +82,11 @@ public class StorageServiceImpl implements StorageService{
     @Override
     public String savePhoto(MultipartFile multipartFile, Authentication authentication) {
         FileOfService fileOfService = fileStorageUtil.convertFromMultipart(multipartFile);
+
+        if (!fileOfService.getType().startsWith("image")) {
+            throw new IllegalArgumentException("FileFormatException");
+        }
+
         try {
             User user = authenticationService.getUserByAuthentication(authentication);
             Profile profile = user.getProfile();
@@ -109,7 +114,7 @@ public class StorageServiceImpl implements StorageService{
         FileOfService file = filesRepository.findOneByEncodedName(fileName);
         response.setContentType(file.getType());
 
-        S3Object object = s3Client.getObject(new GetObjectRequest(bucketName, accessKey));
+        S3Object object = s3Client.getObject(new GetObjectRequest(bucketName, fileName));
         InputStream inputStream = object.getObjectContent();
 
         IOUtils.copy(inputStream, response.getOutputStream());

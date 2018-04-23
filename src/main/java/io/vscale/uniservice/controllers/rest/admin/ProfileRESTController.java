@@ -7,6 +7,7 @@ import io.vscale.uniservice.services.interfaces.user.ProfileService;
 import io.vscale.uniservice.validators.ProfileFormValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,11 @@ public class ProfileRESTController {
     public List<Profile> attachProfile(@RequestBody @Valid @ModelAttribute("profileForm")ProfileForm profileForm){
         this.profileAdminService.addProfileToUser(profileForm);
         return this.profileService.getAllProfiles();
+    }
+
+    @GetMapping("/profiles")
+    public ResponseEntity<List<Profile>> getAllProfiles(){
+        return ResponseEntity.ok(this.profileService.getAllProfiles());
     }
 
 }

@@ -67,7 +67,13 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     public Page<Organization> retrieveSortedOrganizationsAsc(Pageable pageable) {
 
-        Long number = (long) (pageable.getPageNumber() + 3);
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
 
         List<Organization> organizations = this.organizationRepository.findAllByOrderByTitleAsc(number);
 
@@ -78,7 +84,13 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     public Page<Organization> retrieveSortedOrganizationsDesc(Pageable pageable) {
 
-        Long number = (long) (pageable.getPageNumber() + 3);
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
 
         List<Organization> organizations = this.organizationRepository.findAllByOrderByTitleDesc(number);
 

@@ -72,7 +72,13 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Page<Student> retrieveSortedStudentsAsc(Pageable pageable) {
 
-        Long number = (long) (pageable.getPageNumber() + 3);
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
 
         List<Student> students = this.studentRepository.findAllByOrderBySurnameAsc(number);
 
@@ -83,7 +89,13 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Page<Student> retrieveSortedStudentsDesc(Pageable pageable) {
 
-        Long number = (long) (pageable.getPageNumber() + 3);
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
 
         List<Student> students = this.studentRepository.findAllByOrderBySurnameDesc(number);
 

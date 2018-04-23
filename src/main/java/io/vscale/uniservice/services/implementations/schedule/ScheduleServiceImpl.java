@@ -17,8 +17,12 @@ import java.util.List;
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
+    private final ScheduleRepository scheduleRepository;
+
     @Autowired
-    private ScheduleRepository scheduleRepository;
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
+        this.scheduleRepository = scheduleRepository;
+    }
 
     @Override
     public List<Schedule> findAll() {

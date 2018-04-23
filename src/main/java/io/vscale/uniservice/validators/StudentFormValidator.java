@@ -2,7 +2,7 @@ package io.vscale.uniservice.validators;
 
 import io.vscale.uniservice.domain.Group;
 import io.vscale.uniservice.domain.Profile;
-import io.vscale.uniservice.forms.rest.StudentForm;
+import io.vscale.uniservice.forms.rest.StudentRESTForm;
 import io.vscale.uniservice.repositories.data.GroupRepository;
 import io.vscale.uniservice.repositories.data.ProfileRepository;
 import lombok.AllArgsConstructor;
@@ -33,22 +33,22 @@ public class StudentFormValidator implements Validator{
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz.getName().equals(StudentForm.class.getName());
+        return clazz.getName().equals(StudentRESTForm.class.getName());
     }
 
     @Override
     public void validate(Object target, Errors errors) {
 
-        StudentForm studentForm = (StudentForm) target;
+        StudentRESTForm studentRESTForm = (StudentRESTForm) target;
 
         Optional<Profile> existedProfile =
-                Optional.ofNullable(this.profileRepository.findOne(studentForm.getProfileId()));
+                Optional.ofNullable(this.profileRepository.findOne(studentRESTForm.getProfileId()));
 
         if(!existedProfile.isPresent()){
             errors.reject("bad.profileId", "Нет пользователя с таким id");
         }
 
-        Optional<Group> existedGroup = this.groupRepository.findByTitle(studentForm.getGroupTitle());
+        Optional<Group> existedGroup = this.groupRepository.findByTitle(studentRESTForm.getGroupTitle());
 
         if(!existedGroup.isPresent()){
             errors.reject("bad.groupTitle", "Нет такой группы");
@@ -56,15 +56,15 @@ public class StudentFormValidator implements Validator{
 
         Set<String> genders = Stream.of("мужской", "женский").collect(Collectors.toSet());
 
-        if(!genders.contains(studentForm.getGender())){
+        if(!genders.contains(studentRESTForm.getGender())){
             errors.reject("bad.gender", "У человека нет такой половой принадлежности");
         }
 
-        if(studentForm.getCourse() < 1 || studentForm.getCourse() > 4){
+        if(studentRESTForm.getCourse() < 1 || studentRESTForm.getCourse() > 4){
             errors.reject("invalid.course", "Неправильно введён номер курса");
         }
 
-        Field[] fields = StudentForm.class.getDeclaredFields();
+        Field[] fields = StudentRESTForm.class.getDeclaredFields();
 
         List<String> fieldsNames = Arrays.stream(fields)
                                          .map(Field::getName)

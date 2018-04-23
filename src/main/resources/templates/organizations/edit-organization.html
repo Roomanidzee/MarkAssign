@@ -26,7 +26,7 @@
 
     <header>
         <nav class="header-container">
-            <a th:href="@{/admin/index}" class="logo main-logo">UniService</a>
+            <a href="admin.html" class="logo main-logo">UniService</a>
 
             <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden>
                 <span class="hamburger-box">
@@ -38,17 +38,17 @@
                 <ul>
                     <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
                         <ul>
-                            <li><a th:href="@{/admin/students}">Студенты</a></li>
-                            <li><a th:href="@{/admin/cooperators}">Сотрудники</a></li>
+                            <li><a href="admin.html">Студенты</a></li>
+                            <li><a href="admin-employees.html">Сотрудники</a></li>
                         </ul>
                     </li>
-                    <li><a th:href="@{/admin/events}"><i class="fas fa-bell"></i>Мероприятия</a></li>
-                    <li><a th:href="@{/admin/organizations}"><i class="fas fa-list-alt"></i>Организации</a></li>
+                    <li><a href="admin-events.html"><i class="fas fa-bell"></i>Мероприятия</a></li>
+                    <li><a href="admin-organizations.html"><i class="fas fa-list-alt"></i>Организации</a></li>
                     <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
                     <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
                         <ul>
                             <li><a href="#">Настройки</a></li>
-                            <li><a th:href="@{/logout}">Выйти</a></li>
+                            <li><a href="#">Выйти</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -58,11 +58,61 @@
 
     <div class="main-content">
         <div class="container-fluid">
-            <div class="row">
+            <div class="extra-container">
+                <div class="small-box">
+                    <div class="row">
+                    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-3 edit-container">
 
+                            <div class="description-box">
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-4">
+                                        <h3>Сменить фото</h3>
+                                        <img class="center-block img-rounded" src="img/default-user.png" alt="Organization">
+                                        <form enctype="multipart/form-data" method="post">
+                                            <p><input class="upload-input" type="file" name="upload" accept="image/jpeg,image/png"></p>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                <div class="col-lg-8 col-md-9 col-sm-9 col-xs-9 right-col edit-container vertical-line">
+                        <div class="info-edit">
+                            <h2>Редактировать</h2>
+                            <div class="row">
+                                <div class="input-box">
+                                    <label for="name">Название:</label>
+                                    <input id="name" type="text" name="login" placeholder="Логин">
+                                </div>
+                                <div class="input-box">
+                                    <label for="name">Руководитель:</label>
+                                    <input id="name" type="text" name="login" placeholder="Логин">
+                                </div>
+                                <div class="input-box">
+                                    <label for="name">Тип:</label>
+                                    <select title="">
+                                        <option>Не выбрано</option>
+                                        <option>Фильтр 1</option>
+                                        <option>Фильтр 2</option>
+                                    </select>
+                                </div>
+
+                                <div class="input-box">
+                                    <label for="name">Описание:</label>
+                                    <textarea id="name" type="text" name="login" placeholder="Логин"></textarea>
+                                </div>
+                                <div class="button-container">
+                                    <button class="create-button upload-button" type="submit">Отправить</button>
+                                    <button class="create-button upload-button" type="reset">Отмена</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <footer>

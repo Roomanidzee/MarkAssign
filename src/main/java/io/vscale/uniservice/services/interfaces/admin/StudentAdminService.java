@@ -1,6 +1,6 @@
 package io.vscale.uniservice.services.interfaces.admin;
 
-import io.vscale.uniservice.forms.rest.StudentForm;
+import io.vscale.uniservice.forms.rest.StudentRESTForm;
 
 /**
  * 17.03.2018
@@ -9,5 +9,5 @@ import io.vscale.uniservice.forms.rest.StudentForm;
  * @version 1.0
  */
 public interface StudentAdminService {
-    void makeRESTStudent(StudentForm studentForm);
+    void makeRESTStudent(StudentRESTForm studentRESTForm);
 }

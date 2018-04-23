@@ -1,5 +1,6 @@
 package io.vscale.uniservice.services.interfaces.admin;
 
+import io.vscale.uniservice.dto.TokenDTO;
 import io.vscale.uniservice.forms.rest.NewUserForm;
 
 
@@ -12,5 +13,6 @@ import io.vscale.uniservice.forms.rest.NewUserForm;
 public interface UserAdminService {
 
     void addNewUserREST(NewUserForm newUserForm);
+    TokenDTO retrieveTokenToUser(Long userId);
 
 }

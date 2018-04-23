@@ -3,7 +3,7 @@ package io.vscale.uniservice.tests.rest.admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vscale.uniservice.controllers.rest.admin.CooperatorRESTController;
 import io.vscale.uniservice.domain.Cooperator;
-import io.vscale.uniservice.forms.rest.CooperatorForm;
+import io.vscale.uniservice.forms.rest.CooperatorRESTForm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -39,23 +39,23 @@ public class CooperatorRESTControllerTest {
     @Test
     public void shouldCreateNewCooperator() throws Exception {
 
-        CooperatorForm cooperatorForm = CooperatorForm.builder()
+        CooperatorRESTForm cooperatorRESTForm = CooperatorRESTForm.builder()
                                                       .profileId((long) 2)
                                                       .appointment("Должность1")
                                                       .recordOfService((byte) 5)
                                                       .build();
 
         Cooperator cooperator = Cooperator.builder()
-                                          .appointment(cooperatorForm.getAppointment())
-                                          .recordOfService(cooperatorForm.getRecordOfService())
+                                          .appointment(cooperatorRESTForm.getAppointment())
+                                          .recordOfService(cooperatorRESTForm.getRecordOfService())
                                           .build();
 
-        BDDMockito.given(this.cooperatorRESTController.createCooperator(cooperatorForm))
+        BDDMockito.given(this.cooperatorRESTController.createCooperator(cooperatorRESTForm))
                   .willReturn(Collections.singletonList(cooperator));
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        String jsonInString = objectMapper.writeValueAsString(cooperatorForm);
+        String jsonInString = objectMapper.writeValueAsString(cooperatorRESTForm);
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.post("/api_v1/admin_role/create_cooperator")

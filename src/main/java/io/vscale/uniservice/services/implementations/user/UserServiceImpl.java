@@ -69,4 +69,18 @@ public class UserServiceImpl implements UserService {
         return storageService.savePhoto(file, authentication);
     }
 
+    @Override
+    public void requestForAPIToken(Long id) {
+
+        User user = this.userRepository.findOne(id);
+
+        if(user.getToken() != null || !user.getToken().equals("") || !user.getToken().equals("WAITING")){
+            throw new IllegalArgumentException("User already waiting for / has a token");
+        }else{
+            user.setToken("WAITING");
+            this.userRepository.save(user);
+        }
+
+    }
+
 }

@@ -27,12 +27,12 @@ public class TokenAuthentication extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return token.split(":")[1];
+        return getToken();
     }
 
     @Override
     public Object getPrincipal() {
-        return token.split(":")[0];
+        return null;
     }
 
     public String getToken() {

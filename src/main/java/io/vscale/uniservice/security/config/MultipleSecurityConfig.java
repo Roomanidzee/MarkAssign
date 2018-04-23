@@ -144,21 +144,21 @@ public class MultipleSecurityConfig {
         @Override
         protected void configure(HttpSecurity http) throws Exception{
 
-            http.authorizeRequests()
+            http.addFilterBefore(
+                    new TokenAuthenticationFilter(this.authenticationProvider, this.authenticationEntryPoint,
+                            this.header), BasicAuthenticationFilter.class)
+                  .sessionManagement()
+                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                  .authorizeRequests()
                   .antMatchers("/api_v1/admin_role/**").hasAuthority("ADMIN")
                   .antMatchers( "/api_v1/student_role/**").hasAuthority("STUDENT")
                   .antMatchers("/api_v1/cooperator_role/**").hasAuthority("COOPERATOR")
                   .antMatchers("/api_v1/event/**").permitAll()
                   .antMatchers("/api_v1/organization/**").permitAll()
                   .antMatchers("/api_v1/schedule/**").permitAll()
+                  .antMatchers("/api_v1/confirmations/**").permitAll()
                   .anyRequest().authenticated()
-                .and()
-                  .addFilterBefore(
-                   new TokenAuthenticationFilter(this.authenticationProvider,
-                                                 this.authenticationEntryPoint, this.header),
-                                                 BasicAuthenticationFilter.class)
-                  .sessionManagement()
-                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                   .csrf()
                   .disable()

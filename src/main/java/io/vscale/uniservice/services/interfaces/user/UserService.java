@@ -21,4 +21,5 @@ public interface UserService {
     List<User> getAllUsers();
 
     String savePhoto(MultipartFile file, Authentication authentication);
+    void requestForAPIToken(Long id);
 }

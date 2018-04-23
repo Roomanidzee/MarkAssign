@@ -2,7 +2,7 @@ package io.vscale.uniservice.services.implementations.admin;
 
 import io.vscale.uniservice.domain.Cooperator;
 import io.vscale.uniservice.domain.Profile;
-import io.vscale.uniservice.forms.rest.CooperatorForm;
+import io.vscale.uniservice.forms.rest.CooperatorRESTForm;
 import io.vscale.uniservice.repositories.data.CooperatorRepository;
 import io.vscale.uniservice.repositories.data.ProfileRepository;
 import io.vscale.uniservice.repositories.indexing.CooperatorESRepository;
@@ -32,14 +32,14 @@ public class CooperatorAdminServiceImpl implements CooperatorAdminService{
     }
 
     @Override
-    public void makeRESTCooperator(CooperatorForm cooperatorForm) {
+    public void makeRESTCooperator(CooperatorRESTForm cooperatorRESTForm) {
 
-        Profile profile = this.profileRepository.findOne(cooperatorForm.getProfileId());
+        Profile profile = this.profileRepository.findOne(cooperatorRESTForm.getProfileId());
 
         Cooperator cooperator = Cooperator.builder()
                                           .profile(profile)
-                                          .recordOfService(cooperatorForm.getRecordOfService())
-                                          .appointment(cooperatorForm.getAppointment())
+                                          .recordOfService(cooperatorRESTForm.getRecordOfService())
+                                          .appointment(cooperatorRESTForm.getAppointment())
                                           .build();
 
         this.cooperatorRepository.save(cooperator);

@@ -1,12 +1,16 @@
 package io.vscale.uniservice.controllers.rest.admin;
 
 import io.vscale.uniservice.domain.User;
+import io.vscale.uniservice.dto.TokenDTO;
 import io.vscale.uniservice.forms.rest.NewUserForm;
 import lombok.AllArgsConstructor;
 import io.vscale.uniservice.services.interfaces.admin.UserAdminService;
 import io.vscale.uniservice.services.interfaces.user.UserService;
 import io.vscale.uniservice.validators.NewUserFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +51,11 @@ public class UserRESTController {
     @GetMapping("/get_all_users")
     public List<User> getAllUsers(){
         return this.userService.getAllUsers();
+    }
+
+    @PostMapping("/user/retrieve_token/{id}")
+    public ResponseEntity<TokenDTO> giveTokenToUser(@PathVariable("id") Long id){
+        return new ResponseEntity<>(this.userAdminService.retrieveTokenToUser(id), HttpStatus.OK);
     }
 
 }

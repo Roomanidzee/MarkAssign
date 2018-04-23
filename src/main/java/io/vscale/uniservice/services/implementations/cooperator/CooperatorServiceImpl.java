@@ -50,7 +50,13 @@ public class CooperatorServiceImpl implements CooperatorService{
     @Override
     public Page<Cooperator> retrieveAllCooperatorsAsc(Pageable pageable) {
 
-        Long number = (long) (pageable.getPageNumber() + 3);
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
 
         List<Cooperator> cooperators = this.cooperatorRepository.findAllByOrderBySurnameAsc(number);
 
@@ -61,7 +67,13 @@ public class CooperatorServiceImpl implements CooperatorService{
     @Override
     public Page<Cooperator> retrieveAllCooperatorsDesc(Pageable pageable) {
 
-        Long number = (long) (pageable.getPageNumber() + 3);
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
 
         List<Cooperator> cooperators = this.cooperatorRepository.findAllByOrderBySurnameDesc(number);
 

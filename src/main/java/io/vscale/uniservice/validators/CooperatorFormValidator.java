@@ -1,7 +1,7 @@
 package io.vscale.uniservice.validators;
 
 import io.vscale.uniservice.domain.Profile;
-import io.vscale.uniservice.forms.rest.CooperatorForm;
+import io.vscale.uniservice.forms.rest.CooperatorRESTForm;
 import io.vscale.uniservice.repositories.data.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,22 +35,22 @@ public class CooperatorFormValidator implements Validator{
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz.getName().equals(CooperatorForm.class.getName());
+        return clazz.getName().equals(CooperatorRESTForm.class.getName());
     }
 
     @Override
     public void validate(Object target, Errors errors) {
 
-        CooperatorForm cooperatorForm = (CooperatorForm) target;
+        CooperatorRESTForm cooperatorRESTForm = (CooperatorRESTForm) target;
 
         Optional<Profile> existedProfile =
-                Optional.ofNullable(this.profileRepository.findOne(cooperatorForm.getProfileId()));
+                Optional.ofNullable(this.profileRepository.findOne(cooperatorRESTForm.getProfileId()));
 
         if(!existedProfile.isPresent()){
             errors.reject("bad.profileId", "Профиля с таким id не существует");
         }
 
-        Field[] fields = CooperatorForm.class.getDeclaredFields();
+        Field[] fields = CooperatorRESTForm.class.getDeclaredFields();
 
         List<String> fieldsNames = Arrays.stream(fields)
                                          .map(Field::getName)

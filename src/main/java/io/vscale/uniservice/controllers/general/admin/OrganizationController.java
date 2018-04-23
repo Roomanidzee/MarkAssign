@@ -1,5 +1,6 @@
 package io.vscale.uniservice.controllers.general.admin;
 
+import io.vscale.uniservice.domain.Event;
 import io.vscale.uniservice.domain.Organization;
 import io.vscale.uniservice.services.interfaces.events.OrganizationService;
 import io.vscale.uniservice.utils.PageWrapper;
@@ -9,21 +10,28 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Set;
 
 /**
  * 26.03.2018
  *
- * @author Andrey Romanov
+ * @author Andrey Romanov and Dias Arkharov
  * @version 1.0
  */
 @Controller
 @RequestMapping("/admin")
-@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class OrganizationController {
 
-    private OrganizationService organizationService;
+    private final OrganizationService organizationService;
+
+    @Autowired
+    public OrganizationController(OrganizationService organizationService) {
+        this.organizationService = organizationService;
+    }
 
     @GetMapping("/organizations")
     public ModelAndView showOrganizations(@PageableDefault(value = 4) Pageable pageable){
@@ -67,10 +75,17 @@ public class OrganizationController {
         return modelAndView;
     }
 
-    @GetMapping("/organizations/show/id")
-    public ModelAndView showOrganization(){
+    @GetMapping("/organizations/show/{id}")
+    public ModelAndView showOrganization(@PathVariable("id") Long id){
 
-        return new ModelAndView("organizations/view-organization");
+        Organization organization = this.organizationService.findById(id);
+        Set<Event> events = organization.getEvents();
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("events", events);
+        modelAndView.setViewName("organizations/view-organization");
+
+        return modelAndView;
 
     }
 
