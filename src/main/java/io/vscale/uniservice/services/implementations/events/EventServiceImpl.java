@@ -4,8 +4,10 @@ import io.vscale.uniservice.domain.Event;
 import io.vscale.uniservice.domain.EventTypeEvaluation;
 import io.vscale.uniservice.domain.User;
 import io.vscale.uniservice.dto.EventDTO;
+import io.vscale.uniservice.forms.general.EventTypeEvaluationForm;
 import io.vscale.uniservice.forms.general.NewEventForm;
 import io.vscale.uniservice.repositories.data.EventRepository;
+import io.vscale.uniservice.repositories.data.EventTypeEvaluationRepository;
 import io.vscale.uniservice.repositories.data.StudentRepository;
 import io.vscale.uniservice.services.interfaces.events.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +30,16 @@ import java.util.stream.Collectors;
 @Service
 public class EventServiceImpl implements EventService {
 
-    private EventRepository repository;
+    private final EventRepository repository;
     private final StudentRepository studentRepository;
+    private final EventTypeEvaluationRepository eventTypeEvaluationRepository;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, StudentRepository studentRepository){
+    public EventServiceImpl(EventRepository eventRepository, StudentRepository studentRepository,
+                            EventTypeEvaluationRepository eventTypeEvaluationRepository){
         this.repository = eventRepository;
         this.studentRepository = studentRepository;
+        this.eventTypeEvaluationRepository = eventTypeEvaluationRepository;
     }
 
     @Override
@@ -104,6 +109,23 @@ public class EventServiceImpl implements EventService {
         return user.getProfile()
                    .getStudent()
                    .getEvents();
+    }
+
+    @Override
+    public void addEvaluationToEvent(EventTypeEvaluationForm eventTypeEvaluationForm) {
+
+        EventTypeEvaluation eventTypeEvaluation = EventTypeEvaluation.builder()
+                                                                     .type(eventTypeEvaluationForm.getType())
+                                                                     .startValue(eventTypeEvaluationForm.getStartValue())
+                                                                     .endValue(eventTypeEvaluationForm.getEndValue())
+                                                                     .finalValue(eventTypeEvaluationForm.getFinalValue())
+                                                                     .build();
+        Event event = this.repository.findOne(eventTypeEvaluationForm.getEventId());
+
+        this.eventTypeEvaluationRepository.save(eventTypeEvaluation);
+        event.getEventTypeEvaluations().add(eventTypeEvaluation);
+        this.repository.save(event);
+
     }
 
     @Override

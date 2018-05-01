@@ -89,10 +89,8 @@
                     <div class="data-list">
 
                         <div class="title-view">
-                            <div class="small-box">
-                                <a data-toggle="modal" data-target="#myModal">
-                                    <span>Участники: </span>32
-                                </a>
+                            <div class="small-box" data-toggle="modal" data-target="#myModal">
+                                <span>Участники: </span>32
                             </div>
 
                             <!-- Modal -->
@@ -107,7 +105,7 @@
                                             <div class="list-item-users">
                                                 <div class="row">
                                                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
-                                                        <img class="user-picture center-block img-circle" src="img/default-user.png" alt="User">
+                                                        <img class="user-picture center-block img-circle" src="img/default-user.png" alt="User"/>
                                                     </div>
                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
                                                         <div class="user-data">
@@ -146,7 +144,6 @@
                             </div>
                         </div>
 
-                        <!-- item 1 -->
                         <div class="list-item">
                             <div class="row">
                                 <div class="col-lg-12" th:if = "${events ne null}" th:each="event : ${events}">
@@ -167,72 +164,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="list-item">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="user-data">
-                                        <div class="user-title">
-                                            <div class="user-name">
-                                                <a href="#">
-                                                    <span>Название</span>
-                                                </a>
-                                            </div>
-                                            <a class="edit" href="#"><i class="fas fa-edit"></i> Редактировать</a>
-                                        </div>
-                                        <div class="user-info">
-                                            <p><span>Тип мероприятия:</span>Тип</p>
-                                            <p><span>Дата:</span>13.04.2018</p>
-                                            <p><span>Описание:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis dolore magni mollitia praesentium quae vel? Facilis hic, illum inventore nemo nobis perspiciatis qui suscipit voluptatem! Eius impedit neque tenetur.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="list-item">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="user-data">
-                                        <div class="user-title">
-                                            <div class="user-name">
-                                                <a href="#">
-                                                    <span>Название</span>
-                                                </a>
-                                            </div>
-                                            <a class="edit" href="#"><i class="fas fa-edit"></i> Редактировать</a>
-                                        </div>
-                                        <div class="user-info">
-                                            <p><span>Тип мероприятия:</span>Тип</p>
-                                            <p><span>Дата:</span>13.04.2018</p>
-                                            <p><span>Описание:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis dolore magni mollitia praesentium quae vel? Facilis hic, illum inventore nemo nobis perspiciatis qui suscipit voluptatem! Eius impedit neque tenetur.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="list-item">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="user-data">
-                                        <div class="user-title">
-                                            <div class="user-name">
-                                                <a href="#">
-                                                    <span>Название</span>
-                                                </a>
-                                            </div>
-                                            <a class="edit" href="#"><i class="fas fa-edit"></i> Редактировать</a>
-                                        </div>
-                                        <div class="user-info">
-                                            <p><span>Тип мероприятия:</span>Тип</p>
-                                            <p><span>Дата:</span>13.04.2018</p>
-                                            <p><span>Описание:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis dolore magni mollitia praesentium quae vel? Facilis hic, illum inventore nemo nobis perspiciatis qui suscipit voluptatem! Eius impedit neque tenetur.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 

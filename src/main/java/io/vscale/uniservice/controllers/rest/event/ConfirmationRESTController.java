@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 23.04.2018
  *
- * @author Andrey Romanov (steampart@gmail.com)
+ * @author Andrey Romanov
  * @version 1.0
  */
 @RestController

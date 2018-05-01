@@ -1,5 +1,7 @@
 package io.vscale.uniservice.services.implementations.events;
 
+import io.vscale.uniservice.domain.Event;
+import io.vscale.uniservice.domain.FileOfService;
 import io.vscale.uniservice.domain.Organization;
 import io.vscale.uniservice.domain.Student;
 import io.vscale.uniservice.repositories.data.OrganizationRepository;
@@ -10,8 +12,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 02.03.2018
@@ -96,5 +101,31 @@ public class OrganizationServiceImpl implements OrganizationService{
 
         return new PageImpl<>(organizations, pageable, organizations.size());
 
+    }
+
+    @Override
+    public Set<FileOfService> getEventFiles(Long organizationId) {
+        return this.organizationRepository.findOne(organizationId).getOrganizationFiles();
+    }
+
+    @Override
+    public Map<Event, Set<FileOfService>> getEventsWithFile(Long organizationId) {
+
+        Organization organization = this.organizationRepository.findOne(organizationId);
+        Set<Event> events = organization.getEvents();
+
+        return events.stream()
+                     .collect(Collectors.toMap(event -> event, Event::getFiles, (a, b) -> b));
+
+    }
+
+    @Override
+    public Integer getNumberOfPeople(Long id) {
+        return organizationRepository.findOne(id).getStudents().size();
+    }
+
+    @Override
+    public Set<Student> getParticipants(Long id) {
+        return organizationRepository.findOne(id).getStudents();
     }
 }

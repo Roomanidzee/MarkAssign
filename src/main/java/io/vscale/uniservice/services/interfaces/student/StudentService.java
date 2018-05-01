@@ -1,6 +1,7 @@
 package io.vscale.uniservice.services.interfaces.student;
 
 import io.vscale.uniservice.domain.Event;
+import io.vscale.uniservice.domain.FileOfService;
 import io.vscale.uniservice.domain.Group;
 import io.vscale.uniservice.domain.Student;
 import io.vscale.uniservice.forms.general.NewEventForm;
@@ -33,5 +34,7 @@ public interface StudentService {
     void addEvent(NewEventForm newEventForm);
     List<Event> getStudentEvents(Student student);
     Integer getMarksSum(Student student);
+
+    List<FileOfService> getConfirmationFiles(Long studentId);
 
 }

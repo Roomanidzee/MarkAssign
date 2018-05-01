@@ -1,11 +1,14 @@
 package io.vscale.uniservice.services.interfaces.events;
 
+import io.vscale.uniservice.domain.Event;
+import io.vscale.uniservice.domain.FileOfService;
 import io.vscale.uniservice.domain.Organization;
 import io.vscale.uniservice.domain.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,5 +35,12 @@ public interface OrganizationService {
 
     Page<Organization> retrieveSortedOrganizationsAsc(Pageable pageable);
     Page<Organization> retrieveSortedOrganizationsDesc(Pageable pageable);
+
+    Set<FileOfService> getEventFiles(Long organizationId);
+    Map<Event, Set<FileOfService>> getEventsWithFile(Long organizationId);
+
+    Integer getNumberOfPeople(Long id);
+
+    Set<Student> getParticipants(Long id);
 
 }

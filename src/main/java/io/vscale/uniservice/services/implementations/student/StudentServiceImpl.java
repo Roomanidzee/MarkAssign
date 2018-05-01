@@ -19,10 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -193,6 +190,19 @@ public class StudentServiceImpl implements StudentService {
         );
 
         return result.get();
+
+    }
+
+    @Override
+    public List<FileOfService> getConfirmationFiles(Long studentId) {
+
+        Student student = this.studentRepository.findOne(studentId);
+        Set<Confirmation> studentConfirmations = student.getConfirmations();
+
+        return studentConfirmations.stream()
+                                   .map(Confirmation::getFileOfService)
+                                   .filter(Objects::nonNull)
+                                   .collect(Collectors.toList());
 
     }
 }

@@ -4,6 +4,7 @@ import io.vscale.uniservice.domain.Event;
 import io.vscale.uniservice.domain.EventTypeEvaluation;
 import io.vscale.uniservice.domain.User;
 import io.vscale.uniservice.dto.EventDTO;
+import io.vscale.uniservice.forms.general.EventTypeEvaluationForm;
 import io.vscale.uniservice.forms.general.NewEventForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,4 +29,5 @@ public interface EventService {
     void addEventWithChecking(NewEventForm newEventForm);
     List<EventDTO> getEventsDTO();
     List<Event> getEventsByUser(User user);
+    void addEvaluationToEvent(EventTypeEvaluationForm eventTypeEvaluationForm);
 }

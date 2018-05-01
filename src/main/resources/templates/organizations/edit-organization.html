@@ -56,64 +56,231 @@
         </nav>
     </header>
 
+
     <div class="main-content">
         <div class="container-fluid">
-            <div class="extra-container">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3">
                 <div class="small-box">
-                    <div class="row">
-                    <div class="col-lg-4 col-md-3 col-sm-3 col-xs-3 edit-container">
+                    <div class="select-box">
+                        <!-- Nav tabs -->
+                        <ul class="tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Общие настройки</a></li>
+                            <li role="presentation"><a href="#picture" aria-controls="picture" role="tab" data-toggle="tab">Сменить фото</a></li>
+                            <li role="presentation"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Участники</a></li>
+                            <li role="presentation"><a href="#events" aria-controls="events" role="tab" data-toggle="tab">Мероприятия</a></li>
+                        </ul>
 
-                            <div class="description-box">
-                                <div class="row">
-                                    <div class="col-sm-12 col-xs-4">
-                                        <h3>Сменить фото</h3>
-                                        <img class="center-block img-rounded" src="img/default-user.png" alt="Organization">
-                                        <form enctype="multipart/form-data" method="post">
-                                            <p><input class="upload-input" type="file" name="upload" accept="image/jpeg,image/png"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9 right-col">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="settings">
+                        <div class="data-list">
+                            <div class="title-data">
+                                <h1 class="h1">Редактировать</h1>
+                            </div>
+                            <!-- item 1 -->
+                            <div class="list-item">
+                                <div class="info-edit">
+                                    <div class="row">
+                                        <form action="" method="post">
+                                            <div class="input-box">
+                                                <label for="name">Название:</label>
+                                                <input id="name" type="text" name="name" placeholder="Название">
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="employer">Руководитель:</label>
+                                                <input id="employer" type="text" name="employer" placeholder="Руководитель">
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="type">Тип:</label>
+                                                <select id="type" name="type">
+                                                    <option>Не выбрано</option>
+                                                    <option>Фильтр 1</option>
+                                                    <option>Фильтр 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="descr">Описание:</label>
+                                                <textarea id="descr" type="text" name="description" placeholder="Описание"></textarea>
+                                            </div>
+                                            <div class="button-container">
+                                                <button class="create-org-button create-button upload-button" type="submit">Отправить</button>
+                                                <button class="create-button upload-button" type="reset">Отмена</button>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                <div class="col-lg-8 col-md-9 col-sm-9 col-xs-9 right-col edit-container vertical-line">
-                        <div class="info-edit">
-                            <h2>Редактировать</h2>
-                            <div class="row">
-                                <div class="input-box">
-                                    <label for="name">Название:</label>
-                                    <input id="name" type="text" name="login" placeholder="Логин">
-                                </div>
-                                <div class="input-box">
-                                    <label for="name">Руководитель:</label>
-                                    <input id="name" type="text" name="login" placeholder="Логин">
-                                </div>
-                                <div class="input-box">
-                                    <label for="name">Тип:</label>
-                                    <select title="">
-                                        <option>Не выбрано</option>
-                                        <option>Фильтр 1</option>
-                                        <option>Фильтр 2</option>
-                                    </select>
-                                </div>
-
-                                <div class="input-box">
-                                    <label for="name">Описание:</label>
-                                    <textarea id="name" type="text" name="login" placeholder="Логин"></textarea>
-                                </div>
-                                <div class="button-container">
-                                    <button class="create-button upload-button" type="submit">Отправить</button>
-                                    <button class="create-button upload-button" type="reset">Отмена</button>
-                                </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="picture">
+                        <div class="data-list">
+                            <div class="title-data">
+                                <h1 class="h1">Сменить фото</h1>
+                            </div>
+                            <!-- item 1 -->
+                            <div class="list-item picture-setting-item">
+                                <img class="center-block img-rounded setting-picture" src="img/default-user.png" alt="Organization">
+                                <form id="edit" enctype="multipart/form-data" method="post" action="">
+                                    <input class="upload-input" type="file" name="upload" accept="image/jpeg,image/png">
+                                    <div class="button-container">
+                                        <button class="create-org-button create-button upload-button" type="submit">Отправить</button>
+                                        <button class="create-button upload-button" type="reset">Отмена</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane" id="users">
+                        <div class="data-list">
+                            <div class="title-data">
+                                <div class="sort-select title-sort">
+                                    <select title="">
+                                        <option>Сортировать</option>
+                                        <option>По фамилие А-Я</option>
+                                        <option>По фамилие Я-А</option>
+                                    </select>
+                                    <div class="select__arrow"></div>
+                                </div>
+                                <h1 class="h1">Участники</h1>
+                                <div class="search-title">
+                                    <div class="search-box">
+                                        <input type="search" id="searchUser" placeholder="Поиск..." />
+                                        <button class="icon"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- item 1 -->
+                            <div class="list-item">
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                                        <img class="user-picture center-block" src="img/default-user.png" alt="User">
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+                                        <div class="user-data">
+                                            <div class="user-title">
+                                                <div class="user-name">
+                                                    <a href="#">
+                                                        <span class="lastname">Фамилия</span>
+                                                        <span class="name">Имя</span>
+                                                        <span class="secondname">Отчество</span>
+                                                    </a>
+                                                </div>
+                                                <a class="delete" href="#" data-toggle="modal" data-target="#myModal" ><i class="fas fa-times"></i> Удалить</a>
+
+                                                <div class="modal fade delete-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-body">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">Вы уверенны?</h4>
+                                                                <button class="modal-button" type="submit" value="Да">Исключить</button>
+                                                                <button class="modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="user-info">
+                                                <p><span>Обучение:</span>Бакалавриат</p>
+                                                <p><span>Курс:</span>2</p>
+                                                <p><span>Группа:</span>11-602</p>
+                                                <p><span>Организация:</span>Itis Musiс</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination-list">
+                            <ul class="pagination">
+                                <li class="pagination__item"><a href="#" class="pagination__number">←<span class="pagination__control pagination__control_prev">prev</span></a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number pagination__number_active">1</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number">2</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number">3</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number">4</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number">5</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number"><span class="pagination__control pagination__control_next">next</span>→</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="events">
+                        <div class="data-list">
+                            <div class="title-data">
+                                <div class="sort-select title-sort">
+                                    <select title="">
+                                        <option>Сортировать</option>
+                                        <option>По фамилие А-Я</option>
+                                        <option>По фамилие Я-А</option>
+                                    </select>
+                                    <div class="select__arrow"></div>
+                                </div>
+                                <h1 class="h1">Мероприятия</h1>
+                                <div class="search-title">
+                                    <div class="search-box">
+                                        <input type="search" id="search" placeholder="Поиск..." />
+                                        <button class="icon"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- item 1 -->
+                            <div class="list-item">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="user-data">
+                                            <div class="user-title">
+                                                <div class="user-name">
+                                                    <a href="#">
+                                                        <span>Название</span>
+                                                    </a>
+                                                </div>
+                                                <a class="delete" href="#" data-toggle="modal" data-target="#eventDeleteModal" ><i class="fas fa-times"></i> Удалить</a>
+
+                                                <div class="modal fade delete-modal" id="eventDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-body">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="eventDeleteModalLabel">Вы уверенны?</h4>
+                                                                <button class="modal-button" type="submit" value="Да">Удалить</button>
+                                                                <button class="modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="user-info">
+                                                <p><span>Тип мероприятия:</span>Тип</p>
+                                                <p><span>Дата:</span>13.04.2018</p>
+                                                <p><span>Описание:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis dolore magni mollitia praesentium quae vel? Facilis hic, illum inventore nemo nobis perspiciatis qui suscipit voluptatem! Eius impedit neque tenetur.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination-list">
+                            <ul class="pagination">
+                                <li class="pagination__item"><a href="#" class="pagination__number">←<span class="pagination__control pagination__control_prev">prev</span></a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number pagination__number_active">1</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number">2</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number">3</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number">4</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number">5</a></li>
+                                <li class="pagination__item"><a href="#" class="pagination__number"><span class="pagination__control pagination__control_next">next</span>→</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+
 
 <footer>
     <div class="footer-container">
