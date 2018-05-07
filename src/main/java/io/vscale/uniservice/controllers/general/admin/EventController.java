@@ -67,4 +67,14 @@ public class EventController {
 
     }
 
+    @GetMapping("/event/edit")
+    public ModelAndView editEvent(){
+        return new ModelAndView("events/edit-event");
+    }
+
+    @GetMapping("/event/view")
+    public ModelAndView viewEvent(){
+        return new ModelAndView("events/view-event");
+    }
+
 }

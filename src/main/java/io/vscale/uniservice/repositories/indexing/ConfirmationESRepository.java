@@ -9,5 +9,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @author Andrey Romanov
  * @version 1.0
  */
-public interface ConfirmationESRepository extends ElasticsearchRepository<Confirmation, String>{
+public interface ConfirmationESRepository extends ElasticsearchRepository<Confirmation, Long>{
 }

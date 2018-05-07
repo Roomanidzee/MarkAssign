@@ -85,14 +85,20 @@ public class Student {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "student_to_organization",
-            joinColumns = @JoinColumn(name = "part_student_id"),
-            inverseJoinColumns = @JoinColumn(name = "organization_id"))
+               joinColumns = @JoinColumn(name = "part_student_id"),
+               inverseJoinColumns = @JoinColumn(name = "organization_id"))
     private Set<Organization> organizations;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "head_of_organization",
-            joinColumns = @JoinColumn(name = "head_student_id"),
-            inverseJoinColumns = @JoinColumn(name = "head_organization_id"))
+               joinColumns = @JoinColumn(name = "head_student_id"),
+               inverseJoinColumns = @JoinColumn(name = "head_organization_id"))
     private Set<Organization> headOrganizations;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "evaluation_to_student",
+               joinColumns = @JoinColumn(name = "eval_student_id"),
+               inverseJoinColumns = @JoinColumn(name = "stud_evaluation_id"))
+    private Set<EventTypeEvaluation> evaluations;
 
 }

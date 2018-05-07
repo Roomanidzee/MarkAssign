@@ -10,10 +10,12 @@ import io.vscale.uniservice.repositories.data.EventRepository;
 import io.vscale.uniservice.repositories.data.EventTypeEvaluationRepository;
 import io.vscale.uniservice.repositories.data.StudentRepository;
 import io.vscale.uniservice.services.interfaces.events.EventService;
+import io.vscale.uniservice.services.interfaces.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -32,13 +34,15 @@ public class EventServiceImpl implements EventService {
 
     private final EventRepository repository;
     private final StudentRepository studentRepository;
+    private final StorageService storageService;
     private final EventTypeEvaluationRepository eventTypeEvaluationRepository;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository, StudentRepository studentRepository,
-                            EventTypeEvaluationRepository eventTypeEvaluationRepository){
+                            StorageService storageService, EventTypeEvaluationRepository eventTypeEvaluationRepository){
         this.repository = eventRepository;
         this.studentRepository = studentRepository;
+        this.storageService = storageService;
         this.eventTypeEvaluationRepository = eventTypeEvaluationRepository;
     }
 
@@ -126,6 +130,12 @@ public class EventServiceImpl implements EventService {
         event.getEventTypeEvaluations().add(eventTypeEvaluation);
         this.repository.save(event);
 
+    }
+
+
+    @Override
+    public void addFileOfService(Event event, MultipartFile multipartFile) {
+        storageService.saveFile(event, multipartFile);
     }
 
     @Override

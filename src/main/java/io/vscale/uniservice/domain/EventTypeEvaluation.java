@@ -18,7 +18,11 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Column;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+
 import java.util.List;
+import java.util.Set;
 
 /**
  * 01.03.2018
@@ -56,5 +60,17 @@ public class EventTypeEvaluation {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "eventTypeEvaluations")
     private List<Event> events;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "evaluation_to_student",
+               joinColumns = @JoinColumn(name = "stud_evaluation_id"),
+               inverseJoinColumns = @JoinColumn(name = "eval_student_id"))
+    private List<Student> students;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "subjects_to_evaluation",
+               joinColumns = @JoinColumn(name = "evaluation_id"),
+               inverseJoinColumns = @JoinColumn(name = "subject_id"))
+    private Set<SubjectsToCourse> subjects;
 
 }

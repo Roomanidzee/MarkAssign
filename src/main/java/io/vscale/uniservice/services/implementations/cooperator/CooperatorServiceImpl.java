@@ -117,7 +117,7 @@ public class CooperatorServiceImpl implements CooperatorService{
     public void deleteCooperator(CooperatorForm cooperatorForm) {
 
         this.cooperatorRepository.delete(cooperatorForm.getId());
-        this.cooperatorESRepository.delete(String.valueOf(cooperatorForm.getId()));
+        this.cooperatorESRepository.delete(cooperatorForm.getId());
 
     }
 }

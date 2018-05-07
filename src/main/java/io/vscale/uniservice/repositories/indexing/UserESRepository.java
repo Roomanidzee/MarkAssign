@@ -9,5 +9,5 @@ import io.vscale.uniservice.domain.User;
  * @author Andrey Romanov
  * @version 1.0
  */
-public interface UserESRepository extends ElasticsearchRepository<User, String>{
+public interface UserESRepository extends ElasticsearchRepository<User, Long>{
 }

@@ -6,9 +6,11 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
+import io.vscale.uniservice.domain.Event;
 import io.vscale.uniservice.domain.FileOfService;
 import io.vscale.uniservice.domain.Profile;
 import io.vscale.uniservice.domain.User;
+import io.vscale.uniservice.repositories.data.EventRepository;
 import io.vscale.uniservice.repositories.data.FileOfServiceRepository;
 import io.vscale.uniservice.repositories.data.ProfileRepository;
 import io.vscale.uniservice.services.interfaces.auth.AuthenticationService;
@@ -27,6 +29,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.InputStream;
+import java.util.HashSet;
 
 /**
  * 16.04.2018
@@ -42,6 +45,8 @@ public class StorageServiceImpl implements StorageService{
     private final ProfileRepository profileRepository;
 
     private final FileOfServiceRepository filesRepository;
+
+    private final EventRepository eventRepository;
 
     private final FileStorageUtil fileStorageUtil;
 
@@ -63,10 +68,11 @@ public class StorageServiceImpl implements StorageService{
     @Autowired
     public StorageServiceImpl(@Qualifier("generalAuthenticationService") AuthenticationService authenticationService,
                               ProfileRepository profileRepository, FileOfServiceRepository filesRepository,
-                              FileStorageUtil fileStorageUtil) {
+                              EventRepository eventRepository, FileStorageUtil fileStorageUtil) {
         this.authenticationService = authenticationService;
         this.profileRepository = profileRepository;
         this.filesRepository = filesRepository;
+        this.eventRepository = eventRepository;
         this.fileStorageUtil = fileStorageUtil;
     }
 
@@ -122,14 +128,37 @@ public class StorageServiceImpl implements StorageService{
         response.flushBuffer();
     }
 
+    @Override
     public void uploadFileTos3bucket(String fileName, File file) {
         s3Client.putObject(new PutObjectRequest(bucketName, fileName, file)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
     }
 
+    @Override
     public void deleteFileFromS3Bucket(String fileUrl) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         s3Client.deleteObject(new DeleteObjectRequest(bucketName, fileName));
+    }
+
+    @Override
+    public void saveFile(Event event, MultipartFile multipartFile) {
+        FileOfService fileOfService = fileStorageUtil.convertFromMultipart(multipartFile);
+
+        try {
+            File file = fileStorageUtil.convertMultiPartToFile(multipartFile);
+            String fileName = fileOfService.getEncodedName();
+            uploadFileTos3bucket(fileName, file);
+            file.delete();
+
+            if (event.getFiles()==null){
+                event.setFiles(new HashSet<>());
+            }
+
+            event.getFiles().add(fileOfService);
+            eventRepository.save(event);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

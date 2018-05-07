@@ -9,5 +9,5 @@ import io.vscale.uniservice.domain.Student;
  * @author Andrey Romanov
  * @version 1.0
  */
-public interface StudentESRepository extends ElasticsearchRepository<Student, String>{
+public interface StudentESRepository extends ElasticsearchRepository<Student, Long>{
 }

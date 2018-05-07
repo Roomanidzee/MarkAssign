@@ -140,7 +140,7 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(StudentForm studentForm) {
 
         this.studentRepository.delete(studentForm.getId());
-        this.studentESRepository.delete(String.valueOf(studentForm.getId()));
+        this.studentESRepository.delete(studentForm.getId());
 
     }
 

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+
+    <title>UniService</title>
+    <meta name="description" content=""/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#fff"/>
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#fff"/>
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#fff"/>
+
+    <link rel="stylesheet" th:href="@{/css/main.min.css(v=${v})}"/>
+</head>
+
+<body>
+
+<div class="content">
+
+    <header>
+        <nav class="header-container">
+            <a href="admin.html" class="logo main-logo">UniService</a>
+
+            <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden = "true">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </a>
+
+            <div id="menu">
+                <ul>
+                    <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
+                        <ul>
+                            <li><a href="admin.html">Студенты</a></li>
+                            <li><a href="admin-employees.html">Сотрудники</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="admin-events.html"><i class="fas fa-bell"></i>Мероприятия</a></li>
+                    <li><a href="admin-organizations.html"><i class="fas fa-list-alt"></i>Организации</a></li>
+                    <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
+                    <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
+                        <ul>
+                            <li><a href="edit-user.html">Настройки</a></li>
+                            <li><a href="index.html">Выйти</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3 new-col">
+                    <div class="small-box">
+                        <div class="select-box">
+                            <!-- Nav tabs -->
+                            <ul class="tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Общие настройки</a></li>
+                                <li role="presentation"><a href="#picture" aria-controls="picture" role="tab" data-toggle="tab">Сменить фото</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9 new-col right-col">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="settings">
+                            <div class="data-list">
+                                <div class="title-data">
+                                    <h1 class="h1">Редактировать</h1>
+                                </div>
+                                <!-- item 1 -->
+                                <div class="list-item">
+                                    <div class="info-edit">
+                                        <div class="row">
+                                            <form action="" method="post">
+                                                <div class="input-box">
+                                                    <label for="secondname">Фамилия</label>
+                                                    <input id="secondname" type="text" name="secondname" placeholder="Фамилия"/>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label for="firstname">Имя</label>
+                                                    <input id="firstname" type="text" name="firstname" placeholder="Имя"/>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label for="lastname">Отчество</label>
+                                                    <input id="lastname" type="text" name="lastname" placeholder="Отчество"/>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label for="email">E-mail</label>
+                                                    <input id="email" type="text" name="email" placeholder="Email"/>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label for="position">Должность</label>
+                                                    <input id="position" type="text" name="position" placeholder="Должность"/>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label for="experience">Стаж работы</label>
+                                                    <input id="experience" type="text" name="experience" placeholder="Стаж"/>
+                                                </div>
+
+
+
+                                                <div class="button-container">
+                                                    <button class="create-org-button create-button upload-button" type="submit">Отправить</button>
+                                                    <button class="create-button upload-button" type="reset">Отмена</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="picture">
+                            <div class="data-list">
+                                <div class="title-data">
+                                    <h1 class="h1">Сменить фото</h1>
+                                </div>
+                                <!-- item 1 -->
+                                <div class="list-item picture-setting-item">
+                                    <img class="center-block img-rounded setting-picture" th:src="@{img/default-user.png}" alt="Organization"/>
+                                    <form id="edit" enctype="multipart/form-data" method="post" action="">
+                                        <input class="upload-input" type="file" name="upload" accept="image/jpeg,image/png"/>
+                                        <div class="button-container">
+                                            <button class="create-org-button create-button upload-button" type="submit">Отправить</button>
+                                            <button class="create-button upload-button" type="reset">Отмена</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-text">2018, UniService Team
+            <div class="social-media">
+                <a href="https://vk.com/itis_kpfu"><i class="fab fa-vk fa-lg"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script th:src="@{/js/scripts.min.js(v=${v})}"></script>
+</body>
+</html>

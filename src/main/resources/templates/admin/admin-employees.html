@@ -59,10 +59,55 @@
     <div class="main-content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3 new-col">
                     <div class="create-box">
-                        <button class="create-button">Добавить сотрудника</button>
+                        <button class="create-button" data-toggle="modal" data-target="#myModal">Добавить сотрудника</button>
                     </div>
+
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h2 class="create-title modal-title" id="myModalLabel">Добавить сотрудника</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" method="post" id="create-data">
+                                        <div class="info-edit">
+                                            <div class="input-box">
+                                                <label for="secondname">Фамилия</label>
+                                                <input id="secondname" type="text" name="secondname" placeholder="Фамилия">
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="firstname">Имя</label>
+                                                <input id="firstname" type="text" name="firstname" placeholder="Имя">
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="lastname">Отчество</label>
+                                                <input id="lastname" type="text" name="lastname" placeholder="Отчество">
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="email">E-mail</label>
+                                                <input id="email" type="text" name="email" placeholder="Email">
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="position">Должность</label>
+                                                <input id="position" type="text" name="position" placeholder="Должность">
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="experience">Стаж работы</label>
+                                                <input id="experience" type="text" name="experience" placeholder="Стаж">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" form="create-data" class="create-org-button create-button">Создать</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="small-box">
                         <div class="select-box">
                             <form action="#" method="post">
@@ -81,22 +126,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9 right-col">
+                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9 new-col right-col">
                     <div class="data-list">
                         <div class="title-data">
+                            <h1 class="h1 view-425">Студенты</h1>
                             <div class="sort-select title-sort">
-                                <select title="">
-                                    <option>Сортировать</option>
-                                    <option>По фамилии А-Я</option>
-                                    <option>По фамилии Я-А</option>
-                                </select>
+                                <form action="" method="get"  id="sortForm">
+                                    <select title="" id="sortSelect" onchange="if(this.value !== 0) { this.form.submit(); }" >
+                                        <option value="0">Сортировать</option>
+                                        <option value="1">По фамилие А-Я</option>
+                                        <option value="2">По фамилие Я-А</option>
+                                    </select>
+                                </form>
                                 <div class="select__arrow"></div>
                             </div>
-                            <h1 class="h1">Сотрудники</h1>
+                            <h1 class="h1 list-title">Сотрудники</h1>
                             <div class="search-title">
                                 <div class="search-box">
-                                    <input type="search" id="search" placeholder="Поиск..." />
-                                    <button class="icon"><i class="fa fa-search"></i></button>
+                                    <form action="" method="">
+                                        <input type="search" id="search" placeholder="Поиск..." name="search"/>
+                                        <button class="icon" type="submit"><i class="fa fa-search"></i></button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

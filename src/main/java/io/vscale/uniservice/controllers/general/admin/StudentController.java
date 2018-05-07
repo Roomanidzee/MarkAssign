@@ -69,4 +69,14 @@ public class StudentController {
 
     }
 
+    @GetMapping("/students/edit")
+    public ModelAndView editStudent(){
+        return new ModelAndView("students/edit-student");
+    }
+
+    @GetMapping("/students/view")
+    public ModelAndView viewStudent(){
+        return new ModelAndView("students/view-student");
+    }
+
 }

@@ -9,6 +9,7 @@ import io.vscale.uniservice.domain.FileOfService;
 import io.vscale.uniservice.repositories.data.CooperatorRepository;
 import io.vscale.uniservice.repositories.data.FileOfServiceRepository;
 import io.vscale.uniservice.repositories.data.GroupRepository;
+import io.vscale.uniservice.services.interfaces.storage.StorageService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -45,16 +47,18 @@ public class ExcelGenerator {
     private final CooperatorRepository cooperatorRepository;
     private final GroupRepository groupRepository;
     private final FileOfServiceRepository fileOfServiceRepository;
+    private final StorageService storageService;
 
     @Value("${storage.path}")
     private String urlPath;
 
     @Autowired
     public ExcelGenerator(CooperatorRepository cooperatorRepository, GroupRepository groupRepository,
-                          FileOfServiceRepository fileOfServiceRepository) {
+                          FileOfServiceRepository fileOfServiceRepository, StorageService storageService) {
         this.cooperatorRepository = cooperatorRepository;
         this.groupRepository = groupRepository;
         this.fileOfServiceRepository = fileOfServiceRepository;
+        this.storageService = storageService;
     }
 
     public void generateTable(Long cooperatorId, Long groupId){
@@ -66,12 +70,17 @@ public class ExcelGenerator {
 
         String fileName = group.getTitle() + ".xlsx";
         String fileURL = this.urlPath + fileName;
+        File file = new File(fileURL);
 
         List<String> columns = Arrays.asList("ФИО", "Итоговый балл");
         Set<Student> students = group.getStudents();
 
         try(Workbook workbook = new HSSFWorkbook();
-            FileOutputStream fileOut = new FileOutputStream(fileURL)){
+            FileOutputStream fileOut = new FileOutputStream(file)){
+
+            if(!file.exists()){
+                file.createNewFile();
+            }
 
             Sheet sheet = workbook.createSheet("Данные по группе");
 
@@ -137,6 +146,7 @@ public class ExcelGenerator {
                      .forEach(sheet::autoSizeColumn);
 
             workbook.write(fileOut);
+            this.storageService.uploadFileTos3bucket(fileName, file);
 
         }catch (IOException e){
             e.printStackTrace();

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+
+    <title>UniService</title>
+    <meta name="description" content=""/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#fff"/>
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#fff"/>
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#fff"/>
+
+    <link rel="stylesheet" th:href="@{/css/main.min.css(v=${v})}"/>
+</head>
+
+<body>
+
+<div class="content">
+
+    <header>
+        <nav class="header-container">
+            <a href="admin.html" class="logo main-logo">UniService</a>
+
+            <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden = "true">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </a>
+
+            <div id="menu">
+                <ul>
+                    <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
+                        <ul>
+                            <li><a href="admin.html">Студенты</a></li>
+                            <li><a href="admin-employees.html">Сотрудники</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="admin-events.html"><i class="fas fa-bell"></i>Мероприятия</a></li>
+                    <li><a href="admin-organizations.html"><i class="fas fa-list-alt"></i>Организации</a></li>
+                    <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
+                    <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
+                        <ul>
+                            <li><a href="edit-user.html">Настройки</a></li>
+                            <li><a href="index.html">Выйти</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="create-box">
+                        <a href="edit-scores.html"><button type="button" class="create-button">Редактировать мероприятия</button></a>
+                    </div>
+                    <div class="small-box">
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="current-scores-item">
+                                    <h2>Мои баллы</h2>
+                                    <h1>10</h1>
+                                </div>
+                                <div class="create-box">
+                                    <a href="distribute-scores.html"><button type="button" class="create-button">Распределить баллы</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 right-col">
+                    <div class="data-list">
+                        <div class="title-data event">
+                            <h1 class="h1 event">Начисление дополнительных баллов</h1>
+                        </div>
+                    </div>
+
+
+                    <!-- item 1 -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="responsive-table">
+                                <li class="table-header">
+                                    <div class="col col-1">Мероприятие</div>
+                                    <div class="col col-2">Роль</div>
+                                    <div class="col col-3">Подтверждение</div>
+                                    <div class="col col-4">Файл</div>
+                                    <div class="col col-5">Балл</div>
+                                </li>
+                                <!--если балл выставлен руководителем-->
+                                <li class="table-row">
+                                    <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
+                                    <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
+                                    <div class="col col-3" data-label="Подтверждение">Подтверждено</div>
+                                    <!--в a href="путь_до_файла"-->
+                                    <div class="col col-4" data-label="Файл">
+                                        <div class="download-file-score">
+                                            <a href="view-event.html" download="">Название файла</a></div>
+                                    </div>
+                                    <div class="col col-5" data-label="Балл">10</div>
+                                </li>
+                                <!--если участие в мероприятии не подтверждено-->
+                                <li class="table-row">
+                                    <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
+                                    <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
+                                    <div class="col col-3" data-label="Подтверждение">Не подтверждено</div>
+                                    <div class="col col-4" data-label="Файл">
+                                        <div class="download-file-score">
+                                            Нет файла</div>
+                                    </div>
+                                    <div class="col col-5" data-label="Балл">0</div>
+                                </li>
+                                <!--если балл еще не выставлен-->
+                                <li class="table-row">
+                                    <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
+                                    <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
+                                    <div class="col col-3" data-label="Подтверждение">В обработке</div>
+                                    <div class="col col-4" data-label="Файл">
+                                        <div class="download-file-score">
+                                            <a href="view-event.html" download="">Название файла</a></div>
+                                    </div>
+                                    <div class="col col-5" data-label="Балл">-</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-text">2018, UniService Team
+            <div class="social-media">
+                <a href="https://vk.com/itis_kpfu"><i class="fab fa-vk fa-lg"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script th:src="@{/js/scripts.min.js(v=${v})}"></script>
+</body>
+</html>

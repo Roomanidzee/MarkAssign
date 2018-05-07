@@ -1,10 +1,8 @@
 package io.vscale.uniservice.controllers.general.admin;
 
-import io.vscale.uniservice.domain.Event;
 import io.vscale.uniservice.domain.Organization;
 import io.vscale.uniservice.services.interfaces.events.OrganizationService;
 import io.vscale.uniservice.utils.PageWrapper;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Set;
 
 /**
  * 26.03.2018
@@ -75,33 +71,23 @@ public class OrganizationController {
         return modelAndView;
     }
 
-    @GetMapping("/organizations/show/{id}")
-    public ModelAndView showOrganization(@PathVariable("id") Long id){
+    @GetMapping("/organizations/show/id")
+    public ModelAndView showOrganization(){
 
-        Organization organization = this.organizationService.findById(id);
+       /* Organization organization = this.organizationService.findById(id);
         Set<Event> events = organization.getEvents();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("events", events);
-        modelAndView.setViewName("organizations/view-organization");
+        modelAndView.setViewName("organizations/view-organization");*/
 
-        return modelAndView;
-
-    }
-
-
-    @GetMapping("/organizations/create")
-    public ModelAndView createOrganization(){
-
-        return new ModelAndView("organizations/create-organization");
+        return new ModelAndView("organizations/view-organization");
 
     }
 
     @GetMapping("/organizations/edit/id")
     public ModelAndView editOrganization(){
-
         return new ModelAndView("organizations/edit-organization");
-
     }
 
 }

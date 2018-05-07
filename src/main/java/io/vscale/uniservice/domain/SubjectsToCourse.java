@@ -15,6 +15,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import java.util.List;
 
 /**
  * 02.03.2018
@@ -40,5 +46,11 @@ public class SubjectsToCourse {
 
     @Column(name = "subject_name")
     private String subjectName;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "subjects_to_evaluation",
+               joinColumns = @JoinColumn(name = "subject_id"),
+               inverseJoinColumns = @JoinColumn(name = "evaluation_id"))
+    private List<EventTypeEvaluation> evaluations;
 
 }

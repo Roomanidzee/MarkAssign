@@ -59,7 +59,7 @@
     <div class="main-content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3 new-col">
                     <div class="create-box">
                         <button type="button" class="create-button" data-toggle="modal" data-target="#myModal">Создать организацию</button>
                     </div>
@@ -119,19 +119,24 @@
                 <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9 right-col">
                     <div class="data-list">
                         <div class="title-data">
+                            <h1 class="h1 view-425">Организации</h1>
                             <div class="sort-select title-sort">
-                                <select title="">
-                                    <option>Сортировать</option>
-                                    <option>По названию А-Я</option>
-                                    <option>По названию Я-А</option>
-                                </select>
+                                <form action="" method="get"  id="sortForm">
+                                    <select title="" id="sortSelect" onchange="if(this.value !== 0) { this.form.submit(); }" >
+                                        <option value="0">Сортировать</option>
+                                        <option value="1">По фамилие А-Я</option>
+                                        <option value="2">По фамилие Я-А</option>
+                                    </select>
+                                </form>
                                 <div class="select__arrow"></div>
                             </div>
-                            <h1 class="h1">Организации</h1>
+                            <h1 class="h1 list-title">Организации</h1>
                             <div class="search-title">
                                 <div class="search-box">
-                                    <input type="search" id="search" placeholder="Поиск..." />
-                                    <button class="icon"><i class="fa fa-search"></i></button>
+                                    <form action="" method="">
+                                        <input type="search" id="search" placeholder="Поиск..." />
+                                        <button class="icon" type="submit"><i class="fa fa-search"></i></button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

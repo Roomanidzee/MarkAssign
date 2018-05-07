@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+
+    <title>UniService</title>
+    <meta name="description" content=""/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#fff"/>
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#fff"/>
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#fff"/>
+
+    <link rel="stylesheet" th:href="@{/css/main.min.css(v=${v})}"/>
+</head>
+
+<body>
+
+<div class="content">
+
+    <header>
+        <nav class="header-container">
+            <a href="admin.html" class="logo main-logo">UniService</a>
+
+            <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden = "true">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </a>
+
+            <div id="menu">
+                <ul>
+                    <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
+                        <ul>
+                            <li><a href="admin.html">Студенты</a></li>
+                            <li><a href="admin-employees.html">Сотрудники</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="admin-events.html"><i class="fas fa-bell"></i>Мероприятия</a></li>
+                    <li><a href="admin-organizations.html"><i class="fas fa-list-alt"></i>Организации</a></li>
+                    <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
+                    <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
+                        <ul>
+                            <li><a href="edit-user.html">Настройки</a></li>
+                            <li><a href="index.html">Выйти</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3 new-col">
+                    <div class="small-box">
+                        <div class="select-box">
+                            <!-- Nav tabs -->
+                            <ul class="tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Общие настройки</a></li>
+                                <li role="presentation"><a href="#users" aria-controls="users" role="tab" data-toggle="tab">Участники</a></li>
+                                <li role="presentation"><a href="#files" aria-controls="files" role="tab" data-toggle="tab">Файлы</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9 new-col right-col">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="settings">
+                            <div class="data-list">
+                                <div class="title-data">
+                                    <h1 class="h1">Редактировать</h1>
+                                </div>
+                                <!-- item 1 -->
+                                <div class="list-item">
+                                    <div class="info-edit">
+                                        <div class="row">
+                                            <form action="" method="post">
+                                                <div class="input-box">
+                                                    <label for="name">Название:</label>
+                                                    <input id="name" type="text" name="name" placeholder="Название"/>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label for="type">Тип:</label>
+                                                    <select id="type" name="type">
+                                                        <option>Не выбрано</option>
+                                                        <option>Фильтр 1</option>
+                                                        <option>Фильтр 2</option>
+                                                    </select>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label for="descr">Описание:</label>
+                                                    <textarea id="descr" type="text" name="description" placeholder="Описание"></textarea>
+                                                </div>
+                                                <div class="input-box">
+                                                    <label for="info">Информация:</label>
+                                                    <textarea id="info" type="text" name="info" placeholder="Информация"></textarea>
+                                                </div>
+                                                <div class="button-container">
+                                                    <button class="create-org-button create-button upload-button" type="submit">Отправить</button>
+                                                    <button class="create-button upload-button" type="reset">Отмена</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="users">
+                            <div class="data-list">
+                                <div class="title-data setting">
+                                    <h1 class="h1 view-425">Мероприятия</h1>
+                                    <div class="sort-select title-sort">
+                                        <select title="">
+                                            <option>Сортировать</option>
+                                            <option>По фамилии А-Я</option>
+                                            <option>По фамилии Я-А</option>
+                                        </select>
+                                        <div class="select__arrow"></div>
+                                    </div>
+                                    <h1 class="h1 list-title">Участники</h1>
+                                    <div class="search-title">
+                                        <div class="search-box">
+                                            <input type="search" id="searchUser" placeholder="Поиск..." />
+                                            <button class="icon"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-item">
+                                        <a href="#" data-toggle="modal" data-target="#addStudent"><i class="fa fa-plus"></i>Добавить пользователя</a>
+                                    </div>
+
+                                </div>
+                                <!-- item 1 -->
+                                <div class="list-item">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                                            <img class="user-picture center-block" th:src="@{img/default-user.png}" alt="User"/>
+                                        </div>
+                                        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+                                            <div class="user-data">
+                                                <div class="user-title">
+                                                    <div class="user-name">
+                                                        <a href="view-user.html">
+                                                            <span class="lastname">Фамилия</span>
+                                                            <span class="name">Имя</span>
+                                                            <span class="secondname">Отчество</span>
+                                                        </a>
+                                                    </div>
+                                                    <a class="delete" href="#" data-toggle="modal" data-target="#myModal" ><i class="fas fa-times"></i> Удалить</a>
+
+                                                    <div class="modal fade delete-modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">Вы уверенны?</h4>
+                                                                    <button class="modal-button" type="submit" value="Да">Исключить</button>
+                                                                    <button class="modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="user-info">
+                                                    <p><span>Обучение:</span>Бакалавриат</p>
+                                                    <p><span>Курс:</span>2</p>
+                                                    <p><span>Группа:</span>11-602</p>
+                                                    <p><span>Организация:</span>Itis Musiс</p>
+                                                    <p><span>Роль:</span>роль в мероприятии</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="addStudent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h2 class="create-title modal-title" id="addStudentModalLabel">Выберите студента</h2>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="list-item-users">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="user-data">
+                                                            <div class="user-title">
+                                                                <div class="user-name">
+                                                                    <a href="view-student.html">
+                                                                        <span class="lastname">Фамилия</span>
+                                                                        <span class="name">Имя</span>
+                                                                        <span class="secondname">Отчество</span>
+                                                                    </a>
+                                                                </div>
+                                                                <a class="edit" href=""><i class="fas fa-plus-circle"></i> Добавить</a>
+                                                            </div>
+                                                            <div class="user-info">
+                                                                <p><span>Обучение:</span>Бакалавриат</p>
+                                                                <p><span>Курс:</span>2</p>
+                                                                <p><span>Группа:</span>11-602</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="close-button create-button" data-dismiss="modal">Закрыть</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pagination-list">
+                                <ul class="pagination">
+                                    <li class="pagination__item"><a href="#" class="pagination__number">←<span class="pagination__control pagination__control_prev">prev</span></a></li>
+                                    <li class="pagination__item"><a href="#" class="pagination__number pagination__number_active">1</a></li>
+                                    <li class="pagination__item"><a href="#" class="pagination__number">2</a></li>
+                                    <li class="pagination__item"><a href="#" class="pagination__number">3</a></li>
+                                    <li class="pagination__item"><a href="#" class="pagination__number">4</a></li>
+                                    <li class="pagination__item"><a href="#" class="pagination__number">5</a></li>
+                                    <li class="pagination__item"><a href="#" class="pagination__number"><span class="pagination__control pagination__control_next">next</span>→</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="files">
+                            <div class="data-list">
+                                <div class="title-data" id="edit-event">
+                                    <div class="title-sort">
+                                        <button type="button" class="create-button event-button" data-target="#uploadModal" data-toggle="modal">Добавить файл</button>
+
+                                        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="uploadModalLabel">Загрузить файл</h4>
+                                                        <form enctype="multipart/form-data" method="post" action="">
+                                                            <p>Загрузите ваши документы и файлы </p>
+                                                            <div class="upload-file">
+                                                                <input type="file" name="photo" multiple = "true"/>
+                                                            </div>
+                                                            <button class="modal-button" type="submit" value="Да">Отправить</button>
+                                                            <button class="modal-button" type="reset" value="Нет" data-dismiss="modal">Отмена</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="h1">Файлы</h1>
+                                </div>
+                                <!-- item 1 -->
+                                <div class="list-item">
+                                    <div class="row">
+                                        <div class="edit-event-container">
+                                            <div class="user-data">
+                                                <div class="edit">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-file">View-event.html<a href="view-event.html" download="">Скачать</a>
+                                                            <a class="delete" data-toggle="modal" data-target="#deleteModal" ><i class="fas fa-times"></i> Удалить</a>
+                                                        </li>
+                                                        <li class="list-group-file">View-event.html<a href="view-event.html" download="">Скачать</a>
+                                                            <a class="delete" data-toggle="modal" data-target="#deleteModal" ><i class="fas fa-times"></i> Удалить</a>
+                                                        </li>
+                                                        <li class="list-group-file">View-event.html<a href="view-event.html" download="">Скачать</a>
+                                                            <a class="delete" data-toggle="modal" data-target="#deleteModal" ><i class="fas fa-times"></i> Удалить</a>
+                                                        </li>
+                                                    </ul>
+
+                                                    <div class="modal fade delete-modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="modalLabel">Вы уверенны?</h4>
+                                                                    <button class="modal-button" type="submit" value="Да">Удалить</button>
+                                                                    <button class="modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-text">2018, UniService Team
+            <div class="social-media">
+                <a href="https://vk.com/itis_kpfu"><i class="fab fa-vk fa-lg"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script th:src="@{/js/scripts.min.js(v=${v})}"></script>
+</body>
+</html>

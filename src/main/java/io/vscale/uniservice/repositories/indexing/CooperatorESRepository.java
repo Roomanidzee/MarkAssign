@@ -9,5 +9,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @author Andrey Romanov
  * @version 1.0
  */
-public interface CooperatorESRepository extends ElasticsearchRepository<Cooperator, String>{
+public interface CooperatorESRepository extends ElasticsearchRepository<Cooperator, Long>{
 }

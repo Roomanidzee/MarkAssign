@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="utf-8"/>
+
+    <title>UniService</title>
+    <meta name="description" content=""/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#fff"/>
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#fff"/>
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#fff"/>
+
+    <link rel="stylesheet" th:href="@{/css/main.min.css(v=${v})}"/>
+</head>
+
+<body>
+
+<div class="content">
+    <header>
+        <nav class="header-container">
+            <a href="admin.html" class="logo main-logo">UniService</a>
+
+            <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden = "true">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </a>
+
+            <div id="menu">
+                <ul>
+                    <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
+                        <ul>
+                            <li><a href="admin.html">Студенты</a></li>
+                            <li><a href="admin-employees.html">Сотрудники</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="admin-events.html"><i class="fas fa-bell"></i>Мероприятия</a></li>
+                    <li><a href="admin-organizations.html"><i class="fas fa-list-alt"></i>Организации</a></li>
+                    <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
+                    <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
+                        <ul>
+                            <li><a href="edit-user.html">Настройки</a></li>
+                            <li><a href="index.html">Выйти</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3 new-col">
+                    <div class="create-box">
+                        <a href="" ><button class="create-button">Выгрузить данные</button></a>
+                    </div>
+                    <div class="small-box">
+                        <div class="select-box">
+                            <form action="#" method="post">
+                                <div class="select-item">
+                                    <h4>Обучение</h4>
+                                    <div class="select">
+                                        <select title="">
+                                            <option>Не выбрано</option>
+                                            <option>Бакавлариат</option>
+                                            <option>Магистратура</option>
+                                        </select>
+                                        <div class="select__arrow"></div>
+                                    </div>
+                                </div>
+                                <div class="select-item">
+                                    <h4>Курс</h4>
+                                    <div class="select">
+                                        <select title="">
+                                            <option>Не выбрано</option>
+                                            <option>1 курс</option>
+                                            <option>2 курс</option>
+                                            <option>3 курс</option>
+                                            <option>4 курс</option>
+                                        </select>
+                                        <div class="select__arrow"></div>
+                                    </div>
+                                </div>
+                                <div class="select-item">
+                                    <h4>Группа</h4>
+                                    <div class="select">
+                                        <select title="">
+                                            <option>Не выбрано</option>
+                                            <option>11-601</option>
+                                            <option>11-602</option>
+                                            <option>11-603</option>
+                                            <option>11-604</option>
+                                            <option>11-605</option>
+                                            <option>11-606</option>
+                                            <option>11-607</option>
+                                            <option>11-608</option>
+                                        </select>
+                                        <div class="select__arrow"></div>
+                                    </div>
+                                </div>
+                                <div class="select-item">
+                                    <h4>Организация</h4>
+                                    <div class="select">
+                                        <select title="">
+                                            <option>Не выбрано</option>
+                                            <option>ITIS Music</option>
+                                            <option>ITIS Dance</option>
+                                            <option>Театр</option>
+                                        </select>
+                                        <div class="select__arrow"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-9 new-col right-col">
+                    <div class="data-list">
+                        <div class="title-data">
+                            <h1 class="h1 view-425">Баллы студентов</h1>
+                            <div class="sort-select title-sort">
+                                <select title="">
+                                    <option>Сортировать</option>
+                                    <option>По фамилие А-Я</option>
+                                    <option>По фамилие Я-А</option>
+                                </select>
+                                <div class="select__arrow"></div>
+                            </div>
+                            <h1 class="h1 list-title">Баллы студентов</h1>
+                            <div class="search-title">
+                                <div class="search-box">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- item 1 -->
+                        <div class="list-item">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="user-data">
+                                        <div class="user-title">
+                                            <div class="user-name">
+                                                <a href="view-student.html">
+                                                    <span class="lastname">Фамилия</span>
+                                                    <span class="name">Имя</span>
+                                                    <span class="secondname">Отчество</span>
+                                                </a>
+                                            </div>
+                                            <a class="edit" href="view-scores.html"><i class="fas fa-star"></i> Смотреть все баллы</a>
+                                        </div>
+                                        <div class="user-info">
+                                            <p><span>Текущий дополнительный балл:</span>Балл</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="pagination-list">
+                        <ul class="pagination">
+                            <li class="pagination__item"><a href="#" class="pagination__number">←<span class="pagination__control pagination__control_prev">prev</span></a></li>
+                            <li class="pagination__item"><a href="#" class="pagination__number pagination__number_active">1</a></li>
+                            <li class="pagination__item"><a href="#" class="pagination__number">2</a></li>
+                            <li class="pagination__item"><a href="#" class="pagination__number">3</a></li>
+                            <li class="pagination__item"><a href="#" class="pagination__number">4</a></li>
+                            <li class="pagination__item"><a href="#" class="pagination__number">5</a></li>
+                            <li class="pagination__item"><a href="#" class="pagination__number"><span class="pagination__control pagination__control_next">next</span>→</a></li>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-text">2018, UniService Team
+            <div class="social-media">
+                <a href="https://vk.com/itis_kpfu"><i class="fab fa-vk fa-lg"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script th:src="@{/js/scripts.min.js(v=${v})}">
+</script>
+
+</body>
+</html>
