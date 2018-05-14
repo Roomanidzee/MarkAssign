@@ -145,8 +145,8 @@ public class MultipleSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception{
 
             http.addFilterBefore(
-                    new TokenAuthenticationFilter(this.authenticationProvider, this.authenticationEntryPoint,
-                            this.header), BasicAuthenticationFilter.class)
+              new TokenAuthenticationFilter(this.authenticationProvider, this.authenticationEntryPoint, this.header),
+                    BasicAuthenticationFilter.class)
                   .sessionManagement()
                   .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

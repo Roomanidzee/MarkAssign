@@ -1,5 +1,6 @@
 package io.vscale.uniservice.controllers.general.admin;
 
+import io.vscale.uniservice.domain.Event;
 import io.vscale.uniservice.domain.Organization;
 import io.vscale.uniservice.services.interfaces.events.OrganizationService;
 import io.vscale.uniservice.utils.PageWrapper;
@@ -7,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Set;
 
 /**
  * 26.03.2018
@@ -71,15 +72,15 @@ public class OrganizationController {
         return modelAndView;
     }
 
-    @GetMapping("/organizations/show/id")
-    public ModelAndView showOrganization(){
+    @GetMapping("/organizations/show/{id}")
+    public ModelAndView showOrganization(@PathVariable("id") Long id){
 
-       /* Organization organization = this.organizationService.findById(id);
+        Organization organization = this.organizationService.findById(id);
         Set<Event> events = organization.getEvents();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("events", events);
-        modelAndView.setViewName("organizations/view-organization");*/
+        modelAndView.setViewName("organizations/view-organization");
 
         return new ModelAndView("organizations/view-organization");
 
@@ -88,6 +89,20 @@ public class OrganizationController {
     @GetMapping("/organizations/edit/id")
     public ModelAndView editOrganization(){
         return new ModelAndView("organizations/edit-organization");
+    }
+
+    @PostMapping("/organizations/search")
+    public ModelAndView searchOrganization(@RequestParam("search") String searchQuery){
+
+        PageWrapper<Organization> pageWrapper =
+                new PageWrapper<>(this.organizationService.searchByTitle(searchQuery), "/admin/organizations/search");
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-organizations");
+        modelAndView.addObject("pageWrapper", pageWrapper);
+
+        return modelAndView;
+
     }
 
 }

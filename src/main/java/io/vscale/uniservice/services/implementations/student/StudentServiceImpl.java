@@ -205,4 +205,17 @@ public class StudentServiceImpl implements StudentService {
                                    .collect(Collectors.toList());
 
     }
+
+    @Override
+    public Page<Student> searchBySurname(String surname) {
+
+        List<Student> students = this.studentESRepository.findByProfile_Surname(surname);
+
+        return new PageImpl<>(students, null, students.size());
+    }
+
+    @Override
+    public Long getStudentsCount() {
+        return this.studentRepository.count();
+    }
 }

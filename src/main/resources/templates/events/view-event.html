@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div class="create-box">
-                        <a href="edit-event.html"><button type="button" class="create-button">Редактировать</button></a>
+                        <a th:href="@{'/admin/events/' + ${event_model.id} + '/edit'}"><button type="button" class="create-button">Редактировать</button></a>
                     </div>
                     <div class="small-box">
                         <div class="description-box">
@@ -69,46 +69,19 @@
                                 <div class="col-sm-12 col-xs-12">
                                     <div class="user-list">
                                         <h3>Участники</h3>
-                                        <div class="user-item">
+                                        <div th:each="student : ${event_model.students}" class="user-item">
                                             <div class="name">
-                                                <a href="view-student.html">Фамилия Имя Отчество</a>
+                                                <a th:text="@{${student.profile.name} + ' ' + ${student.profile.surname} + ' ' + ${student.profile.patronymic}}"
+                                                   th:href="@{'/admin/users/'+ ${student.profile.user.id}}">
+                                                </a>
                                             </div>
                                             <div class="user-info">
-                                                <p><span>Курс:</span>2</p>
-                                                <p><span>Группа:</span>11-602</p>
+                                                <p th:inline="text"><span>Курс:</span>[[${student.course}]]</p>
+                                                <p ><span>Группа:</span>11-602</p>
                                                 <p><span>Роль:</span>роль в мероприятии</p>
                                             </div>
                                         </div>
-                                        <div class="user-item">
-                                            <div class="name">
-                                                <a href="view-student.html">Фамилия Имя Отчество</a>
-                                            </div>
-                                            <div class="user-info">
-                                                <p><span>Курс:</span>2</p>
-                                                <p><span>Группа:</span>11-602</p>
-                                                <p><span>Роль:</span>роль в мероприятии</p>
-                                            </div>
-                                        </div>
-                                        <div class="user-item">
-                                            <div class="name">
-                                                <a href="view-student.html">Фамилия Имя Отчество</a>
-                                            </div>
-                                            <div class="user-info">
-                                                <p><span>Курс:</span>2</p>
-                                                <p><span>Группа:</span>11-602</p>
-                                                <p><span>Роль:</span>роль в мероприятии</p>
-                                            </div>
-                                        </div>
-                                        <div class="user-item">
-                                            <div class="name">
-                                                <a href="view-student.html">Фамилия Имя Отчество</a>
-                                            </div>
-                                            <div class="user-info">
-                                                <p><span>Курс:</span>2</p>
-                                                <p><span>Группа:</span>11-602</p>
-                                                <p><span>Роль:</span>роль в мероприятии</p>
-                                            </div>
-                                        </div>
+
                                         <div class="view-all-item">
                                             <a data-toggle="modal" data-target="#myModal"><i class="fa fa-arrow-down"></i>Смотреть всех</a>
                                         </div>
@@ -117,27 +90,28 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h2 class="modal-title" id="myModalLabel">Участники: 32 </h2>                                                    </div>
+                                                        <h2 class="modal-title" id="myModalLabel" th:inline="text">Участники: [[${students_size}]] </h2>                                                    </div>
                                                     <div class="modal-body">
                                                         <div class="list-item-users">
-                                                            <div class="row">
+                                                            <div th:each="student : ${event_model.students}" class="row">
                                                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
-                                                                    <img class="user-picture center-block img-circle" th:src="@{/img/default-user.png}" alt="User"/>
+                                                                    <img class="user-picture center-block img-circle"
+                                                                         th:src=" (${student.profile.avatar?.url}? (${student.profile.avatar.url}) : '/img/default-user.png')" alt="User"/>
                                                                 </div>
                                                                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
                                                                     <div class="user-data">
                                                                         <div class="user-title">
                                                                             <div class="user-name">
-                                                                                <a href="view-student.html">
-                                                                                    <span class="lastname">Фамилия</span>
-                                                                                    <span class="name">Имя</span>
-                                                                                    <span class="secondname">Отчество</span>
+                                                                                <a th:text="@{${student.profile.name} + ' ' + ${student.profile.surname} + ' ' + ${student.profile.patronymic}}">
+                                                                                    <span th:text="${student.profile.surname}" class="lastname">Фамилия</span>
+                                                                                    <span th:text="${student.profile.name}" class="name">Имя</span>
+                                                                                    <span th:text="${student.profile.patronymic}" class="secondname">Отчество</span>
                                                                                 </a>
                                                                             </div>
                                                                         </div>
                                                                         <div class="user-info">
-                                                                            <p><span>Обучение:</span>Бакалавриат</p>
-                                                                            <p><span>Курс:</span>2</p>
+                                                                            <p th:inline="text"><span>Обучение:</span>[[${student.educationType}]]</p>
+                                                                            <p th:inline="text"><span>Курс:</span> [[${student.course}]]</p>
                                                                             <p><span>Группа:</span>11-602</p>
                                                                             <p><span>Роль:</span>роль в мероприятии</p>
                                                                         </div>
@@ -164,8 +138,8 @@
                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 right-col">
                     <div class="data-list">
                         <div class="title-data event">
-                            <h1 class="h1 event">Название мероприятия</h1>
-                            <h5 class="edit"><i class="fas fa-calendar-alt"></i> 16.03.2018</h5>
+                            <h1 th:text="${event_model.name}" class="h1 event">Название мероприятия</h1>
+                            <h5 th:inline="text" class="edit"><i class="fas fa-calendar-alt"></i> [[${event_model.eventDate}]]</h5>
                         </div>
                     </div>
 
@@ -179,9 +153,8 @@
                                         Общая информация
                                     </div>
                                     <div class="user-info">
-                                        <p><span>Тип мероприятия:</span>Тип</p>
-                                        <p><span>Описание:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis dolore magni mollitia praesentium quae vel? Facilis hic, illum inventore nemo nobis perspiciatis qui suscipit voluptatem! Eius impedit neque tenetur.</p>
-                                        <p><span>Информация:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam animi aperiam consequatur, distinctio dolor, earum eius enim facere facilis incidunt non nostrum omnis perferendis quisquam recusandae repellat tempora, veniam voluptatibus.</p><p>Accusantium aut consectetur cupiditate exercitationem hic ipsum laborum, magnam modi, necessitatibus non nulla numquam odit officiis quos repellat sequi vero? Ab aliquam distinctio eaque enim eos odio, possimus ullam voluptates!</p><p>Accusantium aliquid amet cupiditate debitis esse eveniet excepturi expedita facere, illo, ipsa ipsam ipsum labore non nulla possimus quaerat quasi qui reiciendis repellendus repudiandae saepe sit temporibus vel vitae voluptate.</p><p>A adipisci aperiam at culpa cum cumque dolorem dolores eaque eos ex expedita facilis, id inventore itaque laboriosam perferendis porro qui quis quod recusandae reiciendis sint soluta tempora unde voluptatibus.</p><p>Alias architecto consectetur dolorem doloremque, ducimus earum enim excepturi exercitationem fuga fugiat harum hic ipsum iste iure molestiae necessitatibus nihil nostrum numquam porro quae quasi repellat repellendus, tempore, voluptas voluptatibus.</p><p>Deleniti eos error eveniet, facilis fuga ipsa maiores quidem saepe sed vero. Amet consequatur culpa ducimus eligendi error fuga id impedit modi, molestias non quae quaerat, quibusdam sapiente voluptas, voluptatem.</p>
+                                        <p th:inline="text"><span>Тип мероприятия:</span>[[${event_model.eventTypeName}]]</p>
+                                        <p th:inline="text"><span>Описание:</span>[[${event_model.description}]]</p>
                                     </div>
                                 </div>
                             </div>
@@ -194,21 +167,12 @@
                                     <div class="event-info-title">
                                         <a href="#">Фото</a>
                                     </div>
-                                    <div class="owl-carousel owl-theme">
-                                        <div class="item"> <img class="user-picture " th:src="@{/img/default-user.png}" alt="User"/></div>
-                                        <div class="item"> <img class="user-picture " th:src="@{/img/default-user.png}" alt="User"/></div>
-                                        <div class="item"> <img class="user-picture " th:src="@{/img/default-user.png}" alt="User"/></div>
-                                        <div class="item"> <img class="user-picture " th:src="@{/img/default-user.png}" alt="User"/></div>
-                                        <div class="item"> <img class="user-picture " th:src="@{/img/default-user.png}" alt="User"/></div>
-                                        <div class="item"> <img class="user-picture " th:src="@{/img/default-user.png}" alt="User"/></div>
-                                        <div class="item"> <img class="user-picture " th:src="@{/img/default-user.png}" alt="User"/></div>
-                                        <div class="item"> <img class="user-picture " th:src="@{/img/default-user.png}" alt="User"/></div>
+                                    <div th:each="photo : ${photos}" class="owl-carousel owl-theme">
+                                        <div class="item"> <img th:src="@{photo.url}" class="user-picture" /></div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="list-item">
                         <div class="row">
@@ -217,23 +181,15 @@
                                     <div class="event-info-title">
                                         Файлы
                                     </div>
-                                    <ul class="list-group">
-                                        <li class="list-group-file">View-event.html<a href="view-event.html" download="">Скачать</a></li>
-                                        <li class="list-group-file">View-event.html<a href="view-event.html" download="">Скачать</a></li>
-                                        <li class="list-group-file">View-event.html<a href="view-event.html" download="">Скачать</a></li>
+                                    <ul th:each="file : ${files}" class="list-group">
+                                        <li th:inline="text" class="list-group-file">[[${file.originalName}]]<a href="view-event.html" download="">Скачать</a></li>
                                     </ul>
-
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
-
             </div>
-
         </div>
     </div>
 </div>

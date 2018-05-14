@@ -22,6 +22,7 @@
         <commons-io.version>2.6</commons-io.version>
         <poi-excel.version>3.17</poi-excel.version>
         <aws-java-sdk.version>1.11.133</aws-java-sdk.version>
+        <jwt.version>0.9.0</jwt.version>
 
     </properties>
 
@@ -129,6 +130,12 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
             <version>${aws-java-sdk.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jwt.version}</version>
         </dependency>
 
     </dependencies>

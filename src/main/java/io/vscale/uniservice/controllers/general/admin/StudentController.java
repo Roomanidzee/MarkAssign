@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import lombok.AllArgsConstructor;
 
@@ -77,6 +79,20 @@ public class StudentController {
     @GetMapping("/students/view")
     public ModelAndView viewStudent(){
         return new ModelAndView("students/view-student");
+    }
+
+    @PostMapping("/students/search")
+    public ModelAndView searchStudents(@RequestParam("search") String searchQuery){
+
+        PageWrapper<Student> pageWrapper =
+                new PageWrapper<>(this.studentService.searchBySurname(searchQuery), "/admin/students/search");
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-students");
+        modelAndView.addObject("pageWrapper", pageWrapper);
+
+        return modelAndView;
+
     }
 
 }

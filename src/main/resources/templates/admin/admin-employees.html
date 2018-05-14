@@ -76,15 +76,15 @@
                                         <div class="info-edit">
                                             <div class="input-box">
                                                 <label for="secondname">Фамилия</label>
-                                                <input id="secondname" type="text" name="secondname" placeholder="Фамилия">
+                                                <input id="secondname" type="text" name="secondName" placeholder="Фамилия">
                                             </div>
                                             <div class="input-box">
                                                 <label for="firstname">Имя</label>
-                                                <input id="firstname" type="text" name="firstname" placeholder="Имя">
+                                                <input id="firstname" type="text" name="firstName" placeholder="Имя">
                                             </div>
                                             <div class="input-box">
                                                 <label for="lastname">Отчество</label>
-                                                <input id="lastname" type="text" name="lastname" placeholder="Отчество">
+                                                <input id="lastname" type="text" name="lastName" placeholder="Отчество">
                                             </div>
                                             <div class="input-box">
                                                 <label for="email">E-mail</label>
@@ -92,11 +92,11 @@
                                             </div>
                                             <div class="input-box">
                                                 <label for="position">Должность</label>
-                                                <input id="position" type="text" name="position" placeholder="Должность">
+                                                <input id="position" type="text" name="appointment" placeholder="Должность">
                                             </div>
                                             <div class="input-box">
                                                 <label for="experience">Стаж работы</label>
-                                                <input id="experience" type="text" name="experience" placeholder="Стаж">
+                                                <input id="experience" type="text" name="recordOfService" placeholder="Стаж">
                                             </div>
                                         </div>
                                     </form>
@@ -131,19 +131,17 @@
                         <div class="title-data">
                             <h1 class="h1 view-425">Студенты</h1>
                             <div class="sort-select title-sort">
-                                <form action="" method="get"  id="sortForm">
-                                    <select title="" id="sortSelect" onchange="if(this.value !== 0) { this.form.submit(); }" >
-                                        <option value="0">Сортировать</option>
-                                        <option value="1">По фамилие А-Я</option>
-                                        <option value="2">По фамилие Я-А</option>
-                                    </select>
-                                </form>
+                                 <select title="" id="sortSelect" onchange="if(this.value !== 0) { location = this.value; }" >
+                                     <option value="0">Сортировать</option>
+                                     <option th:attr="value = @{/admin/cooperators/asc(page = ${pageWrapper.currentNumber})}">По фамилии А-Я</option>
+                                     <option th:attr="value = @{/admin/cooperators/desc(page = ${pageWrapper.currentNumber})}">По фамилии Я-А</option>
+                                 </select>
                                 <div class="select__arrow"></div>
                             </div>
                             <h1 class="h1 list-title">Сотрудники</h1>
                             <div class="search-title">
                                 <div class="search-box">
-                                    <form action="" method="">
+                                    <form th:action="@{/admin/employees/search}" method="POST">
                                         <input type="search" id="search" placeholder="Поиск..." name="search"/>
                                         <button class="icon" type="submit"><i class="fa fa-search"></i></button>
                                     </form>
@@ -180,19 +178,21 @@
 
                     </div>
 
-                    <div class="pagination-list">
+                    <div class="pagination-list" th:if = "${pageWrapper ne null}">
                         <ul class="pagination">
-                            <li class="pagination__item">
-                                <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber - 1})}"
+                            <li class="pagination__item" th:if="${pageWrapper.currentNumber - 4 > 0}">
+                                <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber - 4})}"
                                    class="pagination__number">←<span class="pagination__control pagination__control_prev">prev</span>
-                                </a></li>
-                            <li class="pagination__item" th:each="item : ${pageWrapper.items}">
-                                <a th:href='@{${pageWrapper.url}(page=${item.number})}'
-                                   class="pagination__number pagination__number_active"
-                                   th:text='${item.number}'>1</a>
+                                </a>
                             </li>
-                            <li class="pagination__item">
-                                <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber + 1})}" class="pagination__number">
+                            <li class="pagination__item" th:each="i : ${#numbers.sequence(0, limit, 4)}">
+                                <a th:href='@{${pageWrapper.url}(page=${i})}'
+                                   th:class="${pageWrapper.currentNumber == i} ?
+                                     'pagination__number pagination__number_active' : 'pagination__number'"
+                                   th:text='${i}'>1</a>
+                            </li>
+                            <li class="pagination__item" th:if="${pageWrapper.currentNumber + 4 < limit}">
+                                <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber + 4})}" class="pagination__number">
                                     <span class="pagination__control pagination__control_next">next</span>→</a></li>
                         </ul>
                     </div>

@@ -121,20 +121,18 @@
                         <div class="title-data">
                             <h1 class="h1 view-425">Организации</h1>
                             <div class="sort-select title-sort">
-                                <form action="" method="get"  id="sortForm">
-                                    <select title="" id="sortSelect" onchange="if(this.value !== 0) { this.form.submit(); }" >
-                                        <option value="0">Сортировать</option>
-                                        <option value="1">По фамилие А-Я</option>
-                                        <option value="2">По фамилие Я-А</option>
-                                    </select>
-                                </form>
+                                <select title="" id="sortSelect" onchange="if(this.value !== 0) { location = this.value; }" >
+                                    <option value="0">Сортировать</option>
+                                    <option th:attr="value = @{/admin/organizations/asc(page = ${pageWrapper.currentNumber})}">По названию А-Я</option>
+                                    <option th:attr="value = @{/admin/organizations/desc(page = ${pageWrapper.currentNumber})}">По названию Я-А</option>
+                                </select>
                                 <div class="select__arrow"></div>
                             </div>
                             <h1 class="h1 list-title">Организации</h1>
                             <div class="search-title">
                                 <div class="search-box">
-                                    <form action="" method="">
-                                        <input type="search" id="search" placeholder="Поиск..." />
+                                    <form th:action="@{/admin/organizations/search}" method="POST">
+                                        <input type="search" id="search" placeholder="Поиск..." name="search"/>
                                         <button class="icon" type="submit"><i class="fa fa-search"></i></button>
                                     </form>
                                 </div>
@@ -167,19 +165,21 @@
                         </div>
                     </div>
 
-                    <div class="pagination-list">
+                    <div class="pagination-list" th:if = "${pageWrapper ne null}">
                         <ul class="pagination">
-                            <li class="pagination__item">
-                                <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber - 1})}"
+                            <li class="pagination__item" th:if="${pageWrapper.currentNumber - 4 > 0}">
+                                <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber - 4})}"
                                    class="pagination__number">←<span class="pagination__control pagination__control_prev">prev</span>
-                                </a></li>
-                            <li class="pagination__item" th:each="item : ${pageWrapper.items}">
-                                <a th:href='@{${pageWrapper.url}(page=${item.number})}'
-                                   class="pagination__number pagination__number_active"
-                                   th:text='${item.number}'>1</a>
+                                </a>
                             </li>
-                            <li class="pagination__item">
-                                <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber + 1})}" class="pagination__number">
+                            <li class="pagination__item" th:each="i : ${#numbers.sequence(0, limit, 4)}">
+                                <a th:href='@{${pageWrapper.url}(page=${i})}'
+                                   th:class="${pageWrapper.currentNumber == i} ?
+                                     'pagination__number pagination__number_active' : 'pagination__number'"
+                                   th:text='${i}'>1</a>
+                            </li>
+                            <li class="pagination__item" th:if="${pageWrapper.currentNumber + 4 < limit}">
+                                <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber + 4})}" class="pagination__number">
                                     <span class="pagination__control pagination__control_next">next</span>→</a></li>
                         </ul>
                     </div>

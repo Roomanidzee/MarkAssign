@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div class="create-box">
-                        <a href="edit-scores.html"><button type="button" class="create-button">Редактировать мероприятия</button></a>
+                        <a href="edit"><button type="button" class="create-button">Редактировать мероприятия</button></a>
                     </div>
                     <div class="small-box">
                         <div class="row">
@@ -89,7 +89,7 @@
                     <!-- item 1 -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <ul class="responsive-table">
+                            <ul class="responsive-table" th:each="event : ${events}">
                                 <li class="table-header">
                                     <div class="col col-1">Мероприятие</div>
                                     <div class="col col-2">Роль</div>
@@ -99,7 +99,7 @@
                                 </li>
                                 <!--если балл выставлен руководителем-->
                                 <li class="table-row">
-                                    <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
+                                    <div class="col col-1" data-label="Мероприятие" th:text="${event.name}">Название мероприятия</div>
                                     <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
                                     <div class="col col-3" data-label="Подтверждение">Подтверждено</div>
                                     <!--в a href="путь_до_файла"-->

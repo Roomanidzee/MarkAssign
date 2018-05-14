@@ -86,7 +86,7 @@
                                             <form action="" method="post">
                                                 <div class="input-box">
                                                     <label for="name">Название:</label>
-                                                    <input id="name" type="text" name="name" placeholder="Название"/>
+                                                    <input th:value="${event_model.name}" id="name" type="text" name="name" placeholder="Название"/>
                                                 </div>
                                                 <div class="input-box">
                                                     <label for="type">Тип:</label>
@@ -98,7 +98,7 @@
                                                 </div>
                                                 <div class="input-box">
                                                     <label for="descr">Описание:</label>
-                                                    <textarea id="descr" type="text" name="description" placeholder="Описание"></textarea>
+                                                    <textarea th:text="${event_model.description}" id="descr" type="text" name="description" placeholder="Описание"></textarea>
                                                 </div>
                                                 <div class="input-box">
                                                     <label for="info">Информация:</label>
@@ -140,18 +140,19 @@
                                 </div>
                                 <!-- item 1 -->
                                 <div class="list-item">
-                                    <div class="row">
+                                    <div th:each="student : ${event_model.students}" class="row">
                                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
-                                            <img class="user-picture center-block" th:src="@{img/default-user.png}" alt="User"/>
+                                            <img class="user-picture center-block"
+                                                 th:src=" (${student.profile.avatar?.url}? (${student.profile.avatar.url}) : '/img/default-user.png')" />
                                         </div>
                                         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
                                             <div class="user-data">
                                                 <div class="user-title">
                                                     <div class="user-name">
-                                                        <a href="view-user.html">
-                                                            <span class="lastname">Фамилия</span>
-                                                            <span class="name">Имя</span>
-                                                            <span class="secondname">Отчество</span>
+                                                        <a th:text="@{${student.profile.name} + ' ' + ${student.profile.surname} + ' ' + ${student.profile.patronymic}}">
+                                                            <span th:text="${student.profile.surname}" class="lastname">Фамилия</span>
+                                                            <span th:text="${student.profile.name}" class="name">Имя</span>
+                                                            <span th:text="${student.profile.patronymic}" class="secondname">Отчество</span>
                                                         </a>
                                                     </div>
                                                     <a class="delete" href="#" data-toggle="modal" data-target="#myModal" ><i class="fas fa-times"></i> Удалить</a>
@@ -171,8 +172,8 @@
 
                                                 </div>
                                                 <div class="user-info">
-                                                    <p><span>Обучение:</span>Бакалавриат</p>
-                                                    <p><span>Курс:</span>2</p>
+                                                    <p th:inline="text"><span>Обучение:</span>[[${student.educationType}]]</p>
+                                                    <p th:inline="text"><span>Курс:</span> [[${student.course}]]</p>
                                                     <p><span>Группа:</span>11-602</p>
                                                     <p><span>Организация:</span>Itis Musiс</p>
                                                     <p><span>Роль:</span>роль в мероприятии</p>
@@ -247,10 +248,10 @@
                                                     <div class="modal-body">
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                         <h4 class="modal-title" id="uploadModalLabel">Загрузить файл</h4>
-                                                        <form enctype="multipart/form-data" method="post" action="">
+                                                        <form enctype="multipart/form-data" method="post" action="#" th:action="@{'/admin/events/' + ${event_model.id} + '/edit/files'}">
                                                             <p>Загрузите ваши документы и файлы </p>
                                                             <div class="upload-file">
-                                                                <input type="file" name="photo" multiple = "true"/>
+                                                                <input type="file" name="file" multiple="multiple"/>
                                                             </div>
                                                             <button class="modal-button" type="submit" value="Да">Отправить</button>
                                                             <button class="modal-button" type="reset" value="Нет" data-dismiss="modal">Отмена</button>
@@ -269,13 +270,7 @@
                                             <div class="user-data">
                                                 <div class="edit">
                                                     <ul class="list-group">
-                                                        <li class="list-group-file">View-event.html<a href="view-event.html" download="">Скачать</a>
-                                                            <a class="delete" data-toggle="modal" data-target="#deleteModal" ><i class="fas fa-times"></i> Удалить</a>
-                                                        </li>
-                                                        <li class="list-group-file">View-event.html<a href="view-event.html" download="">Скачать</a>
-                                                            <a class="delete" data-toggle="modal" data-target="#deleteModal" ><i class="fas fa-times"></i> Удалить</a>
-                                                        </li>
-                                                        <li class="list-group-file">View-event.html<a href="view-event.html" download="">Скачать</a>
+                                                        <li th:each="file : ${files}"  th:inline="text" class="list-group-file"> [[${file.originalName}]] <a href="view-event.html" download="">Скачать</a>
                                                             <a class="delete" data-toggle="modal" data-target="#deleteModal" ><i class="fas fa-times"></i> Удалить</a>
                                                         </li>
                                                     </ul>

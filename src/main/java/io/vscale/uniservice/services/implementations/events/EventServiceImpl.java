@@ -9,10 +9,12 @@ import io.vscale.uniservice.forms.general.NewEventForm;
 import io.vscale.uniservice.repositories.data.EventRepository;
 import io.vscale.uniservice.repositories.data.EventTypeEvaluationRepository;
 import io.vscale.uniservice.repositories.data.StudentRepository;
+import io.vscale.uniservice.repositories.indexing.EventESRepository;
 import io.vscale.uniservice.services.interfaces.events.EventService;
 import io.vscale.uniservice.services.interfaces.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,14 +38,17 @@ public class EventServiceImpl implements EventService {
     private final StudentRepository studentRepository;
     private final StorageService storageService;
     private final EventTypeEvaluationRepository eventTypeEvaluationRepository;
+    private final EventESRepository eventESRepository;
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository, StudentRepository studentRepository,
-                            StorageService storageService, EventTypeEvaluationRepository eventTypeEvaluationRepository){
+                            StorageService storageService, EventTypeEvaluationRepository eventTypeEvaluationRepository,
+                            EventESRepository eventESRepository){
         this.repository = eventRepository;
         this.studentRepository = studentRepository;
         this.storageService = storageService;
         this.eventTypeEvaluationRepository = eventTypeEvaluationRepository;
+        this.eventESRepository = eventESRepository;
     }
 
     @Override
@@ -136,6 +141,53 @@ public class EventServiceImpl implements EventService {
     @Override
     public void addFileOfService(Event event, MultipartFile multipartFile) {
         storageService.saveFile(event, multipartFile);
+    }
+
+    @Override
+    public Page<Event> searchByTitle(String title) {
+
+        List<Event> events = this.eventESRepository.findByName(title);
+
+        return new PageImpl<>(events, null, events.size());
+    }
+
+    @Override
+    public Long getEventsCount() {
+        return this.repository.count();
+    }
+
+    @Override
+    public Page<Event> retrieveAllEventsAsc(Pageable pageable) {
+
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
+
+        List<Event> events = this.repository.findAllOrderByNameAsc(number);
+
+        return new PageImpl<>(events, pageable, events.size());
+
+    }
+
+    @Override
+    public Page<Event> retrieveAllEventsDesc(Pageable pageable) {
+
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
+
+        List<Event> events = this.repository.findAllOrderByNameDesc(number);
+
+        return new PageImpl<>(events, pageable, events.size());
+
     }
 
     @Override

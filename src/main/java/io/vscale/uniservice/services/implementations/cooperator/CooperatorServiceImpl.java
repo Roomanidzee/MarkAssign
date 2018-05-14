@@ -82,9 +82,21 @@ public class CooperatorServiceImpl implements CooperatorService{
     }
 
     @Override
+    public Cooperator getCooperatorById(Long id) {
+        return this.cooperatorRepository.findOne(id);
+    }
+
+    @Override
     public void addCooperator(CooperatorForm cooperatorForm) {
 
-        Profile profile = this.profileRepository.findOne(cooperatorForm.getProfileId());
+        Profile profile = Profile.builder()
+                                 .surname(cooperatorForm.getSecondName())
+                                 .name(cooperatorForm.getFirstName())
+                                 .patronymic(cooperatorForm.getLastName())
+                                 .email(cooperatorForm.getEmail())
+                                 .build();
+
+        this.profileRepository.save(profile);
 
         Cooperator cooperator = Cooperator.builder()
                                           .profile(profile)
@@ -102,7 +114,14 @@ public class CooperatorServiceImpl implements CooperatorService{
     public void updateCooperator(CooperatorForm cooperatorForm) {
 
         Cooperator cooperator = this.cooperatorRepository.findOne(cooperatorForm.getId());
-        Profile profile = this.profileRepository.findOne(cooperatorForm.getProfileId());
+
+        Profile profile = Profile.builder()
+                                 .surname(cooperatorForm.getSecondName())
+                                 .name(cooperatorForm.getFirstName())
+                                 .patronymic(cooperatorForm.getLastName())
+                                 .email(cooperatorForm.getEmail())
+                                 .build();
+        this.profileRepository.save(profile);
 
         cooperator.setProfile(profile);
         cooperator.setAppointment(cooperatorForm.getAppointment());
@@ -119,5 +138,10 @@ public class CooperatorServiceImpl implements CooperatorService{
         this.cooperatorRepository.delete(cooperatorForm.getId());
         this.cooperatorESRepository.delete(cooperatorForm.getId());
 
+    }
+
+    @Override
+    public Long getCooperatorsCount() {
+        return this.cooperatorRepository.count();
     }
 }

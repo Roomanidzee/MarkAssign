@@ -36,5 +36,7 @@ public interface StudentService {
     Integer getMarksSum(Student student);
 
     List<FileOfService> getConfirmationFiles(Long studentId);
+    Page<Student> searchBySurname(String surname);
+    Long getStudentsCount();
 
 }

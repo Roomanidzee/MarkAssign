@@ -6,6 +6,7 @@ import io.vscale.uniservice.repositories.data.UserRepository;
 import io.vscale.uniservice.security.rest.filters.TokenAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -32,6 +33,9 @@ public class UserAuthenticationProvider implements AuthenticationProvider{
 
     private final UserRepository userRepository;
     private final UserDetailsService userDetailsService;
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
     @Autowired
     public UserAuthenticationProvider(UserRepository userRepository,

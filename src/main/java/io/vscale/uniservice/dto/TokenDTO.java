@@ -34,6 +34,6 @@ public class TokenDTO {
     private String token;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy hh:mm:ss")
-    private LocalDateTime tokenTime;
+    private LocalDateTime expireTime;
 
 }

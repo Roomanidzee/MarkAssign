@@ -86,16 +86,16 @@
                             <div class="col-lg-12">
                                 <div class="user-data student-view">
                                     <div class="user-title">
-                                        <div class="user-name">
-                                            <span class="lastname">Фамилия</span>
-                                            <span class="name">Имя</span>
-                                            <span class="secondname">Отчество</span>
+                                        <div class="user-name" th:inline="text">
+                                            <span class="lastname">[[${cooperator.profile.surname}]]</span>
+                                            <span class="name">[[${cooperator.profile.name}]]</span>
+                                            <span class="secondname">[[${cooperator.profile.patronymic}]]</span>
                                         </div>
                                     </div>
-                                    <div class="user-info">
-                                        <p><span>E-mail:</span>e-mail@mail.ru</p>
-                                        <p><span>Должность:</span>Название должности</p>
-                                        <p><span>Стаж:</span>Стаж</p>
+                                    <div class="user-info" th:inline="text">
+                                        <p><span>E-mail:</span>[[${cooperator.profile.email}]]</p>
+                                        <p><span>Должность:</span>[[${cooperator.appointment}]]</p>
+                                        <p><span>Стаж:</span>[[${cooperator.recordOfService}]]</p>
                                     </div>
                                 </div>
                             </div>

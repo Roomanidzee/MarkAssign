@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -30,16 +31,18 @@ public class CooperatorController {
     private CooperatorService cooperatorService;
     private CooperatorAdminService cooperatorAdminService;
 
-
     @GetMapping("/cooperators")
     public ModelAndView showCooperators(@PageableDefault(value = 4) Pageable pageable){
 
         PageWrapper<Cooperator> pageWrapper =
                 new PageWrapper<>(this.cooperatorService.findAll(pageable), "/admin/cooperators");
 
+        Long limit = this.cooperatorService.getCooperatorsCount();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/admin-employees");
         modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("limit", limit);
 
         return modelAndView;
 
@@ -51,9 +54,12 @@ public class CooperatorController {
         PageWrapper<Cooperator> pageWrapper =
                 new PageWrapper<>(this.cooperatorService.retrieveAllCooperatorsAsc(pageable), "/admin/cooperators/asc");
 
+        Long limit = this.cooperatorService.getCooperatorsCount();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/admin-employees");
         modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("limit", limit);
 
         return modelAndView;
 
@@ -65,9 +71,29 @@ public class CooperatorController {
         PageWrapper<Cooperator> pageWrapper =
                 new PageWrapper<>(this.cooperatorService.retrieveAllCooperatorsDesc(pageable), "/admin/cooperators/desc");
 
+        Long limit = this.cooperatorService.getCooperatorsCount();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/admin-employees");
         modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("limit", limit);
+
+        return modelAndView;
+
+    }
+
+    @PostMapping("/employees/search")
+    public ModelAndView searchCooperators(@RequestParam("search") String searchQuery){
+
+        PageWrapper<Cooperator> pageWrapper =
+                new PageWrapper<>(this.cooperatorAdminService.searchBySurname(searchQuery), "/admin/cooperators/search");
+
+        Long limit = this.cooperatorService.getCooperatorsCount();
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-employees");
+        modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("limit", limit);
 
         return modelAndView;
 

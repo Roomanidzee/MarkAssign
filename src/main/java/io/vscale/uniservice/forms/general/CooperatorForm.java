@@ -24,7 +24,10 @@ import lombok.NoArgsConstructor;
 public class CooperatorForm {
 
     private Long id;
-    private Long profileId;
+    private String secondName;
+    private String firstName;
+    private String lastName;
+    private String email;
     private Byte recordOfService;
     private String appointment;
 

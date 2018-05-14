@@ -143,6 +143,7 @@ public class StorageServiceImpl implements StorageService{
     @Override
     public void saveFile(Event event, MultipartFile multipartFile) {
         FileOfService fileOfService = fileStorageUtil.convertFromMultipart(multipartFile);
+        this.filesRepository.save(fileOfService);
 
         try {
             File file = fileStorageUtil.convertMultiPartToFile(multipartFile);

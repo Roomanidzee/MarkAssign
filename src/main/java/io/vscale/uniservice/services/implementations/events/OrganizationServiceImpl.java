@@ -5,6 +5,7 @@ import io.vscale.uniservice.domain.FileOfService;
 import io.vscale.uniservice.domain.Organization;
 import io.vscale.uniservice.domain.Student;
 import io.vscale.uniservice.repositories.data.OrganizationRepository;
+import io.vscale.uniservice.repositories.indexing.OrganizationESRepository;
 import io.vscale.uniservice.services.interfaces.events.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,10 +29,13 @@ import java.util.stream.Collectors;
 public class OrganizationServiceImpl implements OrganizationService{
 
     private final OrganizationRepository organizationRepository;
+    private final OrganizationESRepository organizationESRepository;
 
     @Autowired
-    public OrganizationServiceImpl(OrganizationRepository organizationRepository) {
+    public OrganizationServiceImpl(OrganizationRepository organizationRepository,
+                                   OrganizationESRepository organizationESRepository) {
         this.organizationRepository = organizationRepository;
+        this.organizationESRepository = organizationESRepository;
     }
 
     @Override
@@ -127,5 +131,18 @@ public class OrganizationServiceImpl implements OrganizationService{
     @Override
     public Set<Student> getParticipants(Long id) {
         return organizationRepository.findOne(id).getStudents();
+    }
+
+    @Override
+    public Page<Organization> searchByTitle(String title) {
+
+        List<Organization> organizations = this.organizationESRepository.findByTitle(title);
+
+        return new PageImpl<>(organizations, null, organizations.size());
+    }
+
+    @Override
+    public Long getOrganizationsCount() {
+        return this.organizationRepository.count();
     }
 }

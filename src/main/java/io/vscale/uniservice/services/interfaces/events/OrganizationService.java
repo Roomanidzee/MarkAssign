@@ -43,4 +43,8 @@ public interface OrganizationService {
 
     Set<Student> getParticipants(Long id);
 
+    Page<Organization> searchByTitle(String title);
+
+    Long getOrganizationsCount();
+
 }

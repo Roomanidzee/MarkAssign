@@ -1,9 +1,14 @@
 package io.vscale.uniservice.controllers.general.admin;
 
+import io.vscale.uniservice.domain.Event;
+import io.vscale.uniservice.services.interfaces.events.EventService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * 07.05.2018
@@ -14,6 +19,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/admin")
 public class ScoreController {
+
+    private final EventService eventService;
+
+    @Autowired
+    public ScoreController(EventService eventService) {
+        this.eventService = eventService;
+    }
 
     @GetMapping("/scores/add")
     public ModelAndView addScores(){
@@ -32,7 +44,11 @@ public class ScoreController {
 
     @GetMapping("/scores/view")
     public ModelAndView viewScores(){
-        return new ModelAndView("scores/view-scores");
+        List<Event> events =  eventService.findAll();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("events", events);
+        modelAndView.setViewName("scores/view-scores");
+        return modelAndView;
     }
 
     @GetMapping("/scores/view-students")

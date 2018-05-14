@@ -20,9 +20,11 @@ public interface CooperatorService {
     Page<Cooperator> findAll(Pageable pageable);
     Page<Cooperator> retrieveAllCooperatorsAsc(Pageable pageable);
     Page<Cooperator> retrieveAllCooperatorsDesc(Pageable pageable);
+    Cooperator getCooperatorById(Long id);
 
     void addCooperator(CooperatorForm cooperatorForm);
     void updateCooperator(CooperatorForm cooperatorForm);
     void deleteCooperator(CooperatorForm cooperatorForm);
+    Long getCooperatorsCount();
 
 }

@@ -32,4 +32,8 @@ public interface EventService {
     List<Event> getEventsByUser(User user);
     void addEvaluationToEvent(EventTypeEvaluationForm eventTypeEvaluationForm);
     void addFileOfService(Event event, MultipartFile multipartFile);
+    Page<Event> searchByTitle(String title);
+    Long getEventsCount();
+    Page<Event> retrieveAllEventsAsc(Pageable pageable);
+    Page<Event> retrieveAllEventsDesc(Pageable pageable);
 }

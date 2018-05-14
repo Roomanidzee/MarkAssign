@@ -11,6 +11,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 04.05.2018
@@ -66,7 +67,7 @@ public class DataLoader implements CommandLineRunner{
                          this.confirmationESRepository.save(confirmation);
                      });
 
-        /*log.info("Work with " + Cooperator.class.toString());
+       /* log.info("Work with " + Cooperator.class.toString());
 
         this.esTemplate.deleteIndex(Cooperator.class);
         this.esTemplate.createIndex(Cooperator.class);
@@ -77,13 +78,12 @@ public class DataLoader implements CommandLineRunner{
 
         List<Cooperator> cooperators = this.cooperatorRepository.findAll();
 
-        cooperators.stream()
-                   .filter(cooperator -> this.cooperatorESRepository.findOne(cooperator.getId()) == null)
-                   .forEach(cooperator -> {
-                       log.info("Uploading to ElasticSearch: " + cooperator.toString());
-                       this.cooperatorESRepository.save(cooperator);
-                   });*/
+        List<Cooperator> newCooperators = cooperators.stream()
+                                                     .filter(cooperator -> this.cooperatorESRepository.findOne(cooperator.getId()) == null)
+                                                     .collect(Collectors.toList());
 
+        this.cooperatorESRepository.save(newCooperators);
+*/
         log.info("Work with " + Event.class.toString());
 
         this.esTemplate.deleteIndex(Event.class);

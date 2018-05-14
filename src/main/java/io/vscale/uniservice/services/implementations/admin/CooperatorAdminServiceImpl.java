@@ -8,7 +8,11 @@ import io.vscale.uniservice.repositories.data.ProfileRepository;
 import io.vscale.uniservice.repositories.indexing.CooperatorESRepository;
 import io.vscale.uniservice.services.interfaces.admin.CooperatorAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 17.03.2018
@@ -45,5 +49,13 @@ public class CooperatorAdminServiceImpl implements CooperatorAdminService{
         this.cooperatorRepository.save(cooperator);
         this.cooperatorESRepository.save(cooperator);
 
+    }
+
+    @Override
+    public Page<Cooperator> searchBySurname(String surname) {
+
+        List<Cooperator> result = this.cooperatorESRepository.findByProfile_Surname(surname);
+
+        return new PageImpl<>(result, null, result.size());
     }
 }
