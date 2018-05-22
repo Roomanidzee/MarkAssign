@@ -40,8 +40,8 @@ public class StudentRESTController {
     }
 
     @GetMapping("/student/mark")
-    public ResponseEntity<Integer> getStudentMarks(Student student){
-        return ResponseEntity.ok(this.studentService.getMarksSum(student));
+    public ResponseEntity<Long> getStudentMarks(Student student){
+        return ResponseEntity.ok(this.studentService.getStudentsMarks(student.getId()));
     }
 
     @GetMapping({"/admin_role/student/events", "/student_role/student/events"})

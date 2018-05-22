@@ -143,22 +143,22 @@
                         </div>
 
                         <!-- item 1 -->
-                        <div class="list-item">
+                        <div class="list-item" th:each="student : ${pageWrapper.content}">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="user-data">
                                         <div class="user-title">
                                             <div class="user-name">
                                                 <a href="view-student.html">
-                                                    <span class="lastname">Фамилия</span>
-                                                    <span class="name">Имя</span>
-                                                    <span class="secondname">Отчество</span>
+                                                    <span class="lastname" th:text="${student.profile.surname}">Фамилия</span>
+                                                    <span class="name" th:text="${student.profile.name}">Имя</span>
+                                                    <span class="secondname" th:text="${student.profile.patronymic}}">Отчество</span>
                                                 </a>
                                             </div>
                                             <a class="edit" href="view-scores.html"><i class="fas fa-star"></i> Смотреть все баллы</a>
                                         </div>
                                         <div class="user-info">
-                                            <p><span>Текущий дополнительный балл:</span>Балл</p>
+                                            <p th:text="${@studentServiceImpl.getStudentsMarks(student.id)}"><span>Текущий дополнительный балл:</span>Балл</p>
                                         </div>
                                     </div>
                                 </div>

@@ -73,11 +73,11 @@
                                     <h2 class="create-title modal-title" id="myModalLabel">Создать мероприятие</h2>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="create-data" action="" method="post">
+                                    <form id="create-data" th:action="@{/admin/events/add}" method="post">
                                         <div class="info-edit">
                                             <div class="input-box">
                                                 <label for="name">Название:</label>
-                                                <input id="name" type="text" name="name" placeholder="Название">
+                                                <input id="name" type="text" name="title" placeholder="Название">
                                             </div>
 
                                             <div class="input-box">

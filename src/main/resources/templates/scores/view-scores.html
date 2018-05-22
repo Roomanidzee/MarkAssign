@@ -89,7 +89,7 @@
                     <!-- item 1 -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <ul class="responsive-table" th:each="event : ${events}">
+                            <ul class="responsive-table">
                                 <li class="table-header">
                                     <div class="col col-1">Мероприятие</div>
                                     <div class="col col-2">Роль</div>
@@ -98,7 +98,7 @@
                                     <div class="col col-5">Балл</div>
                                 </li>
                                 <!--если балл выставлен руководителем-->
-                                <li class="table-row">
+                                <li class="table-row" th:each="event : ${events}">
                                     <div class="col col-1" data-label="Мероприятие" th:text="${event.name}">Название мероприятия</div>
                                     <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
                                     <div class="col col-3" data-label="Подтверждение">Подтверждено</div>
@@ -108,28 +108,6 @@
                                             <a href="view-event.html" download="">Название файла</a></div>
                                     </div>
                                     <div class="col col-5" data-label="Балл">10</div>
-                                </li>
-                                <!--если участие в мероприятии не подтверждено-->
-                                <li class="table-row">
-                                    <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
-                                    <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
-                                    <div class="col col-3" data-label="Подтверждение">Не подтверждено</div>
-                                    <div class="col col-4" data-label="Файл">
-                                        <div class="download-file-score">
-                                            Нет файла</div>
-                                    </div>
-                                    <div class="col col-5" data-label="Балл">0</div>
-                                </li>
-                                <!--если балл еще не выставлен-->
-                                <li class="table-row">
-                                    <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
-                                    <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
-                                    <div class="col col-3" data-label="Подтверждение">В обработке</div>
-                                    <div class="col col-4" data-label="Файл">
-                                        <div class="download-file-score">
-                                            <a href="view-event.html" download="">Название файла</a></div>
-                                    </div>
-                                    <div class="col col-5" data-label="Балл">-</div>
                                 </li>
                             </ul>
                         </div>
@@ -157,3 +135,4 @@
 <script th:src="@{/js/scripts.min.js(v=${v})}"></script>
 </body>
 </html>
+

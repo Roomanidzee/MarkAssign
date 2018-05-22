@@ -127,7 +127,7 @@
                         <!-- item 1 -->
                         <div class="row">
                             <div class="col-lg-12">
-                                <form action="" method="post" id="addScoresForm">
+                                <form action="save" method="post" id="addScoresForm">
                                     <ul class="responsive-table">
                                         <li class="table-header">
                                             <div class="col col-1">Мероприятие</div>
@@ -136,49 +136,21 @@
                                             <div class="col col-4">Балл</div>
                                         </li>
                                         <!--когда строка таблицы еще обаботана руководителем-->
-                                        <li class="table-row">
-                                            <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
+                                        <li class="table-row" th:each="event : ${events}">
+                                            <div class="col col-1" data-label="Мероприятие" th:text="${event.name}">Название мероприятия</div>
                                             <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
                                             <div class="col col-3" data-label="Подтверждение">
-                                                <input type="radio" name="confirm" value="true"/> Да<br/>
-                                                <input type="radio" name="confirm" value="false"/> Нет
+                                                <input type="radio" th:name="'confirm' + ${event.id}" value="true"/> Да<br/>
+                                                <input type="radio" th:name="'confirm' + ${event.id}" value="false"/> Нет
                                             </div>
                                             <div class="col col-4" data-label="Балл">
                                                 <div class="add-scores-box">
-                                                    <input id="score1" type="text" name="student_id1" form="addScoresForm" data-rule-range="0, 10" data-msg-range="Введите число в диапазоне от 0 до 10" data-msg-required="Обязательно к заполнению" required = "true"/>
+                                                    <input id="score1" type="text" th:name="'addScoresForm' + ${event.id}" form="addScoresForm" data-rule-range="0, 10" data-msg-range="Введите число в диапазоне от 0 до 10" data-msg-required="Обязательно к заполнению" required = "true"/>
                                                 </div>
                                             </div>
                                         </li>
                                         <!--когда строка таблицы еще обаботана руководителем-->
                                         <!--если не подтверждается, то в баллах написать все равно надо 0-->
-                                        <li class="table-row">
-                                            <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
-                                            <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
-                                            <div class="col col-3" data-label="Подтверждение">
-                                                <div class="radio-add-scores-box">
-                                                    <input type="radio" name="confirm" value="true" form="addScoresForm"/> Да<br/></div>
-                                                <div class="radio-add-scores-box">
-                                                    <input type="radio" name="confirm" value="false" form="addScoresForm"/> Нет</div>
-                                            </div>
-                                            <div class="col col-4" data-label="Балл">
-                                                <div class="add-scores-box">
-                                                    <input id="score2" type="text" name="student_id1" form="addScoresForm" data-rule-range="0, 10" data-msg-range="Введите число в диапазоне от 0 до 10" data-msg-required="Обязательно к заполнению" required = "true"/>
-                                                </div></div>
-                                        </li>
-                                        <!--если балл уже проставлен, то балл появляется-->
-                                        <li class="table-row">
-                                            <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
-                                            <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
-                                            <div class="col col-3" data-label="Подтверждение">Подтверждено</div>
-                                            <div class="col col-4" data-label="Балл">10</div>
-                                        </li>
-                                        <!--если не подтверждено, то-->
-                                        <li class="table-row">
-                                            <div class="col col-1" data-label="Мероприятие">Название мероприятия</div>
-                                            <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
-                                            <div class="col col-3" data-label="Подтверждение">Не подтверждено</div>
-                                            <div class="col col-4" data-label="Балл">0</div>
-                                        </li>
                                     </ul>
                                     <div class="view-all-item">
                                         <button type="submit" class="create-button create-org-button">Сохранить</button>

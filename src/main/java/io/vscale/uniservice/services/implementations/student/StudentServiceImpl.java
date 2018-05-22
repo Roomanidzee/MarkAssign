@@ -175,25 +175,6 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Integer getMarksSum(Student student) {
-
-        AtomicInteger result = new AtomicInteger();
-        result.set(0);
-
-        List<Event> events = student.getEvents();
-
-        events.forEach(event ->
-                            result.set(result.get() + event.getEventTypeEvaluations()
-                                                           .stream()
-                                                           .mapToInt(EventTypeEvaluation::getFinalValue)
-                                                           .sum())
-        );
-
-        return result.get();
-
-    }
-
-    @Override
     public List<FileOfService> getConfirmationFiles(Long studentId) {
 
         Student student = this.studentRepository.findOne(studentId);
@@ -217,5 +198,18 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Long getStudentsCount() {
         return this.studentRepository.count();
+    }
+
+    @Override
+    public Long getStudentsMarks(Long studentId) {
+
+        Student student = this.studentRepository.findOne(studentId);
+        Set<EventTypeEvaluation> evaluations = student.getEvaluations();
+
+        Integer result = evaluations.stream()
+                                    .mapToInt(EventTypeEvaluation::getFinalValue)
+                                    .sum();
+
+        return result.longValue();
     }
 }

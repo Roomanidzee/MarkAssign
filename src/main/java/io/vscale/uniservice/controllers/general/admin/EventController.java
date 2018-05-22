@@ -2,13 +2,17 @@ package io.vscale.uniservice.controllers.general.admin;
 
 import io.vscale.uniservice.domain.Event;
 import io.vscale.uniservice.domain.FileOfService;
+import io.vscale.uniservice.forms.general.NewEventForm;
 import io.vscale.uniservice.services.interfaces.events.EventService;
 import io.vscale.uniservice.utils.PageWrapper;
+import io.vscale.uniservice.validators.NewEventFormValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,6 +34,12 @@ import java.util.stream.Collectors;
 public class EventController {
 
     private EventService eventService;
+    private NewEventFormValidator newEventFormValidator;
+
+    @InitBinder("newEventForm")
+    public void initValidator(WebDataBinder binder){
+        binder.addValidators(this.newEventFormValidator);
+    }
 
     @GetMapping("/events")
     public ModelAndView showEvents(@PageableDefault(value = 4) Pageable pageable){
@@ -170,6 +180,12 @@ public class EventController {
 
         return modelAndView;
 
+    }
+
+    @PostMapping("/events/add")
+    public ModelAndView addEvent(@Validated NewEventForm newEventForm){
+        this.eventService.addEventWithChecking(newEventForm);
+        return new ModelAndView("redirect:/admin/events");
     }
 
 }
