@@ -83,10 +83,10 @@ public class CooperatorController {
     }
 
     @PostMapping("/employees/search")
-    public ModelAndView searchCooperators(@RequestParam("search") String searchQuery){
+    public ModelAndView searchCooperators(@RequestParam("search") String searchQuery, @PageableDefault(value = 4) Pageable pageable){
 
         PageWrapper<Cooperator> pageWrapper =
-                new PageWrapper<>(this.cooperatorAdminService.searchBySurname(searchQuery), "/admin/cooperators/search");
+                new PageWrapper<>(this.cooperatorAdminService.searchBySurname(searchQuery, pageable), "/admin/cooperators/search");
 
         Long limit = this.cooperatorService.getCooperatorsCount();
 

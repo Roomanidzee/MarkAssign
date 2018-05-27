@@ -48,15 +48,17 @@ public class EventController {
                 new PageWrapper<>(this.eventService.findAll(pageable), "/admin/events");
 
         Long limit = this.eventService.getEventsCount();
+        List<String> types = this.eventService.getAllTypes();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/admin-events");
         modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("types", types);
         modelAndView.addObject("limit", limit);
 
         return modelAndView;
 
-    }
+    }/*
 
     @GetMapping("/events/alph")
     public ModelAndView showEventsWithAlthabeticPagination(@RequestParam(defaultValue = "а") char ch){
@@ -79,7 +81,7 @@ public class EventController {
 
         return modelAndView;
 
-    }
+    }*/
 
     @GetMapping("/events/asc")
     public ModelAndView showEventsAsc(@PageableDefault(value = 4) Pageable pageable){
@@ -115,12 +117,13 @@ public class EventController {
 
     }
 
-    @GetMapping("/event/{eventId}/edit")
+    @GetMapping("/event/edit/{eventId}")
     public ModelAndView editEvent(@PathVariable("eventId") long eventId){
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("admin/events/edit-event");
         Event event = eventService.findOne(eventId);
+        List<String> types = this.eventService.getAllTypes();
 
         Set<FileOfService> files = event.getFiles();
 
@@ -129,18 +132,19 @@ public class EventController {
                                                        .collect(Collectors.toSet());
 
         mav.addObject("event_model", event);
+        mav.addObject("types", types);
         mav.addObject("files", applicationTypeFiles);
         mav.addObject("students_size", event.getStudents().size());
         return mav;
 
     }
 
-    @GetMapping("/event/{eventId}/view")
-    public ModelAndView viewEvent(@PathVariable("eventId") long eventId){
+    @GetMapping("/event/view/{id}")
+    public ModelAndView viewEvent(@PathVariable("id") Long id){
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("events/view-event");
-        Event event = eventService.findOne(eventId);
+        Event event = eventService.findOne(id);
 
         Set<FileOfService> files = event.getFiles();
 

@@ -44,7 +44,18 @@ public class CooperatorServiceImpl implements CooperatorService{
 
     @Override
     public Page<Cooperator> findAll(Pageable pageable) {
-        return this.cooperatorRepository.findAll(pageable);
+
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
+
+        List<Cooperator> cooperators = this.cooperatorRepository.findAll(number);
+
+        return new PageImpl<>(cooperators, pageable, cooperators.size());
     }
 
     @Override

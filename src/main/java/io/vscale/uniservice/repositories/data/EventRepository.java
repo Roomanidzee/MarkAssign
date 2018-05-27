@@ -23,6 +23,9 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query("SELECT new io.vscale.uniservice.dto.EventDTO(e.name, e.eventTypeName, e.eventDate, e.description) from Event e")
     List<EventDTO> findAllEventsAsDTO();
 
+    @Query(value = "SELECT * FROM event LIMIT 4 OFFSET :number", nativeQuery = true)
+    List<Event> findAll(@Param("number") Long number);
+
     @Query(value = "SELECT * FROM event ORDER BY event.name ASC LIMIT 4 OFFSET :number", nativeQuery = true)
     List<Event> findAllOrderByNameAsc(@Param("number") Long number);
 

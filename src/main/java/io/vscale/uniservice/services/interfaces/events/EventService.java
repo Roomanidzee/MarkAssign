@@ -36,4 +36,5 @@ public interface EventService {
     Long getEventsCount();
     Page<Event> retrieveAllEventsAsc(Pageable pageable);
     Page<Event> retrieveAllEventsDesc(Pageable pageable);
+    List<String> getAllTypes();
 }

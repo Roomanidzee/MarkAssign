@@ -20,6 +20,10 @@ public interface CooperatorRepository extends JpaRepository<Cooperator, Long> {
     Page<Cooperator> findAll(Pageable pageable);
 
     @Query(value = "SELECT * FROM cooperator LEFT JOIN profile ON profile.id = cooperator.profile_id " +
+                                                                           "LIMIT 4 OFFSET :number", nativeQuery = true)
+    List<Cooperator> findAll(@Param("number") Long number);
+
+    @Query(value = "SELECT * FROM cooperator LEFT JOIN profile ON profile.id = cooperator.profile_id " +
                              "ORDER BY profile.surname ASC LIMIT 4 OFFSET :number", nativeQuery = true)
     List<Cooperator> findAllByOrderBySurnameAsc(@Param("number") Long number);
 

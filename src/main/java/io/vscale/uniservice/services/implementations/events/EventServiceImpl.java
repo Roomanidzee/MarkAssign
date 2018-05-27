@@ -99,9 +99,8 @@ public class EventServiceImpl implements EventService {
     public void addEventWithChecking(NewEventForm newEventForm) {
 
         Event event = Event.builder()
+                           .name(newEventForm.getTitle())
                            .description(newEventForm.getTitle())
-                           .timestamp(Timestamp.valueOf(newEventForm.getEventDate()))
-                           .students(Collections.singleton(this.studentRepository.findOne(newEventForm.getStudentId())))
                            .build();
 
         this.repository.save(event);
@@ -191,12 +190,36 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<String> getAllTypes() {
+
+        List<Event> events = this.repository.findAll();
+
+        return events.stream()
+                     .map(Event::getEventTypeName)
+                     .distinct()
+                     .collect(Collectors.toList());
+
+    }
+
+    @Override
     public List<Event> findAll() {
         return repository.findAll();
     }
 
     @Override
     public Page<Event> findAll(Pageable pageable) {
-        return repository.findAll(pageable);
+
+        Long number;
+
+        if(pageable.getPageNumber() == 1){
+            number = (long)0;
+        }else{
+            number = (long) (pageable.getPageNumber() + 3);
+        }
+
+        List<Event> events = this.repository.findAll(number);
+
+        return new PageImpl<>(events, pageable, events.size());
+
     }
 }

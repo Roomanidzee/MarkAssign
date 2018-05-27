@@ -1,65 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-
-    <meta charset="utf-8"/>
-
-    <title>UniService</title>
-    <meta name="description" content=""/>
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#fff"/>
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#fff"/>
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#fff"/>
-
-    <link rel="stylesheet" th:href="@{/css/main.min.css(v=${v})}"/>
-</head>
+<head th:include="elements/head :: head"></head>
 <body>
 
 <div class="content">
-    <header>
-        <nav class="header-container">
-            <a th:href="@{/admin/index}" class="logo main-logo">UniService</a>
-
-            <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden = "true">
-                <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                </span>
-            </a>
-
-            <div id="menu">
-                <ul>
-                    <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
-                        <ul>
-                            <li><a th:href="@{/admin/students}">Студенты</a></li>
-                            <li><a th:href="@{/admin/cooperators}">Сотрудники</a></li>
-                        </ul>
-                    </li>
-                    <li><a th:href="@{/admin/events}"><i class="fas fa-bell"></i>Мероприятия</a></li>
-                    <li><a th:href="@{/admin/organizations}"><i class="fas fa-list-alt"></i>Организации</a></li>
-                    <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
-                    <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
-                        <ul>
-                            <li><a href="#">Настройки</a></li>
-                            <li><a th:href="@{/logout}">Выйти</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <header th:include="elements/menu-header :: menu-header"></header>
 
     <div class="main-content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3">
-                    <div class="create-box">
-                        <button class="create-button" data-toggle="modal" data-target="#myModal">Добавить студента</button>
+                    <div class="create-box" th:if="${role} == 'ADMIN' ">
+                        <button class="add-button create-button" data-toggle="modal" data-target="#myModal">Добавить студента</button>
                     </div>
 
                     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -172,6 +124,9 @@
                                         <div class="select__arrow"></div>
                                     </div>
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="submit" form="create-data" class="create-org-button create-button">Создать</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -215,7 +170,9 @@
                                                     <span class="secondname" th:text="${student.profile.patronymic}">Отчество</span>
                                                 </a>
                                             </div>
-                                            <a class="edit" href="#"><i class="fas fa-edit"></i> Редактировать</a>
+                                            <a class="edit" href="#" th:if="${role} == 'ADMIN'"><i class="fas fa-edit"></i> Редактировать</a>
+                                            <a class="edit" href="#" th:if="${role} == 'EMPLOYEE'"><i class="fas fa-edit"></i> Редактировать</a>
+
                                         </div>
                                         <div class="user-info">
                                             <p th:inline="text"><span>Обучение:</span>[[${student.educationType.toString()}]]</p>
@@ -255,18 +212,7 @@
     </div>
 </div>
 
-<footer>
-    <div class="footer-container">
-        <div class="footer-text">2018, UniService Team
-            <div class="social-media">
-                <a href="https://vk.com/itis_kpfu"><i class="fab fa-vk fa-lg"></i></a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script th:src="@{/js/scripts.min.js(v=${v})}">
-</script>
+<footer th:include="elements/footer :: footer"></footer>
 
 </body>
 </html>

@@ -1,67 +1,23 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-
-    <meta charset="utf-8"/>
-
-    <title>UniService</title>
-    <meta name="description" content=""/>
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#fff"/>
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#fff"/>
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#fff"/>
-
-    <link rel="stylesheet" th:href="@{/css/main.min.css(v=${v})}"/>
-</head>
-
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="elements/head :: head"></head>
 <body>
 
 <div class="content">
 
-    <header>
-        <nav class="header-container">
-            <a href="admin.html" class="logo main-logo">UniService</a>
-
-            <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden = "true">
-                <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                </span>
-            </a>
-
-            <div id="menu">
-                <ul>
-                    <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
-                        <ul>
-                            <li><a href="admin.html">Студенты</a></li>
-                            <li><a href="admin-employees.html">Сотрудники</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="admin-events.html"><i class="fas fa-bell"></i>Мероприятия</a></li>
-                    <li><a href="admin-organizations.html"><i class="fas fa-list-alt"></i>Организации</a></li>
-                    <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
-                    <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
-                        <ul>
-                            <li><a href="edit-user.html">Настройки</a></li>
-                            <li><a href="index.html">Выйти</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <header th:include="elements/menu-header :: menu-header"></header>
 
     <div class="main-content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="create-box">
-                        <a th:href="@{'/admin/events/' + ${event_model.id} + '/edit'}"><button type="button" class="create-button">Редактировать</button></a>
+                    <div class="create-box" sec:authorize="hasAnyRole('ADMIN', 'COOPERATOR')">
+                        <a th:href="@{/admin/event/edit/{eventId}(eventId = ${event_model.id})}">
+                            <button type="button" class="edit-button create-button">Редактировать</button></a>
+                    </div>
+                    <div class="create-box" sec:authorize="hasRole('STUDENT')">
+                        <a th:href=""><button type="button" class="edit-button create-button">Участвовать</button></a>
                     </div>
                     <div class="small-box">
                         <div class="description-box">
@@ -71,12 +27,13 @@
                                         <h3>Участники</h3>
                                         <div th:each="student : ${event_model.students}" class="user-item">
                                             <div class="name">
-                                                <a th:text="@{${student.profile.name} + ' ' + ${student.profile.surname} + ' ' + ${student.profile.patronymic}}"
-                                                   th:href="@{'/admin/users/'+ ${student.profile.user.id}}">
+                                                <a th:href="@{/admin/students/view/{id}(id = student.id)}"
+                                                   th:text="${student.profile.surname} + ' ' + ${student.profile.name} + ' ' + ${student.profile.patronymic}">
                                                 </a>
                                             </div>
                                             <div class="user-info">
                                                 <p th:inline="text"><span>Курс:</span>[[${student.course}]]</p>
+                                                <!--Сделать внедрение группы и роли-->
                                                 <p ><span>Группа:</span>11-602</p>
                                                 <p><span>Роль:</span>роль в мероприятии</p>
                                             </div>
@@ -96,13 +53,13 @@
                                                             <div th:each="student : ${event_model.students}" class="row">
                                                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
                                                                     <img class="user-picture center-block img-circle"
-                                                                         th:src=" (${student.profile.avatar?.url}? (${student.profile.avatar.url}) : '/img/default-user.png')" alt="User"/>
+                                                                         th:src=" ${student.profile.avatar.url == null} ? ${student.profile.avatar.url} : '/img/default-user.png' " alt="User"/>
                                                                 </div>
                                                                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
                                                                     <div class="user-data">
                                                                         <div class="user-title">
                                                                             <div class="user-name">
-                                                                                <a th:text="@{${student.profile.name} + ' ' + ${student.profile.surname} + ' ' + ${student.profile.patronymic}}">
+                                                                                <a th:href="@{/admin/students/view/{id}(id = student.id)}">
                                                                                     <span th:text="${student.profile.surname}" class="lastname">Фамилия</span>
                                                                                     <span th:text="${student.profile.name}" class="name">Имя</span>
                                                                                     <span th:text="${student.profile.patronymic}" class="secondname">Отчество</span>
@@ -122,7 +79,7 @@
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="close-button create-button" data-dismiss="modal">Закрыть</button>
+                                                        <button type="button" class="add-button close-button create-button" data-dismiss="modal">Закрыть</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -1,60 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-
-    <meta charset="utf-8"/>
-
-    <title>UniService</title>
-    <meta name="description" content=""/>
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#fff"/>
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#fff"/>
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#fff"/>
-
-    <link rel="stylesheet" th:href="@{/css/main.min.css(v=${v})}"/>
-</head>
-
+<head th:include="elements/head :: head"></head>
 <body>
 
 <div class="content">
 
-    <header>
-        <nav class="header-container">
-            <a href="admin.html" class="logo main-logo">UniService</a>
-
-            <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden = "true">
-                <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                </span>
-            </a>
-
-            <div id="menu">
-                <ul>
-                    <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
-                        <ul>
-                            <li><a href="admin.html">Студенты</a></li>
-                            <li><a href="admin-employees.html">Сотрудники</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="admin-events.html"><i class="fas fa-bell"></i>Мероприятия</a></li>
-                    <li><a href="admin-organizations.html"><i class="fas fa-list-alt"></i>Организации</a></li>
-                    <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
-                    <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
-                        <ul>
-                            <li><a href="edit-user.html">Настройки</a></li>
-                            <li><a href="index.html">Выйти</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <header th:include="elements/menu-header :: menu-header"></header>
 
     <div class="main-content">
         <div class="container-fluid">
@@ -92,8 +43,7 @@
                                                     <label for="type">Тип:</label>
                                                     <select id="type" name="type">
                                                         <option>Не выбрано</option>
-                                                        <option>Фильтр 1</option>
-                                                        <option>Фильтр 2</option>
+                                                        <option th:each="type : ${types}" th:text="${type}">Фильтр 1</option>
                                                     </select>
                                                 </div>
                                                 <div class="input-box">
@@ -106,7 +56,7 @@
                                                 </div>
                                                 <div class="button-container">
                                                     <button class="create-org-button create-button upload-button" type="submit">Отправить</button>
-                                                    <button class="create-button upload-button" type="reset">Отмена</button>
+                                                    <button class="cancel-button create-button upload-button" type="reset">Отмена</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -163,8 +113,8 @@
                                                                 <div class="modal-body">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                     <h4 class="modal-title" id="myModalLabel">Вы уверенны?</h4>
-                                                                    <button class="modal-button" type="submit" value="Да">Исключить</button>
-                                                                    <button class="modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
+                                                                    <button class="cancel-button modal-button" type="submit" value="Да">Исключить</button>
+                                                                    <button class="send-button modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -218,7 +168,7 @@
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="close-button create-button" data-dismiss="modal">Закрыть</button>
+                                            <button type="button" class="add-button close-button create-button" data-dismiss="modal">Закрыть</button>
                                         </div>
                                     </div>
                                 </div>
@@ -253,8 +203,8 @@
                                                             <div class="upload-file">
                                                                 <input type="file" name="file" multiple="multiple"/>
                                                             </div>
-                                                            <button class="modal-button" type="submit" value="Да">Отправить</button>
-                                                            <button class="modal-button" type="reset" value="Нет" data-dismiss="modal">Отмена</button>
+                                                            <button class="send-button modal-button" type="submit" value="Да">Отправить</button>
+                                                            <button class="cancel-button modal-button" type="reset" value="Нет" data-dismiss="modal">Отмена</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -281,8 +231,8 @@
                                                                 <div class="modal-body">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                     <h4 class="modal-title" id="modalLabel">Вы уверенны?</h4>
-                                                                    <button class="modal-button" type="submit" value="Да">Удалить</button>
-                                                                    <button class="modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
+                                                                    <button class="cancel-button modal-button" type="submit" value="Да">Удалить</button>
+                                                                    <button class="send-button modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -302,16 +252,6 @@
 </div>
 
 
-<footer>
-    <div class="footer-container">
-        <div class="footer-text">2018, UniService Team
-            <div class="social-media">
-                <a href="https://vk.com/itis_kpfu"><i class="fab fa-vk fa-lg"></i></a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script th:src="@{/js/scripts.min.js(v=${v})}"></script>
+<footer th:include="elements/footer :: footer"></footer>
 </body>
 </html>

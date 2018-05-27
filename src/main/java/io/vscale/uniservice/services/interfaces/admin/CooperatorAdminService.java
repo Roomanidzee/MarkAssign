@@ -3,6 +3,7 @@ package io.vscale.uniservice.services.interfaces.admin;
 import io.vscale.uniservice.domain.Cooperator;
 import io.vscale.uniservice.forms.rest.CooperatorRESTForm;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 /**
@@ -13,5 +14,5 @@ import org.springframework.data.domain.Page;
  */
 public interface CooperatorAdminService {
     void makeRESTCooperator(CooperatorRESTForm cooperatorRESTForm);
-    Page<Cooperator> searchBySurname(String surname);
+    Page<Cooperator> searchBySurname(String surname, Pageable pageable);
 }

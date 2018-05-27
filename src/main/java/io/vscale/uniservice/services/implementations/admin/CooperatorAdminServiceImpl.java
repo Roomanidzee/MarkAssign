@@ -10,6 +10,7 @@ import io.vscale.uniservice.services.interfaces.admin.CooperatorAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,10 +53,10 @@ public class CooperatorAdminServiceImpl implements CooperatorAdminService{
     }
 
     @Override
-    public Page<Cooperator> searchBySurname(String surname) {
+    public Page<Cooperator> searchBySurname(String surname, Pageable pageable) {
 
         List<Cooperator> result = this.cooperatorESRepository.findByProfile_Surname(surname);
 
-        return new PageImpl<>(result, null, result.size());
+        return new PageImpl<>(result, pageable, result.size());
     }
 }

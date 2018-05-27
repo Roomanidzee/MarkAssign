@@ -43,20 +43,25 @@ public class EmployeeController {
 
     }
 
-    @GetMapping("/employee/edit")
-    public ModelAndView editEmployeePage(){
-        return new ModelAndView("employees/edit-employee");
+    @GetMapping("/employee/edit/{id}")
+    public ModelAndView editEmployeePage(@PathVariable("id") Long id){
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("employees/edit-employee");
+        modelAndView.addObject("id", id);
+
+        return modelAndView;
     }
 
     @PostMapping("/employee/edit")
     public ModelAndView editEmployee(@Validated @ModelAttribute("cooperatorForm") CooperatorForm cooperatorForm){
 
         this.cooperatorService.updateCooperator(cooperatorForm);
-        return new ModelAndView("redirect:/admin/employee/view");
+        return new ModelAndView("redirect:/admin/employee/view/" + cooperatorForm.getId());
 
     }
 
-    @GetMapping("/employee/{id}/view")
+    @GetMapping("/employee/view/{id}")
     public ModelAndView viewEmployee(@PathVariable("id") Long id){
 
         Cooperator cooperator = this.cooperatorService.getCooperatorById(id);

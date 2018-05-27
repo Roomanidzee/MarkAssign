@@ -1,0 +1,33 @@
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="menu-header">
+    <nav class="header-container">
+        <a th:href="@{/admin/index}" class="logo main-logo">UniService</a>
+
+        <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden = "true">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+        </a>
+
+        <div id="menu">
+            <ul>
+                <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
+                    <ul>
+                        <li><a th:href="@{/admin/students}">Студенты</a></li>
+                        <li><a th:href="@{/admin/cooperators}">Сотрудники</a></li>
+                    </ul>
+                </li>
+                <li><a th:href="@{/admin/events}"><i class="fas fa-bell"></i>Мероприятия</a></li>
+                <li><a th:href="@{/admin/organizations}"><i class="fas fa-list-alt"></i>Организации</a></li>
+                <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
+                <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
+                    <ul>
+                        <li><a href="#">Настройки</a></li>
+                        <li><a th:href="@{/logout}">Выйти</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+</html>

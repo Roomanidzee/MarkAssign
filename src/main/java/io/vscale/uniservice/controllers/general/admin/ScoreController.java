@@ -1,14 +1,18 @@
 package io.vscale.uniservice.controllers.general.admin;
 
-import io.vscale.uniservice.domain.Event;
-import io.vscale.uniservice.domain.Student;
+import io.vscale.uniservice.domain.*;
+import io.vscale.uniservice.services.interfaces.auth.AuthenticationService;
 import io.vscale.uniservice.services.interfaces.events.EventService;
+import io.vscale.uniservice.services.interfaces.events.EventTypeEvaluationService;
+import io.vscale.uniservice.services.interfaces.student.GroupService;
 import io.vscale.uniservice.services.interfaces.student.StudentService;
 import io.vscale.uniservice.utils.FormDataParser;
 import io.vscale.uniservice.utils.PageWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 07.05.2018
@@ -30,22 +35,35 @@ import java.util.List;
 public class ScoreController {
 
     private final EventService eventService;
+    private final EventTypeEvaluationService eventTypeEvaluationService;
     private final StudentService studentService;
     private final FormDataParser formDataParser;
+    private final AuthenticationService authenticationService;
+    private final GroupService groupService;
 
     @Autowired
-    public ScoreController(EventService eventService, StudentService studentService, FormDataParser formDataParser) {
+    public ScoreController(EventService eventService, EventTypeEvaluationService eventTypeEvaluationService, StudentService studentService, FormDataParser formDataParser,
+                           @Qualifier("generalAuthenticationService") AuthenticationService authenticationService,
+                           GroupService groupService) {
         this.eventService = eventService;
+        this.eventTypeEvaluationService = eventTypeEvaluationService;
         this.studentService = studentService;
         this.formDataParser = formDataParser;
+        this.authenticationService = authenticationService;
+        this.groupService = groupService;
     }
 
     @GetMapping("/scores/add")
     public ModelAndView addScores(){
-        List<Event> events =  eventService.findAll();
+
+        List<EventTypeEvaluation> evaluations = this.eventTypeEvaluationService.getAllEvaluations();
+        List<Group> groups = this.groupService.getAllGroups();
+
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("events", events);
+        modelAndView.addObject("evaluations", evaluations);
+        modelAndView.addObject("groups", groups);
         modelAndView.setViewName("scores/add-scores");
+
         return modelAndView;
     }
 
@@ -61,8 +79,15 @@ public class ScoreController {
     }
 
     @GetMapping("/scores/edit")
-    public ModelAndView editScores(){
-        List<Event> events =  eventService.findAll();
+    public ModelAndView editScores(Authentication authentication){
+
+        User user = this.authenticationService.getUserByAuthentication(authentication);
+        assert user.getProfile().getStudent() != null : "Authentication error";
+
+        Student student = user.getProfile().getStudent();
+        Set<EventTypeEvaluation> evaluations = student.getEvaluations();
+
+        List<Event> events =  student.getEvents();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("events", events);
         modelAndView.setViewName("scores/edit-scores");
@@ -77,11 +102,20 @@ public class ScoreController {
     }
 
     @GetMapping("/scores/view")
-    public ModelAndView viewScores(){
-        List<Event> events =  eventService.findAll();
+    public ModelAndView viewScores(Authentication authentication){
+        User user = this.authenticationService.getUserByAuthentication(authentication);
+        assert user.getProfile().getStudent() != null : "Authentication error";
+
+        Student student = user.getProfile().getStudent();
+        Long marks = this.studentService.getStudentsMarks(student.getId());
+
+        List<Event> events =  student.getEvents();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("events", events);
+        modelAndView.addObject("marks", marks);
         modelAndView.setViewName("scores/view-scores");
+
         return modelAndView;
     }
 

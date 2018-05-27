@@ -1,74 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-
-    <meta charset="utf-8"/>
-
-    <title>UniService</title>
-    <meta name="description" content=""/>
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#fff"/>
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#fff"/>
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#fff"/>
-
-    <link rel="stylesheet" th:href="@{/css/main.min.css(v=${v})}"/>
+<head th:include="elements/head :: head">
 </head>
 
 <body>
 
 <div class="content">
-    <header>
-        <nav class="header-container">
-            <a href="admin.html" class="logo main-logo">UniService</a>
-
-            <a href="#menu" id="btn-menu" class="hamburger hamburger--spring" type="button" hidden = "true">
-                <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                </span>
-            </a>
-
-            <div id="menu">
-                <ul>
-                    <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
-                        <ul>
-                            <li><a href="admin.html">Студенты</a></li>
-                            <li><a href="admin-employees.html">Сотрудники</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="admin-events.html"><i class="fas fa-bell"></i>Мероприятия</a></li>
-                    <li><a href="admin-organizations.html"><i class="fas fa-list-alt"></i>Организации</a></li>
-                    <li><a href="view-students-scores.html"><i class="fas fa-edit"></i>Баллы</a></li>
-                    <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
-                        <ul>
-                            <li><a href="edit-user.html">Настройки</a></li>
-                            <li><a href="index.html">Выйти</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <header th:include="elements/menu-header :: menu-header"></header>
 
     <div class="main-content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3 new-col">
                     <div class="create-box">
-                        <button class="create-button" data-toggle="modal" data-target="#myModal">Выгрузить таблицу</button>
+                        <button class="add-button create-button" data-toggle="modal" data-target="#myModal">Выгрузить таблицу</button>
                     </div>
+
                     <div class="small-box">
                         <div class="select-box">
-                            <form action="#" method="post">
+                            <form action="#" th:action="@{/add-scores}" th:object="${filter}" method="post">
                                 <div class="select-item">
                                     <h4>Курс</h4>
                                     <div class="select">
-                                        <select title="">
+                                        <select th:field="*{course}">
+                                            <!--<option
+                                                    th:each="courseValue: ${singleSelectAllValues}"
+                                                    th:value="${courseValue}"
+                                                    th:text="${courseValue}"></option>-->
                                             <option>Не выбрано</option>
                                             <option>1 курс</option>
                                             <option>2 курс</option>
@@ -83,14 +41,7 @@
                                     <div class="select">
                                         <select title="">
                                             <option>Не выбрано</option>
-                                            <option>11-601</option>
-                                            <option>11-602</option>
-                                            <option>11-603</option>
-                                            <option>11-604</option>
-                                            <option>11-605</option>
-                                            <option>11-606</option>
-                                            <option>11-607</option>
-                                            <option>11-608</option>
+                                            <option th:each="group : ${groups}" th:text="${group.title}">11-601</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -130,27 +81,37 @@
                                 <form action="save" method="post" id="addScoresForm">
                                     <ul class="responsive-table">
                                         <li class="table-header">
-                                            <div class="col col-1">Мероприятие</div>
-                                            <div class="col col-2">Роль</div>
-                                            <div class="col col-3">Подтверждение</div>
-                                            <div class="col col-4">Балл</div>
+                                            <div class="col col-1">Студент</div>
+                                            <div class="col col-2">Мероприятие</div>
+                                            <div class="col col-3">Роль</div>
+                                            <div class="col col-4">Подтверждение</div>
+                                            <div class="col col-5">Балл</div>
                                         </li>
                                         <!--когда строка таблицы еще обаботана руководителем-->
-                                        <li class="table-row" th:each="event : ${events}">
-                                            <div class="col col-1" data-label="Мероприятие" th:text="${event.name}">Название мероприятия</div>
-                                            <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
-                                            <div class="col col-3" data-label="Подтверждение">
-                                                <input type="radio" th:name="'confirm' + ${event.id}" value="true"/> Да<br/>
-                                                <input type="radio" th:name="'confirm' + ${event.id}" value="false"/> Нет
-                                            </div>
-                                            <div class="col col-4" data-label="Балл">
-                                                <div class="add-scores-box">
-                                                    <input id="score1" type="text" th:name="'addScoresForm' + ${event.id}" form="addScoresForm" data-rule-range="0, 10" data-msg-range="Введите число в диапазоне от 0 до 10" data-msg-required="Обязательно к заполнению" required = "true"/>
+                                        <div th:each="evaluation : ${evaluations}">
+                                            <li class="table-row" th:each="student : ${evaluation.students}" >
+                                                <div class="col col-1" data-label="Мероприятие" >
+                                                    <div class="col col-2" data-label="Мероприятие" th:text="${evaluation.id}"></div>
+                                                    <div class="col col-3" data-label="Роль" th:text="${evaluation.studentRole}"></div>
+
+                                                    <div class="col col-4" data-label="Подтверждение">
+                                                        <input type="radio" th:name="'confirm' + ${evaluation.id}" value="true"/> Да<br/>
+                                                        <input type="radio" th:name="'confirm' + ${evaluation.id}" value="false"/> Нет
+                                                    </div>
+                                                    <div class="col col-5" data-label="Балл">
+                                                        <div class="add-scores-box">
+                                                            <input id="score1" type="text"
+                                                                   th:name="'addScoresForm' + ${evaluation.id}"
+                                                                   form="addScoresForm"
+                                                                   th:attr="data-rule-range = ${evaluation.startValue} + ', ' + ${evaluation.endValue}"
+                                                                   th:attr = "data-msg-range = 'Введите число в диапазоне от ' + ${evaluation.startValue} + ' до ' + ${evaluation.endValue}"
+                                                                   data-msg-required="Обязательно к заполнению"
+                                                                   required = "true"/>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <!--когда строка таблицы еще обаботана руководителем-->
-                                        <!--если не подтверждается, то в баллах написать все равно надо 0-->
+                                            </li>
+                                        </div>
                                     </ul>
                                     <div class="view-all-item">
                                         <button type="submit" class="create-button create-org-button">Сохранить</button>
@@ -163,20 +124,9 @@
             </div>
         </div>
     </div>
+
+
 </div>
-
-<footer>
-    <div class="footer-container">
-        <div class="footer-text">2018, UniService Team
-            <div class="social-media">
-                <a href="https://vk.com/itis_kpfu"><i class="fab fa-vk fa-lg"></i></a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script th:src="@{/js/scripts.min.js(v=${v})}">
-</script>
-
+<footer th:include="elements/footer :: footer"></footer>
 </body>
 </html>
