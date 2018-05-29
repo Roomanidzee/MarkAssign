@@ -33,7 +33,7 @@
                                 <div class="col col-1" data-label="Мероприятие" th:text="${event.name}">Название мероприятия</div>
                                 <div class="col col-2" data-label="Роль" th:text="${evaluation.studentRole}">Роль в мероприятии</div>
                                 <div class="col col-3" data-label="Подтверждение"
-                                     th:text="${@eventTypeEvaluationServiceImpl.checkStudent(${evaluation.id}, ${student.id})} ?
+                                     th:text="${@eventTypeEvaluationServiceImpl.checkStudent(evaluation.id,student.id) == true} ?
                                                                                         'Подтверждено' : 'Не подтверждено'">Подтверждено</div>
                                   <div class="col col-4" data-label="Файл">
                                       <div class="download-file-score">

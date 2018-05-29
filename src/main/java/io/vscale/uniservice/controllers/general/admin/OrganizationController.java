@@ -37,10 +37,12 @@ public class OrganizationController {
 
         PageWrapper<Organization> pageWrapper =
                 new PageWrapper<>(this.organizationService.findAll(pageable), "/admin/organizations");
+        Long limit = this.organizationService.getOrganizationsCount();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/admin-organizations");
         modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("limit", limit);
 
         return modelAndView;
 
@@ -52,10 +54,12 @@ public class OrganizationController {
         PageWrapper<Organization> pageWrapper =
                     new PageWrapper<>(this.organizationService.retrieveSortedOrganizationsAsc(pageable),
                                                                     "/admin/organizations/asc");
+        Long limit = this.organizationService.getOrganizationsCount();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/admin-organizations");
         modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("limit", limit);
 
         return modelAndView;
     }
@@ -66,10 +70,12 @@ public class OrganizationController {
         PageWrapper<Organization> pageWrapper =
                 new PageWrapper<>(this.organizationService.retrieveSortedOrganizationsDesc(pageable),
                                                                        "/admin/organizations/desc");
+        Long limit = this.organizationService.getOrganizationsCount();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/admin-organizations");
         modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("limit", limit);
 
         return modelAndView;
     }

@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
  * @author Andrey Romanov
  * @version 1.0
  */
-@Component
+//@Component
 @Slf4j
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+//@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class DataLoader implements CommandLineRunner{
 
     private ConfirmationESRepository confirmationESRepository;

@@ -38,8 +38,8 @@
                                                 <input id="lastname" type="text" name="lastName" placeholder="Отчество"/>
                                             </div>
                                             <div class="input-box">
-                                                <label for="type">Обучение</label>
-                                                <select id="type" name="type">
+                                                <label for="degrees-list-modal">Обучение</label>
+                                                <select id="degrees-list-modal" name="type">
                                                     <option>Не выбрано</option>
                                                     <option value = "Бакалавриат">Бакалавриат</option>
                                                     <option value = "Магистратура">Магистратура</option>
@@ -47,17 +47,17 @@
                                             </div>
                                             <div class="input-box">
                                                 <label for="course">Курс</label>
-                                                <select id="course" name="course">
-                                                    <option>Не выбрано</option>
-                                                    <option value = "1">1</option>
-                                                    <option value = "2">2</option>
-                                                    <option value = "3">3</option>
-                                                    <option value = "4">4</option>
+                                                <select id="course-list-modal" name="course">
+                                                    <select title="" id="course-list-modal">
+                                                        <option value="0">Не выбрано</option>
+                                                    </select>
                                                 </select>
                                             </div>
                                             <div class="input-box">
-                                                <label for="group">Группа</label>
-                                                <input id="group" type="text" name="group" placeholder="Номер группы"/>
+                                                <label for="group-list-modal">Группа</label>
+                                                <select title="" id="group-list-modal">
+                                                    <option>Не выбрано</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </form>
@@ -75,7 +75,7 @@
                                 <div class="select-item">
                                     <h4>Обучение</h4>
                                     <div class="select">
-                                        <select title="">
+                                        <select title="" id="degrees-list">
                                             <option>Не выбрано</option>
                                             <option>Бакавлариат</option>
                                             <option>Магистратура</option>
@@ -86,12 +86,8 @@
                                 <div class="select-item">
                                     <h4>Курс</h4>
                                     <div class="select">
-                                        <select title="">
-                                            <option>Не выбрано</option>
-                                            <option>1 курс</option>
-                                            <option>2 курс</option>
-                                            <option>3 курс</option>
-                                            <option>4 курс</option>
+                                        <select title="" id="course-list">
+                                            <option value="0">Не выбрано</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -99,16 +95,8 @@
                                 <div class="select-item">
                                     <h4>Группа</h4>
                                     <div class="select">
-                                        <select title="">
+                                        <select title="" id="group-list">
                                             <option>Не выбрано</option>
-                                            <option>11-601</option>
-                                            <option>11-602</option>
-                                            <option>11-603</option>
-                                            <option>11-604</option>
-                                            <option>11-605</option>
-                                            <option>11-606</option>
-                                            <option>11-607</option>
-                                            <option>11-608</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -116,11 +104,8 @@
                                 <div class="select-item">
                                     <h4>Организация</h4>
                                     <div class="select">
-                                        <select title="">
+                                        <select title="" id="organizations-list">
                                             <option>Не выбрано</option>
-                                            <option>ITIS Music</option>
-                                            <option>ITIS Dance</option>
-                                            <option>Театр</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -195,7 +180,7 @@
                                 </a>
                             </li>
                             <li class="pagination__item" th:each="elem : ${pageWrapper.content}">
-                                    <a th:if="${elem.id} + 3 &le; ${limit}" th:href='@{${pageWrapper.url}(page = ${elem.id})}'
+                                    <a th:href='@{${pageWrapper.url}(page = ${elem.id})}'
                                        class = "pagination_number"
                                        th:text='${elem.id}'>1</a>
                             </li>

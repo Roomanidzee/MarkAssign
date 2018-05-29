@@ -37,8 +37,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = {"user", "cooperator", "student", "confirmations", "manageEvents"})
-@ToString(exclude = {"user", "cooperator", "student", "confirmations", "manageEvents"})
+@EqualsAndHashCode(exclude = {"user", "cooperator", "student", "confirmations", "manageEvents", "avatar"})
+@ToString(exclude = {"user", "cooperator", "student", "confirmations", "manageEvents", "avatar"})
 @Entity(name = "Profile")
 @Table(name = "profile")
 @Document(indexName = "profile", type = "profiles")

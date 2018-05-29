@@ -34,10 +34,10 @@
                     <label class="remember-me"><input name="" value="remember" type="checkbox"/> &nbsp;Запомнить
                         меня</label>
                 </div>
-                <button th:if="${role_check == null}" class="enter-button" type="submit" value="Войти">Войти</button>
+                <button th:if="${role_check == null}" class="enter-button add-button" type="submit" value="Войти">Войти</button>
             </form>
 
-            <button th:if="${role_check ne null}" class="enter-button" type="button"
+            <button th:if="${role_check ne null}" class="enter-button add-button" type="button"
                     data-toggle="modal" data-target="#myModal">Войти</button>
 
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

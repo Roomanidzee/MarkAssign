@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="elements/head :: head"></head>
 <body>
 <div class="content">
@@ -8,15 +9,15 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                    <div class="create-box" th:if="${role} == 'STUDENT'">
-                        <a href="edit-scores.html"><button type="button" class="edit-button create-button">Редактировать мероприятия</button></a>
+                    <div class="create-box" sec:authorize="hasAuthority('STUDENT')">
+                        <a th:href="@{/student/edit-scores}"><button type="button" class="edit-button create-button">Редактировать мероприятия</button></a>
                     </div>
                     <div class="small-box">
                         <div class="row">
                             <div class="col-sm-12 col-xs-12">
                                 <div class="current-scores-item">
                                     <h2>Мои баллы</h2>
-                                    <h1>10</h1>
+                                    <h1 th:text="${marks}">10</h1>
                                 </div>
                             </div>
                         </div>

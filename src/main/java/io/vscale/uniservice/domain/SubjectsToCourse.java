@@ -33,8 +33,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = {"evaluations"})
+@ToString(exclude = {"evaluations"})
 @Entity(name = "SubjectsToCourse")
 @Table(name = "subjects_to_course")
 public class SubjectsToCourse {

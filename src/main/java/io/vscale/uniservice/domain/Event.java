@@ -38,8 +38,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = {"eventTypeEvaluations", "students", "managers"})
-@ToString(exclude = {"eventTypeEvaluations", "students", "managers"})
+@EqualsAndHashCode(exclude = {"eventTypeEvaluations", "students", "files", "managers", "organizations"})
+@ToString(exclude = {"eventTypeEvaluations", "students", "files", "managers", "organizations"})
 @Entity(name = "Event")
 @Table(name = "event")
 @Document(indexName = "event", type = "events")

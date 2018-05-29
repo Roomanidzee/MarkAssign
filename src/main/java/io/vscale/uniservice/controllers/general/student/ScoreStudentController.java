@@ -91,6 +91,7 @@ public class ScoreStudentController {
         modelAndView.addObject("student", student);
         modelAndView.addObject("evaluations", student.getEvaluations());
         modelAndView.addObject("events", events);
+        modelAndView.setViewName("scores/edit-scores");
 
         return modelAndView;
 
@@ -106,8 +107,16 @@ public class ScoreStudentController {
     }
 
     @GetMapping("/scores/distribute")
-    public ModelAndView distributeScores(){
-        return new ModelAndView("scores/distribute-scores");
+    public ModelAndView distributeScores(Authentication authentication){
+
+        User user = this.authenticationService.getUserByAuthentication(authentication);
+        Student student = user.getProfile().getStudent();
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("scores/distribute-scores");
+        modelAndView.addObject("marks", this.studentService.getStudentsMarks(student.getId()));
+
+        return modelAndView;
     }
 
 }

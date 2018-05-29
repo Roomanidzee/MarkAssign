@@ -17,7 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan({"io.vscale.uniservice.application", "io.vscale.uniservice.controllers", "io.vscale.uniservice.domain",
                 "io.vscale.uniservice.repositories", "io.vscale.uniservice.security", "io.vscale.uniservice.services",
                 "io.vscale.uniservice.validators", "io.vscale.uniservice.utils", "io.vscale.uniservice.websockets",
-                "io.vscale.uniservice.stomp", "io.vscale.uniservice.loaders"})
+                "io.vscale.uniservice.stomp"})
 @EnableJpaRepositories("io.vscale.uniservice.repositories.data")
 @EnableElasticsearchRepositories("io.vscale.uniservice.repositories.indexing")
 @EntityScan(basePackages = "io.vscale.uniservice.domain")

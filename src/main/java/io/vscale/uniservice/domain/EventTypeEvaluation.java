@@ -35,8 +35,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = {"events"})
-@ToString(exclude = {"events"})
+@EqualsAndHashCode(exclude = {"events", "students", "subjects"})
+@ToString(exclude = {"events", "students", "subjects"})
 @Entity(name = "EventTypeEvaluation")
 @Table(name = "event_type_evaluation")
 public class EventTypeEvaluation {

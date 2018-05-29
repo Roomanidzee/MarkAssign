@@ -35,8 +35,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = {"organization"})
+@ToString(exclude = {"organization"})
 @Entity(name = "Schedule")
 @Table(name = "schedule")
 public class Schedule {

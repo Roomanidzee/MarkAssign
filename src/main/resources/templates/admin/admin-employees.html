@@ -142,7 +142,7 @@
                                 </a>
                             </li>
                             <li class="pagination__item" th:each="elem : ${pageWrapper.content}">
-                                <a th:if="${elem.id} + 3 &le; ${limit}" th:href='@{${pageWrapper.url}(page = ${elem.id})}'
+                                <a th:href='@{${pageWrapper.url}(page = ${elem.id})}'
                                    class = "pagination_number"
                                    th:text='${elem.id}'>1</a>
                             </li>

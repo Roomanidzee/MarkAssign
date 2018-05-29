@@ -17,10 +17,10 @@
                                 <div class="select-item">
                                     <h4>Обучение</h4>
                                     <div class="select">
-                                        <select title="">
-                                            <option>Не выбрано</option>
-                                            <option>Бакавлариат</option>
-                                            <option>Магистратура</option>
+                                        <select title="" id="degrees-list">
+                                            <option value="0">Не выбрано</option>
+                                            <option value="1">Бакавлариат</option>
+                                            <option value="2">Магистратура</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -28,12 +28,8 @@
                                 <div class="select-item">
                                     <h4>Курс</h4>
                                     <div class="select">
-                                        <select title="">
-                                            <option>Не выбрано</option>
-                                            <option>1 курс</option>
-                                            <option>2 курс</option>
-                                            <option>3 курс</option>
-                                            <option>4 курс</option>
+                                        <select title="" id="course-list">
+                                            <option value="0">Не выбрано</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -41,16 +37,8 @@
                                 <div class="select-item">
                                     <h4>Группа</h4>
                                     <div class="select">
-                                        <select title="">
+                                        <select title="" id="group-list">
                                             <option>Не выбрано</option>
-                                            <option>11-601</option>
-                                            <option>11-602</option>
-                                            <option>11-603</option>
-                                            <option>11-604</option>
-                                            <option>11-605</option>
-                                            <option>11-606</option>
-                                            <option>11-607</option>
-                                            <option>11-608</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -58,11 +46,8 @@
                                 <div class="select-item">
                                     <h4>Организация</h4>
                                     <div class="select">
-                                        <select title="">
+                                        <select title="" id="organizations-list">
                                             <option>Не выбрано</option>
-                                            <option>ITIS Music</option>
-                                            <option>ITIS Dance</option>
-                                            <option>Театр</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -104,7 +89,7 @@
                                                 <a href="view-student.html">
                                                     <span class="lastname" th:text="${student.profile.surname}">Фамилия</span>
                                                     <span class="name" th:text="${student.profile.name}">Имя</span>
-                                                    <span class="secondname" th:text="${student.profile.patronymic}}">Отчество</span>
+                                                    <span class="secondname" th:text="${student.profile.patronymic}">Отчество</span>
                                                 </a>
                                             </div>
                                             <a class="edit" href="view-scores.html"><i class="fas fa-star"></i> Смотреть все баллы</a>

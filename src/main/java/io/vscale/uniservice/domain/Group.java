@@ -36,8 +36,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = {"students"})
+@ToString(exclude = {"students"})
 @Entity(name = "Group")
 @Table(name = "group_of_faculty")
 public class Group {

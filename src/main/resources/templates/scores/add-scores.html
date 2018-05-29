@@ -20,18 +20,21 @@
                         <div class="select-box">
                             <form action="#" th:action="@{/add-scores}" th:object="${filter}" method="post">
                                 <div class="select-item">
+                                    <h4>Обучение</h4>
+                                    <div class="select">
+                                        <select title="" id="degrees-list">
+                                            <option value="0">Не выбрано</option>
+                                            <option value="1">Бакавлариат</option>
+                                            <option value="2">Магистратура</option>
+                                        </select>
+                                        <div class="select__arrow"></div>
+                                    </div>
+                                </div>
+                                <div class="select-item">
                                     <h4>Курс</h4>
                                     <div class="select">
-                                        <select th:field="*{course}">
-                                            <!--<option
-                                                    th:each="courseValue: ${singleSelectAllValues}"
-                                                    th:value="${courseValue}"
-                                                    th:text="${courseValue}"></option>-->
-                                            <option>Не выбрано</option>
-                                            <option>1 курс</option>
-                                            <option>2 курс</option>
-                                            <option>3 курс</option>
-                                            <option>4 курс</option>
+                                        <select title="" id="course-list">
+                                            <option value="0">Не выбрано</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -39,9 +42,8 @@
                                 <div class="select-item">
                                     <h4>Группа</h4>
                                     <div class="select">
-                                        <select title="">
+                                        <select title="" id="group-list">
                                             <option>Не выбрано</option>
-                                            <option th:each="group : ${groups}" th:text="${group.title}">11-601</option>
                                         </select>
                                         <div class="select__arrow"></div>
                                     </div>
@@ -91,7 +93,7 @@
                                         <div th:each="evaluation : ${evaluations}">
                                             <li class="table-row" th:each="student : ${evaluation.students}" >
                                                 <div class="col col-1" data-label="Мероприятие" >
-                                                    <div class="col col-2" data-label="Мероприятие" th:text="${evaluation.id}"></div>
+                                                    <div class="col col-2" data-label="Мероприятие" th:text="${evaluation.events.get(0).title}"></div>
                                                     <div class="col col-3" data-label="Роль" th:text="${evaluation.studentRole}"></div>
 
                                                     <div class="col col-4" data-label="Подтверждение">
@@ -103,8 +105,8 @@
                                                             <input id="score1" type="text"
                                                                    th:name="'addScoresForm' + ${evaluation.id}"
                                                                    form="addScoresForm"
-                                                                   th:attr="data-rule-range = ${evaluation.startValue} + ', ' + ${evaluation.endValue}"
-                                                                   th:attr = "data-msg-range = 'Введите число в диапазоне от ' + ${evaluation.startValue} + ' до ' + ${evaluation.endValue}"
+                                                                   th:attr="data-rule-range = ${evaluation.startValue} + ', ' + ${evaluation.endValue},
+                                                                            data-msg-range = 'Введите число в диапазоне от ' + ${evaluation.startValue} + ' до ' + ${evaluation.endValue}"
                                                                    data-msg-required="Обязательно к заполнению"
                                                                    required = "true"/>
                                                         </div>
