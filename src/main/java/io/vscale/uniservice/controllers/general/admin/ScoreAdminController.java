@@ -32,7 +32,7 @@ import java.util.Set;
  */
 @Controller
 @RequestMapping("/admin")
-public class ScoreController {
+public class ScoreAdminController {
 
     private final EventService eventService;
     private final EventTypeEvaluationService eventTypeEvaluationService;
@@ -42,9 +42,9 @@ public class ScoreController {
     private final GroupService groupService;
 
     @Autowired
-    public ScoreController(EventService eventService, EventTypeEvaluationService eventTypeEvaluationService, StudentService studentService, FormDataParser formDataParser,
-                           @Qualifier("generalAuthenticationService") AuthenticationService authenticationService,
-                           GroupService groupService) {
+    public ScoreAdminController(EventService eventService, EventTypeEvaluationService eventTypeEvaluationService, StudentService studentService, FormDataParser formDataParser,
+                                @Qualifier("generalAuthenticationService") AuthenticationService authenticationService,
+                                GroupService groupService) {
         this.eventService = eventService;
         this.eventTypeEvaluationService = eventTypeEvaluationService;
         this.studentService = studentService;
@@ -73,11 +73,6 @@ public class ScoreController {
         return new ModelAndView();
     }
 
-    @GetMapping("/scores/distribute")
-    public ModelAndView distributeScores(){
-        return new ModelAndView("scores/distribute-scores");
-    }
-
     @GetMapping("/scores/edit")
     public ModelAndView editScores(Authentication authentication){
 
@@ -90,6 +85,7 @@ public class ScoreController {
         List<Event> events =  student.getEvents();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("events", events);
+        modelAndView.addObject("evaluations", evaluations);
         modelAndView.setViewName("scores/edit-scores");
         return modelAndView;
     }

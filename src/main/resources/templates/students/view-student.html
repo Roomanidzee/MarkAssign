@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="elements/head :: head"></head>
 <body>
 <div class="content">
@@ -13,7 +14,7 @@
                         <div class="description-box">
                             <div class="row">
                                 <div class="col-sm-12 col-xs-12">
-                                    <img class="center-block img-rounded" src="img/default-user.png" alt="Organization">
+                                    <img class="center-block img-rounded" th:src="@{/img/default-user.png}" alt="Organization">
                                 </div>
                             </div>
                         </div>
@@ -33,16 +34,17 @@
                                 <div class="user-data student-view">
                                     <div class="user-title">
                                         <div class="user-name">
-                                            <span class="lastname">Фамилия</span>
-                                            <span class="name">Имя</span>
-                                            <span class="secondname">Отчество</span>
+                                            <span class="lastname" th:text="${student.profile.surname}">Фамилия</span>
+                                            <span class="name" th:text="${student.profile.name}">Имя</span>
+                                            <span class="secondname" th:text="${student.profile.patronymic}">Отчество</span>
                                         </div>
                                     </div>
                                     <div class="user-info">
-                                        <p><span>Обучение:</span>Бакалавриат</p>
-                                        <p><span>Курс:</span>2</p>
-                                        <p><span>Группа:</span>11-602</p>
-                                        <p><span>Организация:</span>Itis Musiс</p></div>
+                                        <p th:inline="text"><span>Обучение:</span>[[${student.educationType.toString()}]]</p>
+                                        <p th:inline="text"><span>Курс:</span>[[${student.course}]]</p>
+                                        <p th:inline="text"><span>Группа:</span>[[${student.groups.iterator().next().title}]]</p>
+                                        <!--<p th:inline="text"><span>Организация:</span>[[${student.headOrganizations.iterator().next().title}]]</p>-->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -56,23 +58,24 @@
                             <h1 class="h1 event view-student">Мероприятия студента</h1>
                         </div>
                     </div>
-                    <div class="list-item">
+                    <div class="list-item" th:each="event : ${student.events}">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="user-data">
                                     <div class="user-title">
                                         <div class="user-name">
-                                            <a href="view-event.html">
-                                                <span>Название</span>
+                                            <a th:href="@{/admin/event/view/{id}(id = ${event.id})}">
+                                                <span th:text="${event.name}">Название</span>
                                             </a>
                                         </div>
-                                        <a class="edit" href="edit-event.html"><i class="fas fa-edit"></i> Редактировать</a>
+                                        <a class="edit" th:href="@{/admin/event/edit/{eventId}(eventId = ${event.id})}" sec:authorize="hasAnyAuthority('ADMIN', 'COOPERATOR')" ><i class="fas fa-edit"></i> Редактировать</a>
+                                        <a class="edit" href="#" sec:authorize="hasAuthority('STUDENT')"><i class="fas fa-arrow-circle-up"></i> Участвовал</a>
                                     </div>
-                                    <div class="user-info">
-                                        <p><span>Тип мероприятия:</span>Тип</p>
-                                        <p><span>Дата:</span>13.04.2018</p>
+                                    <div class="user-info" th:each="description : ${event.eventTypeEvaluations}">
+                                        <p th:inline="text"><span>Тип мероприятия:</span>[[${description.type}]]</p>
+                                        <p th:inline="text"><span>Дата:</span>[[${event.eventDate}]]</p>
                                         <p><span>Роль:</span>роль в мероприятии</p>
-                                        <p><span>Описание:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis dolore magni mollitia praesentium quae vel? Facilis hic, illum inventore nemo nobis perspiciatis qui suscipit voluptatem! Eius impedit neque tenetur.</p>
+                                        <p th:inline="text"><span>Описание:</span>[[${event.description}]]</p>
                                     </div>
                                 </div>
                             </div>

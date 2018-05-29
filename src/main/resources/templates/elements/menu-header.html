@@ -1,4 +1,5 @@
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <header th:fragment="menu-header">
     <nav class="header-container">
         <a th:href="@{/admin/index}" class="logo main-logo">UniService</a>
@@ -9,7 +10,7 @@
                 </span>
         </a>
 
-        <div id="menu">
+        <div id="menu" sec:authorize="hasAuthority('ADMIN')">
             <ul>
                 <li><a href="#"><i class="fas fa-users"></i>Пользователи</a>
                     <ul>
@@ -19,7 +20,43 @@
                 </li>
                 <li><a th:href="@{/admin/events}"><i class="fas fa-bell"></i>Мероприятия</a></li>
                 <li><a th:href="@{/admin/organizations}"><i class="fas fa-list-alt"></i>Организации</a></li>
-                <li><a href="#"><i class="fas fa-edit"></i>Баллы</a></li>
+                <li><a href="#"><i class="fas fa-edit"></i>Баллы</a>
+
+                    <ul>
+
+                        <li><a th:href = "@{/admin/scores/add}">Добавить баллы</a></li>
+                        <li><a th:href = "@{/admin/scores/edit}">Редактировать баллы</a></li>
+                        <li><a th:href = "@{/admin/scores/view}">Просмотреть баллы</a></li>
+                        <li><a th:href = "@{/admin/scores/view-students}">Просмотреть студентов с баллами</a></li>
+
+                    </ul>
+
+                </li>
+                <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
+                    <ul>
+                        <li><a href="#">Настройки</a></li>
+                        <li><a th:href="@{/logout}">Выйти</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div id="menu" sec:authorize="hasAuthority('STUDENT')">
+            <ul>
+
+                <li><a th:href="@{/student/events}"><i class="fas fa-bell"></i>Мероприятия</a></li>
+                <li><a th:href="@{/student/organizations}"><i class="fas fa-list-alt"></i>Организации</a></li>
+                <li><a href="#"><i class="fas fa-edit"></i>Баллы</a>
+
+                    <ul>
+
+                        <li><a th:href = "@{/student/edit-scores}">Редактировать баллы</a></li>
+                        <li><a th:href = "@{/student/view-scores}">Просмотреть баллы</a></li>
+                        <li><a th:href = "@{/student/scores/distribute}">Распределить баллы</a></li>
+
+                    </ul>
+
+                </li>
                 <li class="profile"><a href="#"><i class="fas fa-user-circle"></i>Профиль</a>
                     <ul>
                         <li><a href="#">Настройки</a></li>

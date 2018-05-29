@@ -19,5 +19,8 @@ public interface EventTypeEvaluationService {
     EventTypeEvaluation getEvaluationByEvent(Event event);
     Map<Integer, String> castMapWithEvaluations(Map<String, String> requestForm);
     void distributeEvaluations(Map<Integer, String> evaluationToSubjects, Long studentId);
+    void addStudentEvaluation(Long studentId, Long eventId, String studentRole);
+    boolean checkStudent(Long evaluationId, Long studentId);
+    void deleteEventFromEvaluation(Long evaluationId, Long eventId);
 
 }

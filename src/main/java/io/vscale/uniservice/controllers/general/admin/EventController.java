@@ -90,10 +90,12 @@ public class EventController {
                 new PageWrapper<>(this.eventService.retrieveAllEventsAsc(pageable), "/admin/events/asc");
 
         Long limit = this.eventService.getEventsCount();
+        List<String> types = this.eventService.getAllTypes();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/admin-events");
         modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("types", types);
         modelAndView.addObject("limit", limit);
 
         return modelAndView;
@@ -107,10 +109,12 @@ public class EventController {
                 new PageWrapper<>(this.eventService.retrieveAllEventsDesc(pageable), "/admin/events/desc");
 
         Long limit = this.eventService.getEventsCount();
+        List<String> types = this.eventService.getAllTypes();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("admin/admin-events");
         modelAndView.addObject("pageWrapper", pageWrapper);
+        modelAndView.addObject("types", types);
         modelAndView.addObject("limit", limit);
 
         return modelAndView;

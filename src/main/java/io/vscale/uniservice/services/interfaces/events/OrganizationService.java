@@ -4,6 +4,7 @@ import io.vscale.uniservice.domain.Event;
 import io.vscale.uniservice.domain.FileOfService;
 import io.vscale.uniservice.domain.Organization;
 import io.vscale.uniservice.domain.Student;
+import io.vscale.uniservice.forms.general.OrganizationForm;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -43,8 +44,20 @@ public interface OrganizationService {
 
     Set<Student> getParticipants(Long id);
 
-    Page<Organization> searchByTitle(String title);
+    Page<Organization> searchByTitle(String title, Pageable pageable);
 
     Long getOrganizationsCount();
+
+    List<String> getTypesOfOrganizations();
+
+    void addOrganization(String title, String type);
+
+    void updateOrganization(OrganizationForm organizationForm);
+
+    void deleteEvent(Long organizationId, Long eventId);
+
+    void deleteParticipant(Long organizationId, Long participantId);
+
+    Set<Event> getEvents(Long organisationId);
 
 }

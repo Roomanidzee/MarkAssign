@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="elements/head :: head"></head>
 <body>
 
@@ -11,7 +12,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3 new-col">
-                    <div class="create-box" th:if="${role} == 'ADMIN' or ${role} == 'EMPLOYEE'">
+                    <div class="create-box" sec:authorize="hasAnyAuthority('ADMIN', 'COOPERATOR')">
                         <button type="button" class="add-button create-button" data-toggle="modal" data-target="#myModal">Создать организацию</button>
                     </div>
 
@@ -23,19 +24,18 @@
                                     <h2 class="create-title modal-title" id="myModalLabel">Создать организацию</h2>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="create-data" action="" method="post">
+                                    <form id="create-data" th:action="@{/admin/organizations/add}" method="POST">
                                         <div class="info-edit">
                                             <div class="input-box">
                                                 <label for="name">Название:</label>
-                                                <input id="name" type="text" name="name" placeholder="Название">
+                                                <input id="name" type="text" name="title" placeholder="Название">
                                             </div>
 
                                             <div class="input-box">
                                                 <label for="type">Тип:</label>
-                                                <select id="type">
+                                                <select id="type" name = "type">
                                                     <option>Не выбрано</option>
-                                                    <option>Фильтр 1</option>
-                                                    <option>Фильтр 2</option>
+                                                    <option th:each="type : ${types}" th:text="${type}" th:value="${type}">Фильтр 1</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -102,13 +102,13 @@
                                     <div class="user-data">
                                         <div class="user-title">
                                             <div class="user-name">
-                                                <a th:href="@{/admin/organizations/show/${organization.id}}">
+                                                <a th:href="@{/admin/organizations/show/{id}(id = ${organization.id})}">
                                                     <span th:text="${organization.title}">Название</span>
                                                 </a>
                                             </div>
-                                            <a class="edit" th:href="@{/admin/organizations/edit/id}" th:if="${role} == 'ADMIN'"><i class="fas fa-edit"></i> Редактировать</a>
-                                            <a class="edit" href="#" th:if="${role} == 'EMPLOYEE'"><i class="fas fa-edit"></i> Редактировать</a>
-                                            <a class="edit" href="#" th:if="${role} == 'STUDENT'"><i class="fas fa-arrow-circle-up"></i> Участвовал</a>
+                                            <a class="edit" th:href="@{/admin/organizations/edit/id}" sec:authorize="hasAnyAuthority('ADMIN', 'COOPERATOR')">
+                                                <i class="fas fa-edit"></i> Редактировать</a>
+                                            <a class="edit" href="#" sec:authorize="hasAuthority('STUDENT')"><i class="fas fa-arrow-circle-up"></i> Участвовал</a>
 
                                         </div>
                                         <div class="user-info">
@@ -124,18 +124,17 @@
 
                     <div class="pagination-list" th:if = "${pageWrapper ne null}">
                         <ul class="pagination">
-                            <li class="pagination__item" th:if="${pageWrapper.currentNumber - 4 > 0}">
+                            <li class="pagination__item" th:if="${pageWrapper.currentNumber} - 3 &gt; 0">
                                 <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber - 4})}"
                                    class="pagination__number">←<span class="pagination__control pagination__control_prev">prev</span>
                                 </a>
                             </li>
-                            <li class="pagination__item" th:each="i : ${#numbers.sequence(0, limit, 4)}">
-                                <a th:href='@{${pageWrapper.url}(page=${i})}'
-                                   th:class="${pageWrapper.currentNumber == i} ?
-                                     'pagination__number pagination__number_active' : 'pagination__number'"
-                                   th:text='${i}'>1</a>
+                            <li class="pagination__item" th:each="elem : ${pageWrapper.content}">
+                                <a th:if="${elem.id} + 3 &le; ${limit}" th:href='@{${pageWrapper.url}(page = ${elem.id})}'
+                                   class = "pagination_number"
+                                   th:text='${elem.id}'>1</a>
                             </li>
-                            <li class="pagination__item" th:if="${pageWrapper.currentNumber + 4 < limit}">
+                            <li class="pagination__item" th:if="${pageWrapper.currentNumber} + 3 &lt; ${limit}">
                                 <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber + 4})}" class="pagination__number">
                                     <span class="pagination__control pagination__control_next">next</span>→</a></li>
                         </ul>

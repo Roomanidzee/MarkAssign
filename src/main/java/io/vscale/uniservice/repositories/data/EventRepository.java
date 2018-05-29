@@ -32,4 +32,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query(value = "SELECT * FROM event ORDER BY event.name DESC LIMIT 4 OFFSET :number", nativeQuery = true)
     List<Event> findAllOrderByNameDesc(@Param("number") Long number);
 
+    Event findByName(String name);
+
 }

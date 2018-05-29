@@ -28,8 +28,8 @@ public interface StudentService {
     Page<Student> retrieveSortedStudentsDesc(Pageable pageable);
 
     void addStudent(StudentForm studentForm);
-    void updateStudent(StudentForm studentForm);
-    void deleteStudent(StudentForm studentForm);
+    void updateStudent(Long id , StudentForm studentForm);
+    void deleteStudent(Long id);
 
     void addEvent(NewEventForm newEventForm);
     List<Event> getStudentEvents(Student student);

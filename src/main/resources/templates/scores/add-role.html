@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:include="elements/head :: head">
+</head>
+
+<body>
+
+<div class="content">
+
+    <header th:include="elements/menu-header :: menu-header"></header>
+
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-9 new-col right-col col-lg-offset-2 col-md-offset-2 col-sm-offset-2">
+                <div class="tab-content">
+                        <div class="data-list">
+                            <div class="title-data">
+                                <h1 class="h1">Добавить мероприятие</h1>
+                            </div>
+                            <!-- item 1 -->
+                            <div class="list-item">
+                                <div class="info-edit">
+                                    <div class="row">
+                                        <form action="" method="post">
+                                            <div class="input-box">
+                                                <label for="student">Студент:</label>
+                                                <input type = "hidden" name = "studentId" th:value="${studentId}"/>
+                                                <input id="student" type="text" name="name" placeholder="Введите ФИО"/>
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="name">Мероприятие:</label>
+                                                <input id ="name" type = "hidden" name = "eventId" th:value="${eventId}"/>
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="role">Роль:</label>
+                                                <input id="role" type="text" name="role" placeholder="Введите роль">
+                                            </div>
+                                            <div class="input-box">
+                                                <label for="file">Файл-подтверждение:</label>
+                                                <input id = "file" class="upload-input" type="file" name="upload" multiple>
+                                            </div>
+                                            <div class="button-container">
+                                                <button class="create-org-button create-button upload-button" type="submit">Отправить</button>
+                                                <button class="cancel-button create-button upload-button" type="reset">Отмена</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:include="elements/footer :: footer"></footer>
+</body>
+</html>

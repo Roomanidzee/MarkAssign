@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-3 new-col">
-                    <div class="create-box" sec:authorize="hasRole('ADMIN')">
+                    <div class="create-box" sec:authorize="hasAuthority('ADMIN')">
                         <button class="create-button" data-toggle="modal" data-target="#myModal">Добавить сотрудника</button>
                     </div>
 
@@ -120,7 +120,7 @@
                                                 </a>
                                             </div>
                                             <a class="edit" th:href="@{/admin/employee/edit/{id}(id = ${cooperator.id})}"
-                                                     sec:authorize="hasRole('ADMIN')"><i class="fas fa-edit"></i> Редактировать</a>
+                                                     sec:authorize="hasAuthority('ADMIN')"><i class="fas fa-edit"></i> Редактировать</a>
                                         </div>
                                         <div class="user-info">
                                             <p th:inline = "text"><span>E-mail:</span>[[${cooperator.profile.email}]]</p>
@@ -136,18 +136,17 @@
 
                     <div class="pagination-list" th:if = "${pageWrapper ne null}">
                         <ul class="pagination">
-                            <li class="pagination__item" th:if="${pageWrapper.currentNumber - 4 > 0}">
+                            <li class="pagination__item" th:if="${pageWrapper.currentNumber} - 3 &gt; 0">
                                 <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber - 4})}"
                                    class="pagination__number">←<span class="pagination__control pagination__control_prev">prev</span>
                                 </a>
                             </li>
-                            <li class="pagination__item" th:each="i : ${#numbers.sequence(0, limit, 4)}">
-                                <a th:href='@{${pageWrapper.url}(page=${i})}'
-                                   th:class="${pageWrapper.currentNumber == i} ?
-                                     'pagination__number pagination__number_active' : 'pagination__number'"
-                                   th:text='${i}'>1</a>
+                            <li class="pagination__item" th:each="elem : ${pageWrapper.content}">
+                                <a th:if="${elem.id} + 3 &le; ${limit}" th:href='@{${pageWrapper.url}(page = ${elem.id})}'
+                                   class = "pagination_number"
+                                   th:text='${elem.id}'>1</a>
                             </li>
-                            <li class="pagination__item" th:if="${pageWrapper.currentNumber + 4 < limit}">
+                            <li class="pagination__item" th:if="${pageWrapper.currentNumber} + 3 &lt; ${limit}">
                                 <a th:href="@{${pageWrapper.url}(page = ${pageWrapper.currentNumber + 4})}" class="pagination__number">
                                     <span class="pagination__control pagination__control_next">next</span>→</a></li>
                         </ul>

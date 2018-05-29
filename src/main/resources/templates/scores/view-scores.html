@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:include="elements/head :: head"></head>
 <body>
 <div class="content">
@@ -9,17 +10,17 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div class="create-box">
-                        <a href="edit-scores.html"><button type="button" class="edit-button create-button">Редактировать мероприятия</button></a>
+                        <a th:href="@{/student/edit-scores}"><button type="button" class="edit-button create-button">Редактировать мероприятия</button></a>
                     </div>
                     <div class="small-box">
                         <div class="row">
                             <div class="col-sm-12 col-xs-12">
                                 <div class="current-scores-item">
                                     <h2>Мои баллы</h2>
-                                    <h1>10</h1>
+                                    <h1 th:text="${marks}">10</h1>
                                 </div>
-                                <div class="create-box" th:if="${role} == 'STUDENT'">
-                                    <a href="distribute-scores.html"><button type="button" class="send-button create-button">Распределить баллы</button></a>
+                                <div class="create-box" sec:authorize="hasAuthority('STUDENT')">
+                                    <a th:href="@{/student/distribute-scores}"><button type="button" class="send-button create-button">Распределить баллы</button></a>
                                 </div>
                             </div>
                         </div>
@@ -46,16 +47,20 @@
                                     <div class="col col-5">Балл</div>
                                 </li>
                                 <!--если балл выставлен руководителем-->
-                                <li class="table-row" th:each="event : ${events}">
-                                    <div class="col col-1" data-label="Мероприятие" th:text="${event.name}">Название мероприятия</div>
-                                    <div class="col col-2" data-label="Роль">Роль в мероприятии</div>
-                                    <div class="col col-3" data-label="Подтверждение">Подтверждено</div>
+                                <li class="table-row" th:each="evaluation : ${evaluations}">
+                                    <th:block th:each="event : ${evaluation.events}">
+                                          <div class="col col-1" data-label="Мероприятие" th:text="${event.name}">Название мероприятия</div>
+                                          <div class="col col-2" data-label="Роль" th:text="${evaluation.studentRole}">Роль в мероприятии</div>
+                                          <div class="col col-3" data-label="Подтверждение"
+                                               th:text="${@eventTypeEvaluationServiceImpl.checkStudent(${evaluation.id}, ${student.id})} ?
+                                                                                        'Подтверждено' : 'Не подтверждено'">Подтверждено</div>
                                     <!--в a href="путь_до_файла"-->
-                                    <div class="col col-4" data-label="Файл">
+                                    <!--<div class="col col-4" data-label="Файл">
                                         <div class="download-file-score">
                                             <a href="view-event.html" download="">Название файла</a></div>
-                                    </div>
-                                    <div class="col col-5" data-label="Балл">10</div>
+                                    </div>-->
+                                          <div class="col col-5" data-label="Балл" th:text="${evaluation.finalValue}">10</div>
+                                    </th:block>
                                 </li>
                             </ul>
                         </div>

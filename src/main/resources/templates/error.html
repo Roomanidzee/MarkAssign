@@ -12,7 +12,7 @@
                     <h1 th:text="${status}">404</h1>
                     <h2 th:text="${error}">Ошибка</h2>
                     <h2 th:text="${message}">К сожалению, страница не найдена</h2>
-                    <h2 th:text="${#dates.format(timestamp, 'dd.MMM.yyyy HH:mm:ssss')}">Дата</h2>
+                    <h2 th:text="${#dates.format(timestamp, 'dd MMM yyyy HH:mm')}">Дата</h2>
                     <a th:href="@{/admin/index}">Вернуться на главную страницу <span><i class="fa fa-arrow-right"></i></span></a>
                 </div>
             </div>

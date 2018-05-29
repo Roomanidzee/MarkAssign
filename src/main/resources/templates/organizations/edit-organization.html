@@ -35,14 +35,17 @@
                                 <div class="list-item">
                                     <div class="info-edit">
                                         <div class="row">
-                                            <form action="" method="post">
+                                            <form th:action="@{/admin/organizations/edit}" method="POST">
+
+                                                <input type = "hidden" name = "id" th:value="${id}"/>
+
                                                 <div class="input-box">
                                                     <label for="name">Название:</label>
-                                                    <input id="name" type="text" name="name" placeholder="Название"/>
+                                                    <input id="name" type="text" name="title" placeholder="Название"/>
                                                 </div>
                                                 <div class="input-box">
-                                                    <label for="employer">Руководитель:</label>
-                                                    <input id="employer" type="text" name="employer" placeholder="Руководитель"/>
+                                                    <label for="employer">ID руководителя:</label>
+                                                    <input id="employer" type="text" name="directorId" placeholder="Руководитель"/>
                                                 </div>
                                                 <div class="input-box">
                                                     <label for="type">Тип:</label>
@@ -110,7 +113,7 @@
                                 </div>
                                 <!-- item 1 -->
                                 <div class="list-item">
-                                    <div class="row">
+                                    <div class="row" th:each="student : ${students}">
                                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
                                             <img class="user-picture center-block" th:src="@{/img/default-user.png}" alt="User"/>
                                         </div>
@@ -118,10 +121,11 @@
                                             <div class="user-data">
                                                 <div class="user-title">
                                                     <div class="user-name">
+                                                        <!--сделать ссылку на студента-->
                                                         <a href="view-user.html">
-                                                            <span class="lastname">Фамилия</span>
-                                                            <span class="name">Имя</span>
-                                                            <span class="secondname">Отчество</span>
+                                                            <span class="lastname" th:text="${student.profile.surname}">Фамилия</span>
+                                                            <span class="name" th:text="${student.profile.name}">Имя</span>
+                                                            <span class="secondname" th:text="${student.profile.patronymic}">Отчество</span>
                                                         </a>
                                                     </div>
                                                     <a class="delete" data-toggle="modal" data-target="#myModal" ><i class="fas fa-times"></i> Удалить</a>
@@ -131,8 +135,10 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-body">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">Вы уверенны?</h4>
-                                                                    <button class="cancel-button modal-button" type="submit" value="Да">Исключить</button>
+                                                                    <h4 class="modal-title" id="myModalLabel">Вы уверены?</h4>
+                                                                    <a th:href="@{/admin/organizations/{organizationId}/delete/{participantId}(organizationId = ${id}, participantId = ${student.id})}">
+                                                                        <button class="cancel-button modal-button" type="submit" value="Да">Исключить</button>
+                                                                    </a>
                                                                     <button class="send-button modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
                                                                 </div>
                                                             </div>
@@ -141,10 +147,10 @@
 
                                                 </div>
                                                 <div class="user-info">
-                                                    <p><span>Обучение:</span>Бакалавриат</p>
-                                                    <p><span>Курс:</span>2</p>
-                                                    <p><span>Группа:</span>11-602</p>
-                                                    <p><span>Организация:</span>Itis Musiс</p>
+                                                    <p th:inline="text"><span>Обучение:</span>[[${student.educationType.toString()}]]</p>
+                                                    <p th:inline="text"><span>Курс:</span>[[${student.course}]]</p>
+                                                    <p th:inline="text"><span>Группа:</span>[[${student.groups.iterator().next().title}]]</p>
+                                                    <!--<p><span>Организация:</span>Itis Musiс</p>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -172,23 +178,23 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="list-item-users">
-                                            <div class="row">
+                                            <div class="row" th:each="student : ${students}">
                                                 <div class="col-lg-12">
                                                     <div class="user-data">
                                                         <div class="user-title">
                                                             <div class="user-name">
                                                                 <a href="view-student.html">
-                                                                    <span class="lastname">Фамилия</span>
-                                                                    <span class="name">Имя</span>
-                                                                    <span class="secondname">Отчество</span>
+                                                                    <span class="lastname" th:text="${student.profile.surname}">Фамилия</span>
+                                                                    <span class="name" th:text="${student.profile.name}">Имя</span>
+                                                                    <span class="secondname" th:text="${student.profile.patronymic}">Отчество</span>
                                                                 </a>
                                                             </div>
                                                             <a class="edit" href=""><i class="fas fa-plus-circle"></i> Добавить</a>
                                                         </div>
                                                         <div class="user-info">
-                                                            <p><span>Обучение:</span>Бакалавриат</p>
-                                                            <p><span>Курс:</span>2</p>
-                                                            <p><span>Группа:</span>11-602</p>
+                                                            <p th:inline="text"><span>Обучение:</span>[[${student.educationType.toString()}]]</p>
+                                                            <p th:inline="text"><span>Курс:</span>[[${student.course}]]</p>
+                                                            <p th:inline="text"><span>Группа:</span>[[${student.groups.iterator().next().title}]]</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -226,14 +232,14 @@
                                     </div>
                                 </div>
                                 <!-- item 1 -->
-                                <div class="list-item">
+                                <div class="list-item" th:each="event : ${events}">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="user-data">
                                                 <div class="user-title">
                                                     <div class="user-name">
-                                                        <a href="#">
-                                                            <span>Название</span>
+                                                        <a th:href="@{/admin/event/view/{id}(id = ${event.id})}">
+                                                            <span th:text="${event.name}">Название</span>
                                                         </a>
                                                     </div>
                                                     <a class="delete" href="#" data-toggle="modal" data-target="#eventDeleteModal" ><i class="fas fa-times"></i> Удалить</a>
@@ -244,17 +250,19 @@
                                                                 <div class="modal-body">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                     <h4 class="modal-title" id="eventDeleteModalLabel">Вы уверенны?</h4>
-                                                                    <button class="cancel-button modal-button" type="submit" value="Да">Удалить</button>
+                                                                    <a th:href = "@{/organizations/{organizationId}/delete/{eventId}(organizationId = ${id}, eventId = ${event.id})}">
+                                                                        <button class="cancel-button modal-button" type="submit" value="Да">Удалить</button>
+                                                                    </a>
                                                                     <button class="send-button modal-button" type="reset" value="Нет" data-dismiss="modal">Вернуться назад</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="user-info">
-                                                    <p><span>Тип мероприятия:</span>Тип</p>
-                                                    <p><span>Дата:</span>13.04.2018</p>
-                                                    <p><span>Описание:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis dolore magni mollitia praesentium quae vel? Facilis hic, illum inventore nemo nobis perspiciatis qui suscipit voluptatem! Eius impedit neque tenetur.</p>
+                                                <div class="user-info" th:each="description : ${event.eventTypeEvaluations}">
+                                                    <p th:inline="text"><span>Тип мероприятия:</span>[[${description.type}]]</p>
+                                                    <p th:inline="text"><span>Дата:</span>[[${event.eventDate}]]</p>
+                                                    <p th:inline="text"><span>Описание:</span>[[${event.description}]]</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -269,22 +277,22 @@
                                             <h2 class="create-title modal-title" id="addEventModalLabel">Выберите мероприятие</h2>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="list-item-users">
+                                            <div class="list-item-users" th:each="event : ${events}">
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="user-data">
                                                             <div class="user-title">
                                                                 <div class="user-name">
-                                                                    <a href="view-event.html">
-                                                                        <span>Название</span>
+                                                                    <a th:href="@{/admin/event/view/{id}(id = ${event.id})}">
+                                                                        <span th:text="${event.name}">Название</span>
                                                                     </a>
                                                                 </div>
                                                                 <a class="edit" href=""><i class="fas fa-plus-circle"></i> Добавить</a>
                                                             </div>
-                                                            <div class="user-info">
-                                                                <p><span>Тип мероприятия:</span>Тип</p>
-                                                                <p><span>Дата:</span>13.04.2018</p>
-                                                                <p><span>Описание:</span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab corporis dolore magni mollitia praesentium quae vel? Facilis hic, illum inventore nemo nobis perspiciatis qui suscipit voluptatem! Eius impedit neque tenetur.</p>
+                                                            <div class="user-info" th:each="description : ${event.eventTypeEvaluations}">
+                                                                <p th:inline="text"><span>Тип мероприятия:</span>[[${description.type}]]</p>
+                                                                <p th:inline="text"><span>Дата:</span>[[${event.eventDate}]]</p>
+                                                                <p th:inline="text"><span>Описание:</span>[[${event.description}]]</p>
                                                             </div>
                                                         </div>
                                                     </div>

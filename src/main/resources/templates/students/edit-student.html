@@ -32,35 +32,38 @@
                                 <div class="list-item">
                                     <div class="info-edit">
                                         <div class="row">
-                                            <form action="" method="post">
+                                            <form th:action="@{/students/add}" method="POST">
+
+                                                <input type = "hidden" name = "id" th:value="${id}"/>
+
                                                 <div class="input-box">
                                                     <label for="secondname">Фамилия</label>
-                                                    <input id="secondname" type="text" name="secondname" placeholder="Фамилия"/>
+                                                    <input id="secondname" type="text" name="secondName" placeholder="Фамилия"/>
                                                 </div>
                                                 <div class="input-box">
                                                     <label for="firstname">Имя</label>
-                                                    <input id="firstname" type="text" name="firstname" placeholder="Имя"/>
+                                                    <input id="firstname" type="text" name="firstName" placeholder="Имя"/>
                                                 </div>
                                                 <div class="input-box">
                                                     <label for="lastname">Отчество</label>
-                                                    <input id="lastname" type="text" name="lastname" placeholder="Отчество"/>
+                                                    <input id="lastname" type="text" name="lastName" placeholder="Отчество"/>
                                                 </div>
                                                 <div class="input-box">
                                                     <label for="type">Обучение</label>
                                                     <select id="type" name="type">
                                                         <option>Не выбрано</option>
-                                                        <option>Бакалавриат</option>
-                                                        <option>Магистратура</option>
+                                                        <option value = "Бакалавриат">Бакалавриат</option>
+                                                        <option value = "Магистратура">Магистратура</option>
                                                     </select>
                                                 </div>
                                                 <div class="input-box">
                                                     <label for="course">Курс</label>
                                                     <select id="course" name="course">
                                                         <option>Не выбрано</option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
+                                                        <option value = "1">1</option>
+                                                        <option value = "2">2</option>
+                                                        <option value = "3">3</option>
+                                                        <option value = "4">4</option>
                                                     </select>
                                                 </div>
                                                 <div class="input-box">

@@ -1,14 +1,9 @@
 package io.vscale.uniservice.services.implementations.events;
 
-import io.vscale.uniservice.domain.Event;
-import io.vscale.uniservice.domain.EventTypeEvaluation;
-import io.vscale.uniservice.domain.Student;
-import io.vscale.uniservice.domain.SubjectsToCourse;
-import io.vscale.uniservice.repositories.data.EventRepository;
-import io.vscale.uniservice.repositories.data.EventTypeEvaluationRepository;
-import io.vscale.uniservice.repositories.data.StudentRepository;
-import io.vscale.uniservice.repositories.data.SubjectsToCourseRepository;
+import io.vscale.uniservice.domain.*;
+import io.vscale.uniservice.repositories.data.*;
 import io.vscale.uniservice.services.interfaces.events.EventTypeEvaluationService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,20 +19,13 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class EventTypeEvaluationServiceImpl implements EventTypeEvaluationService{
 
     private final EventTypeEvaluationRepository eventTypeEvaluationRepository;
     private final StudentRepository studentRepository;
     private final SubjectsToCourseRepository subjectsToCourseRepository;
-
-    @Autowired
-    public EventTypeEvaluationServiceImpl(EventTypeEvaluationRepository eventTypeEvaluationRepository,
-                                          StudentRepository studentRepository,
-                                          SubjectsToCourseRepository subjectsToCourseRepository) {
-        this.eventTypeEvaluationRepository = eventTypeEvaluationRepository;
-        this.studentRepository = studentRepository;
-        this.subjectsToCourseRepository = subjectsToCourseRepository;
-    }
+    private final EventRepository eventRepository;
 
     @Override
     public List<EventTypeEvaluation> getAllEvaluations() {
@@ -87,4 +75,52 @@ public class EventTypeEvaluationServiceImpl implements EventTypeEvaluationServic
         this.studentRepository.save(student);
 
     }
+
+    @Override
+    public void addStudentEvaluation(Long studentId, Long eventId, String studentRole) {
+
+        Student student = this.studentRepository.findOne(studentId);
+
+        if(student == null){
+            throw new IllegalArgumentException("No such student");
+        }
+
+        Event event = this.eventRepository.findOne(eventId);
+        String type = event.getEventTypeName();
+        Byte startValue = event.getEventTypeEvaluations().get(0).getStartValue();
+        Byte endValue = event.getEventTypeEvaluations().get(1).getEndValue();
+
+        EventTypeEvaluation eventTypeEvaluation = EventTypeEvaluation.builder()
+                                                                     .type(type)
+                                                                     .startValue(startValue)
+                                                                     .endValue(endValue)
+                                                                     .students(Collections.singletonList(student))
+                                                                     .studentRole(studentRole)
+                                                                     .build();
+
+        this.eventTypeEvaluationRepository.save(eventTypeEvaluation);
+
+
+    }
+
+    @Override
+    public boolean checkStudent(Long evaluationId, Long studentId) {
+
+        EventTypeEvaluation eventTypeEvaluation = this.eventTypeEvaluationRepository.findOne(evaluationId);
+
+        return eventTypeEvaluation.getStudents().stream()
+                                                .anyMatch(student -> student.getId().equals(studentId));
+
+    }
+
+    @Override
+    public void deleteEventFromEvaluation(Long evaluationId, Long eventId) {
+
+        EventTypeEvaluation eventTypeEvaluation = this.eventTypeEvaluationRepository.findOne(evaluationId);
+
+        eventTypeEvaluation.getEvents().removeIf(event -> event.getId().equals(eventId));
+
+    }
+
+
 }

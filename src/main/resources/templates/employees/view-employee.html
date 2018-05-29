@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 new-col-375">
-                    <div class="create-box" sec:authorize="hasAnyRole('ADMIN', 'COOPERATOR')">
+                    <div class="create-box" sec:authorize="hasAnyAuthority('ADMIN', 'COOPERATOR')">
                         <a th:href="@{/admin/employee/edit/{id}(id = ${cooperator.id})}"><button type="button" class="create-button">Редактировать</button></a>
                     </div>
                     <div class="small-box view-student">

@@ -44,17 +44,17 @@ public class StudentAdminRESTController {
     }
 
     @PostMapping("/update_student")
-    public ResponseEntity<List<Student>> updateStudent(@Valid @ModelAttribute("studentForm")StudentForm studentForm){
+    public ResponseEntity<List<Student>> updateStudent(Long id, @Valid @ModelAttribute("studentForm")StudentForm studentForm){
 
-        this.studentService.updateStudent(studentForm);
+        this.studentService.updateStudent(id, studentForm);
         return ResponseEntity.ok(this.studentService.getAllStudents());
 
     }
 
     @PostMapping("/delete_student")
-    public ResponseEntity<List<Student>> deleteStudent(@Valid @ModelAttribute("studentForm")StudentForm studentForm){
+    public ResponseEntity<List<Student>> deleteStudent(Long id){
 
-        this.studentService.deleteStudent(studentForm);
+        this.studentService.deleteStudent(id);
         return ResponseEntity.ok(this.studentService.getAllStudents());
 
     }

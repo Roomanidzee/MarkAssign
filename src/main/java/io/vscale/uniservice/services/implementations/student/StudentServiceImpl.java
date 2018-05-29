@@ -103,12 +103,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void addStudent(StudentForm studentForm) {
 
-        Profile profile = this.profileRepository.findOne(studentForm.getProfileId());
+        Profile profile = Profile.builder()
+                                 .surname(studentForm.getSecondName())
+                                 .name(studentForm.getFirstName())
+                                 .patronymic(studentForm.getLastName())
+                                 .build();
+
+        this.profileRepository.save(profile);
 
         Student student = Student.builder()
                                  .profile(profile)
                                  .course(studentForm.getCourse())
-                                 .gender(studentForm.getGender())
                                  .headOrganizations(new HashSet<>())
                                  .events(new ArrayList<>())
                                  .confirmations(new HashSet<>())
@@ -121,13 +126,19 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void updateStudent(StudentForm studentForm) {
+    public void updateStudent(Long id, StudentForm studentForm) {
 
-        Student student = this.studentRepository.findOne(studentForm.getId());
-        Profile profile = this.profileRepository.findOne(studentForm.getProfileId());
+        Student student = this.studentRepository.findOne(id);
+
+        Profile profile = Profile.builder()
+                                 .surname(studentForm.getSecondName())
+                                 .name(studentForm.getFirstName())
+                                 .patronymic(studentForm.getLastName())
+                                 .build();
+
+        this.profileRepository.save(profile);
 
         student.setCourse(studentForm.getCourse());
-        student.setGender(studentForm.getGender());
         student.setProfile(profile);
 
         this.studentRepository.save(student);
@@ -137,10 +148,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteStudent(StudentForm studentForm) {
+    public void deleteStudent(Long id) {
 
-        this.studentRepository.delete(studentForm.getId());
-        this.studentESRepository.delete(studentForm.getId());
+        this.studentRepository.delete(id);
+        this.studentESRepository.delete(id);
 
     }
 

@@ -9,9 +9,9 @@ import lombok.ToString;
 import lombok.NoArgsConstructor;
 
 /**
- * 11.03.2018
+ * 28.05.2018
  *
- * @author Andrey Romanov
+ * @author Andrey Romanov (steampart@gmail.com)
  * @version 1.0
  */
 @Getter
@@ -21,13 +21,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @EqualsAndHashCode
 @ToString
-public class StudentForm {
+public class OrganizationForm {
 
-    private String secondName;
-    private String firstName;
-    private String lastName;
+    private Long id;
+    private String title;
+    private Long directorId;
     private String type;
-    private Byte course;
-    private String group;
+    private String description;
 
 }
